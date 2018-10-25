@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Slash</string>
-
-    <string name="email">E-Mail</string>
-    <string name="pw">Password</string>
-    <string name="login">LOGIN</string>
-    <string name="register">REGISTER</string>
-    <string name="pwForgot">Forgot Password?</string>
+    <string name="homeScreenEmailInput">E-Mail</string>
+    <string name="homeScreenPasswordInput">Password</string>
+    <string name="homeScreenLoginButton">Login</string>
+    <string name="homeScreenRegisterButton">Register</string>
+    <string name="homeScreenForgotPassword"><u> Forgot Password </u></string>
 </resources>
