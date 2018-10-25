@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Slash</string>
+
+    <string name="email">E-Mail</string>
+    <string name="pw">Password</string>
+    <string name="login">LOGIN</string>
+    <string name="register">REGISTER</string>
+    <string name="pwForgot">Forgot Password?</string>
 </resources>
