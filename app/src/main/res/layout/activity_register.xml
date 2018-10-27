@@ -1,9 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/registerScreenUsernameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="#ff8800"
+        android:hint="@string/registerScreenUsernameInput">
+    </EditText>
+
+    <EditText
+        android:id="@+id/registerScreenEmailInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="#ff8800"
+        android:hint="@string/registerScreenEmailInput"
+        android:inputType="textEmailAddress">
+    </EditText>
+
+    <TextView
+        android:id="@+id/registerScreenUsernameErrorMessageTextView"
+        style="@style/ErrorMessageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Passwörter stimmen nicht überein"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="150dp"/>
+
+    <EditText
+        android:id="@+id/registerScreenPasswordInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="#ff8800"
+        android:inputType="textPassword"
+        android:hint="@string/registerScreenPasswordInput">
+    </EditText>
+
+    <EditText
+        android:id="@+id/registerScreenConfirmPasswordInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="#ff8800"
+        android:inputType="textPassword"
+        android:hint="@string/registerScreenConfirmPasswordInput">
+    </EditText>
+
+    <TextView
+        android:id="@+id/registerScreenPasswordErrorMessageTextView"
+        style="@style/ErrorMessageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Passwörter stimmen nicht überein"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="300dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginRight="10dp"
+        android:hint="@string/registerScreenRegisterButton">
+    </Button>
+
+
+</RelativeLayout>
+
+
+
