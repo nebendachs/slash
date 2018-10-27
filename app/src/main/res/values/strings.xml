@@ -3,6 +3,14 @@
     <string name="homeScreenEmailInput">E-Mail</string>
     <string name="homeScreenPasswordInput">Password</string>
     <string name="homeScreenLoginButton">Login</string>
-    <string name="homeScreenRegisterButton">Register</string>
+    <string name="homeScreenRegisterLink">New on Slash? Please register!</string>
     <string name="homeScreenForgotPassword"><u> Forgot Password </u></string>
+    <string name="homeScreenEmptyEmailMessage">Please insert a valid E-mail address</string>
+    <string name="homeScreenIncorrectPasswordMessage">Password is incorrect</string>
+    <string name="registerScreenHeadline">Registration</string>
+    <string name="registerScreenEmailInput">E-Mail</string>
+    <string name="registerScreenUsernameInput">Username</string>
+    <string name="registerScreenPasswordInput">Password</string>
+    <string name="registerScreenConfirmPasswordInput">Confirm Password</string>
+    <string name="registerScreenRegisterButton">Register</string>
 </resources>

@@ -22,46 +22,84 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-        <EditText
-            android:id="@+id/homeScreenEmailInput"
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <EditText
+            android:id="@+id/homeScreenEmailInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="75dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#ff8800"
             android:ems="10"
             android:hint="@string/homeScreenEmailInput"
             android:inputType="textEmailAddress" />
 
+        <TextView
+            android:id="@+id/homeScreenWrongEmailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            style="@style/ErrorMessageTextView" />
+
         <EditText
             android:id="@+id/homeScreenPasswordInput"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#ff8800"
             android:ems="10"
             android:hint="@string/homeScreenPasswordInput"
             android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/homeScreenLoginButton"
-            android:layout_width="150dp"
+        <TextView
+            style="@style/ErrorMessageTextView"
+            android:id="@+id/homeScreenWrongPasswordTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <TextView
+            android:id="@+id/homeScreenRegisterLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
-            android:text="@string/homeScreenLoginButton" />
+            android:layout_marginRight="10dp"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="@string/homeScreenRegisterLink"
+            android:textColor="#ff8800"
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/homeScreenRegisterButton"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/homeScreenLoginButton"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
-            android:text="@string/homeScreenRegisterButton" />
+            android:layout_marginRight="10dp"
+            android:text="@string/homeScreenLoginButton" />
 
         <TextView
             android:id="@+id/homeScreenForgotPasswordLink"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:ems="10"
             android:gravity="center"
-            android:text="@string/homeScreenForgotPassword" />
+            android:text="@string/homeScreenForgotPassword"
+            android:textColor="#ff8800" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
