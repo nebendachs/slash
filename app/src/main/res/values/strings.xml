@@ -13,4 +13,8 @@
     <string name="registerScreenPasswordInput">Password</string>
     <string name="registerScreenConfirmPasswordInput">Confirm Password</string>
     <string name="registerScreenRegisterButton">Register</string>
+    <string name="registerScreenEmptyUsernameMessage">Please insert a valid E-mail address and an username</string>
+    <string name="registerScreenEmptyPasswordMessage">Please insert a valid password</string>
+    <string name="registerScreenNoMatchPasswordMessage">Inserted passwords does not match</string>
+    <string name="registerScreenUnsafePasswordMessage">The inserted password does not correspond to the guidelines</string>
 </resources>

@@ -8,10 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ErrorMessageTextView">
+    <style name="LoginRegisterScreenInteractionElement">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="LoginRegisterScreenErrorMessageTextView" parent="LoginRegisterScreenInteractionElement">
         <item name="android:textColor">#ff0000</item>
+    </style>
 
-
+    <style name="LoginRegisterScreenInputElement" parent="LoginRegisterScreenInteractionElement">
+       <item name="android:backgroundTint">#ff8800</item>
     </style>
 
 </resources>
