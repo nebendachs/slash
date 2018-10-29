@@ -1,7 +1,6 @@
 package de.sharknoon.slash;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -19,19 +18,20 @@ import javax.net.ssl.TrustManagerFactory;
 public abstract class SSLWebSocketClient {
 
     private Context context;
+    private WebSocketClient webSocketClient;
 
-    public SSLWebSocketClient(String URL, Context context, Consumer<ServerHandshake> onOpenConsumer,
+    public SSLWebSocketClient(String URL, Context context, Consumer<WebSocketClient> onOpenConsumer,
                               Consumer<String> onMessageConsumer, Consumer<String> onCloseConsumer,
                               Consumer<Exception> onErrorConsumer) {
         this.context = context;
 
         try {
             URI serverURI = new URI(URL);
-            WebSocketClient webSocketClient = new WebSocketClient(serverURI) {
+            this.webSocketClient = new WebSocketClient(serverURI) {
 
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
-                    onOpenConsumer.accept(handshakedata);
+                    onOpenConsumer.accept(this);
                 }
 
                 @Override
@@ -73,9 +73,16 @@ public abstract class SSLWebSocketClient {
         tmf.init(keystore);
 
         // Create SSLSocketFactory
-        // SSLContext sslContext = null;
         SSLContext sslContext = SSLContext.getInstance("TLS");
         sslContext.init(keyManagerFactory.getKeyManagers(), tmf.getTrustManagers(), null);
         return sslContext.getSocketFactory();
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public WebSocketClient getWebSocketClient() {
+        return webSocketClient;
     }
 }

@@ -53,26 +53,26 @@ public class MainActivity extends AppCompatActivity {
 
                 // Get inserted E-Mail
                 EditText emailInput = findViewById(R.id.homeScreenEmailInput);
-                String insertedEmail = emailInput.getText().toString();
+                String insertedEmail = String.valueOf(emailInput.getText());
 
                 // Get inserted Password
                 EditText passwordInput = findViewById(R.id.homeScreenPasswordInput);
-                String insertedPassword = passwordInput.getText().toString();
+                String insertedPassword = String.valueOf(passwordInput.getText());
 
                 // Empty password
-                if (insertedEmail == null || insertedEmail.isEmpty()) {
+                if (insertedEmail.isEmpty()) {
                     emailErrorTextView.setText(R.string.homeScreenEmptyEmailMessage);
                     return;
                 }
 
                 // Empty password
-                if (insertedPassword == null || insertedPassword.isEmpty()) {
+                if (insertedPassword.isEmpty()) {
                     passwordErrorTextView.setText(R.string.homeScreenIncorrectPasswordMessage);
                     return;
                 }
 
                 // Try to login User
-                new UserLogin(insertedEmail, insertedPassword);
+        //        new UserLogin(insertedEmail, insertedPassword);
             }
         });
     }

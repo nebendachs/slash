@@ -10,7 +10,7 @@
     <string name="registerScreenHeadline">Registration</string>
     <string name="registerScreenEmailInput">E-Mail</string>
     <string name="registerScreenUsernameInput">Username</string>
-    <string name="registerScreenPasswordInput">Password</string>
+    <string name="registerScreenPasswordInput">Password (at least 8 characters)</string>
     <string name="registerScreenConfirmPasswordInput">Confirm Password</string>
     <string name="registerScreenRegisterButton">Register</string>
     <string name="registerScreenEmptyUsernameMessage">Please insert a valid E-mail address and an username</string>
