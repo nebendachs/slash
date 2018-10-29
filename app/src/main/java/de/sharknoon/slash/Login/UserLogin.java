@@ -1,4 +1,4 @@
-package de.sharknoon.slash;
+package de.sharknoon.slash.Login;
 
 public class UserLogin {
 

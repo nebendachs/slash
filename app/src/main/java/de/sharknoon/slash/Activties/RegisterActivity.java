@@ -1,4 +1,4 @@
-package de.sharknoon.slash;
+package de.sharknoon.slash.Activties;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import de.sharknoon.slash.R;
+import de.sharknoon.slash.Registration.UserRegistration;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -25,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
         //   getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         this.handleRegisterButton();
-
     }
 
     private void handleRegisterButton() {
@@ -50,19 +52,19 @@ public class RegisterActivity extends AppCompatActivity {
                 TextView passwordErrorTextView = findViewById(R.id.registerScreenPasswordErrorMessageTextView);
                 passwordErrorTextView.setText("");
 
-                String insertedUsername = usernameInput.getText().toString();
-                String insertedEmail = emailInput.getText().toString();
-                String insertedPassword = passwordInput.getText().toString();
-                String insertedConfirmPassword = confirmPasswordInput.getText().toString();
+                String insertedUsername = String.valueOf(usernameInput.getText());
+                String insertedEmail = String.valueOf(emailInput.getText());
+                String insertedPassword = String.valueOf(passwordInput.getText());
+                String insertedConfirmPassword = String.valueOf(confirmPasswordInput.getText());
 
                 // Check for empty username and e-mail
-                if (insertedEmail == null || insertedEmail.isEmpty() || insertedUsername == null || insertedUsername.isEmpty()) {
+                if (insertedEmail.isEmpty() || insertedUsername.isEmpty()) {
                     usernameErrorTextView.setText(R.string.registerScreenEmptyUsernameMessage);
                     return;
                 }
 
                 // Check for empty password
-                if(insertedPassword == null || insertedPassword.isEmpty() || insertedConfirmPassword == null || insertedConfirmPassword.isEmpty()){
+                if(insertedPassword.isEmpty() || insertedConfirmPassword.isEmpty()){
                     passwordErrorTextView.setText(R.string.registerScreenEmptyPasswordMessage);
                     return;
                 }
@@ -79,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                new UserRegistration(insertedUsername, insertedEmail, insertedPassword);
+                new UserRegistration(insertedUsername, insertedEmail, insertedPassword, v.getContext());
             }
         });
     }

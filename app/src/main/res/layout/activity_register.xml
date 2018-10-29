@@ -10,6 +10,8 @@
         style="@style/LoginRegisterScreenInputElement"
         android:layout_marginTop="50dp"
         android:backgroundTint="#ff8800"
+        android:inputType="text"
+        android:maxLines="1"
         android:hint="@string/registerScreenUsernameInput" />
 
     <EditText
