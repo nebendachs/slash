@@ -5,8 +5,10 @@
     <string name="homeScreenLoginButton">Login</string>
     <string name="homeScreenRegisterLink">New on Slash? Please register!</string>
     <string name="homeScreenForgotPassword"><u> Forgot Password </u></string>
-    <string name="homeScreenEmptyEmailMessage">Please insert a valid E-mail address</string>
-    <string name="homeScreenIncorrectPasswordMessage">Password is incorrect</string>
+    <string name="homeScreenIncorrectEmailMessage">Please insert a valid E-mail address</string>
+    <string name="homeScreenIncorrectPasswordMessage">Please insert a valid Password with a minimum length of 8</string>
+    <string name="homeScreenUserDoesNotExist">This user does not exist</string>
+    <string name="homeScreenWrongPassword">This Password does not match</string>
     <string name="registerScreenHeadline">Registration</string>
     <string name="registerScreenEmailInput">E-Mail</string>
     <string name="registerScreenUsernameInput">Username</string>

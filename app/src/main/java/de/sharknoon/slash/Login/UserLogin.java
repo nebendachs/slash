@@ -17,17 +17,17 @@ public class UserLogin {
             String hashedPassword = UserLogin.hashPassword(password);
             Gson gson = new Gson();
             LoginMessage loginMessage = new LoginMessage(usernameOrEmail, hashedPassword);
-            String jsonRegistrationMessage = gson.toJson(loginMessage);
-            Log.d("JSON", jsonRegistrationMessage);
+            String jsonLoginMessage = gson.toJson(loginMessage);
+            Log.d("JSON", jsonLoginMessage);
 
             Consumer<WebSocketClient> onOpen = webSocketClient -> {
                 Log.d("Websocket", "Opened");
-                webSocketClient.send(jsonRegistrationMessage);
+                webSocketClient.send(jsonLoginMessage);
             };
 
             Consumer<String> onMessage = message -> {
                 Log.d("Websocket", message);
-                new RegistrationResponseHandler(message, context);
+                new LoginResponseHandler(message, context);
             };
 
             Consumer<String> onClose = reason -> {
@@ -38,8 +38,8 @@ public class UserLogin {
                 Log.d("Websocket", ex.toString());
             };
 
-            String REGISTRATION_URI = "wss://sharknoon.de/slash/login";
-            new LoginClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);
+            String LOGIN_URI = "wss://sharknoon.de/slash/login";
+            new LoginClient(LOGIN_URI, context, onOpen, onMessage, onClose, onError);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -10,17 +10,19 @@ import com.google.gson.Gson;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.Registration.RegistrationResponse;
 
-public class RegistrationResponseHandler {
+public class LoginResponseHandler {
 
     private final String SERVER_RESPONSE_STATUS_OK = "OK";
     private final String SERVER_RESPONSE_USER_DOES_NOT_EXIST = "USER_DOES_NOT_EXIST";
     private final String SERVER_RESPONSE_WRONG_PASSWORD = "WRONG_PASSWORD";
 
-    public RegistrationResponseHandler(String serverResponse, Context context) {
+    public LoginResponseHandler(String serverResponse, Context context) {
         Gson gson = new Gson();
         RegistrationResponse registrationResponse = gson.fromJson(serverResponse, RegistrationResponse.class);
 
-        TextView usernameErrorTextView = ((Activity) context).findViewById(R.id.registerScreenUsernameErrorMessageTextView);
+        TextView emailErrorTextView = ((Activity) context).findViewById(R.id.homeScreenWrongEmailTextView);
+        TextView passwordErrorTextView = ((Activity) context).findViewById(R.id.homeScreenWrongPasswordTextView);
+
         switch (registrationResponse.getStatus()) {
 
             case SERVER_RESPONSE_STATUS_OK:
@@ -28,9 +30,11 @@ public class RegistrationResponseHandler {
                 break;
             case SERVER_RESPONSE_USER_DOES_NOT_EXIST:
                 Log.d("Status", SERVER_RESPONSE_USER_DOES_NOT_EXIST);
+                emailErrorTextView.setText(R.string.homeScreenUserDoesNotExist);
                 break;
             case SERVER_RESPONSE_WRONG_PASSWORD:
                 Log.d("Status", SERVER_RESPONSE_WRONG_PASSWORD);
+                passwordErrorTextView.setText(R.string.homeScreenWrongPassword);
                 break;
         }
     }
