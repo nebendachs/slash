@@ -14,6 +14,8 @@ import de.sharknoon.slash.Registration.UserRegistration;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private UserRegistration userRegistration = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
         //   getSupportActionBar().setLogo(R.mipmap.ic_launcher_round);
         //   getSupportActionBar().setDisplayUseLogoEnabled(true);
 
+        // Open Websocket connection
+        UserRegistration.createRegistrationClient(this);
         this.handleRegisterButton();
     }
 
@@ -81,7 +85,8 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                new UserRegistration(insertedUsername, insertedEmail, insertedPassword, v.getContext());
+                // Send inserted username, email and password to server
+                new UserRegistration(insertedUsername, insertedEmail, insertedPassword);
             }
         });
     }

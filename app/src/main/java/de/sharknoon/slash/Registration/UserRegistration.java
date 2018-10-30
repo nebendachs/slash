@@ -13,8 +13,9 @@ import java.util.function.Consumer;
 public class UserRegistration {
 
     private static final int MIN_PASSWORD_LENGTH = 8;
+    private static RegistrationClient registrationClient = null;
 
-    public UserRegistration(String username, String email, String password, Context context) {
+    public UserRegistration(String username, String email, String password) {
 
         try {
             String hashedPassword = UserRegistration.hashPassword(password);
@@ -23,30 +24,35 @@ public class UserRegistration {
             String jsonRegistrationMessage = gson.toJson(registrationMessage);
             Log.d("JSON", jsonRegistrationMessage);
 
-            Consumer<WebSocketClient> onOpen = webSocketClient -> {
-                Log.d("Websocket", "Opened");
-                webSocketClient.send(jsonRegistrationMessage);
-            };
-
-            Consumer<String> onMessage = message -> {
-                Log.d("Websocket", message);
-                new RegistrationResponseHandler(message, context);
-            };
-
-            Consumer<String> onClose = reason -> {
-                Log.d("Websocket", "Closed");
-            };
-
-            Consumer<Exception> onError = ex -> {
-                Log.d("Websocket", ex.toString());
-            };
-
-            String REGISTRATION_URI = "wss://sharknoon.de/slash/login";
-            new RegistrationClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);
+            if(UserRegistration.registrationClient != null){
+                UserRegistration.registrationClient.getWebSocketClient().send(jsonRegistrationMessage);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void createRegistrationClient(Context context){
+        Consumer<WebSocketClient> onOpen = webSocketClient -> {
+            Log.d("Websocket", "Opened");
+        };
+
+        Consumer<String> onMessage = message -> {
+            Log.d("Websocket", message);
+            RegistrationResponseHandler.handlerResponse(message, context);
+        };
+
+        Consumer<String> onClose = reason -> {
+            Log.d("Websocket", "Closed");
+        };
+
+        Consumer<Exception> onError = ex -> {
+            Log.d("Websocket", String.valueOf(ex));
+        };
+
+        String REGISTRATION_URI = "wss://sharknoon.de/slash/register";
+        UserRegistration.registrationClient = new RegistrationClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);
     }
 
     public static boolean checkForPasswordGuidelines(String password) {
