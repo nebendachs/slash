@@ -3,7 +3,6 @@ package de.sharknoon.slash.Registration;
 import android.content.Context;
 
 import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
 
 import java.util.function.Consumer;
 

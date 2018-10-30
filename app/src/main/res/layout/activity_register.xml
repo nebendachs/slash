@@ -25,7 +25,12 @@
     <TextView
         android:id="@+id/registerScreenUsernameErrorMessageTextView"
         style="@style/LoginRegisterScreenErrorMessageTextView"
-        android:layout_marginTop="150dp"/>
+        android:layout_marginTop="150dp"
+        android:maxLines="2"
+        android:ellipsize="none"
+        android:scrollHorizontally="false"
+        android:text="The specified email is already taken by another account. Please log in."/>
+
 
     <EditText
         android:id="@+id/registerScreenPasswordInput"
@@ -46,7 +51,8 @@
     <TextView
         android:id="@+id/registerScreenPasswordErrorMessageTextView"
         style="@style/LoginRegisterScreenErrorMessageTextView"
-        android:layout_marginTop="300dp"/>
+        android:layout_marginTop="300dp"
+        android:singleLine="false"/>
 
     <Button
         android:id="@+id/registerScreenRegisterButton"
