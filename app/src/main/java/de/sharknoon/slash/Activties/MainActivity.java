@@ -59,20 +59,26 @@ public class MainActivity extends AppCompatActivity {
                 EditText passwordInput = findViewById(R.id.homeScreenPasswordInput);
                 String insertedPassword = String.valueOf(passwordInput.getText());
 
-                // Empty password
-                if (insertedEmail.isEmpty()) {
-                    emailErrorTextView.setText(R.string.homeScreenEmptyEmailMessage);
-                    return;
+
+                boolean mailTrue = true;
+                boolean passwordTrue = true;
+
+                //False EMail
+                if(insertedEmail.isEmpty() || !insertedEmail.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")){
+                    emailErrorTextView.setText(R.string.homeScreenIncorrectEmailMessage);
+                    mailTrue = false;
                 }
 
                 // Empty password
-                if (insertedPassword.isEmpty()) {
+                if (insertedPassword.isEmpty() || insertedPassword.length() < 8) {
                     passwordErrorTextView.setText(R.string.homeScreenIncorrectPasswordMessage);
-                    return;
+                    passwordTrue = false;
                 }
 
                 // Try to login User
-                new UserLogin(insertedEmail, insertedPassword, v.getContext());
+                if(mailTrue && passwordTrue) {
+                    new UserLogin(insertedEmail, insertedPassword, v.getContext());
+                }
             }
         });
     }
