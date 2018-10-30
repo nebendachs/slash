@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Try to login User
-        //        new UserLogin(insertedEmail, insertedPassword);
+                new UserLogin(insertedEmail, insertedPassword, v.getContext());
             }
         });
     }
