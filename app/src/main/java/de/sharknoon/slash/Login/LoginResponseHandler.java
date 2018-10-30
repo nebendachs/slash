@@ -12,11 +12,11 @@ import de.sharknoon.slash.Registration.RegistrationResponse;
 
 public class LoginResponseHandler {
 
-    private final String SERVER_RESPONSE_STATUS_OK = "OK";
-    private final String SERVER_RESPONSE_USER_DOES_NOT_EXIST = "USER_DOES_NOT_EXIST";
-    private final String SERVER_RESPONSE_WRONG_PASSWORD = "WRONG_PASSWORD";
+    private static final String SERVER_RESPONSE_STATUS_OK = "OK";
+    private static final String SERVER_RESPONSE_USER_DOES_NOT_EXIST = "USER_DOES_NOT_EXIST";
+    private static final String SERVER_RESPONSE_WRONG_PASSWORD = "WRONG_PASSWORD";
 
-    public LoginResponseHandler(String serverResponse, Context context) {
+    public static void handlerResponse(String serverResponse, Context context) {
         Gson gson = new Gson();
         RegistrationResponse registrationResponse = gson.fromJson(serverResponse, RegistrationResponse.class);
 
