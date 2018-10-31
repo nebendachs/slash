@@ -27,16 +27,31 @@ public class LoginResponseHandler {
         switch (registrationResponse.getStatus()) {
 
             case SERVER_RESPONSE_STATUS_OK:
+
+                //ToDo: Move on
+
                 Log.d("Status", SERVER_RESPONSE_STATUS_OK);
-                MainActivity.disableLoadingScreen(true, context);
                 break;
             case SERVER_RESPONSE_USER_DOES_NOT_EXIST:
                 Log.d("Status", SERVER_RESPONSE_USER_DOES_NOT_EXIST);
-                emailErrorTextView.setText(R.string.homeScreenUserDoesNotExist);
+                ((Activity) context).runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        MainActivity.disableLoadingScreen(true, context);
+                        emailErrorTextView.setText(R.string.homeScreenUserDoesNotExist);
+                    }
+                });
                 break;
             case SERVER_RESPONSE_WRONG_PASSWORD:
                 Log.d("Status", SERVER_RESPONSE_WRONG_PASSWORD);
-                passwordErrorTextView.setText(R.string.homeScreenWrongPassword);
+                ((Activity) context).runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        MainActivity.disableLoadingScreen(true, context);
+                        passwordErrorTextView.setText(R.string.homeScreenWrongPassword);                    }
+                });
                 break;
         }
     }
