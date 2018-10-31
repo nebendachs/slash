@@ -1,5 +1,7 @@
 package de.sharknoon.slash.Activties;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         this.handleLoginStop();
         this.handleLoginButton();
 
-        UserLogin.disableLoadingScreen(false, this);
+        disableLoadingScreen(true);
     }
 
     private void handleRegisterLink() {
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         bar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserLogin.disableLoadingScreen(true, v.getContext());            }
+               disableLoadingScreen(true);            }
         });
 
     }
@@ -97,10 +99,30 @@ public class MainActivity extends AppCompatActivity {
                 // Try to login User
                 if(mailTrue && passwordTrue) {
                     new UserLogin(insertedEmail, insertedPassword);
-                    UserLogin.disableLoadingScreen(false, v.getContext());
+                    disableLoadingScreen(false);
                 }
             }
         });
+    }
+
+    public void disableLoadingScreen(boolean b){
+        RelativeLayout loadingScreen = findViewById(R.id.loadingScreen);
+        EditText email = findViewById(R.id.homeScreenEmailInput);
+        EditText password = findViewById(R.id.homeScreenPasswordInput);
+        Button login = findViewById(R.id.homeScreenLoginButton);
+        TextView register = findViewById(R.id.homeScreenRegisterLink);
+        TextView forgotPW = findViewById(R.id.homeScreenForgotPasswordLink);
+
+        if(!b) {
+            loadingScreen.setVisibility(View.VISIBLE);
+        } else {
+            loadingScreen.setVisibility(View.GONE);
+        }
+        email.setEnabled(b);
+        password.setEnabled(b);
+        login.setEnabled(b);
+        register.setEnabled(b);
+        forgotPW.setEnabled(b);
     }
 
 }

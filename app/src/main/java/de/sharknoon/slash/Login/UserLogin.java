@@ -46,7 +46,6 @@ public class UserLogin {
         Consumer<String> onMessage = message -> {
             Log.d("Websocket", message);
             LoginResponseHandler.handlerResponse(message, context);
-            disableLoadingScreen(true, context);
         };
 
         Consumer<String> onClose = reason -> {
@@ -55,7 +54,6 @@ public class UserLogin {
 
         Consumer<Exception> onError = ex -> {
             Log.d("Websocket", String.valueOf(ex));
-            disableLoadingScreen(true, context);
         };
 
         String REGISTRATION_URI = "wss://sharknoon.de/slash/register";
@@ -66,26 +64,5 @@ public class UserLogin {
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
         messageDigest.update(password.getBytes());
         return new String(messageDigest.digest());
-    }
-
-
-    public static void disableLoadingScreen(boolean b, Context context){
-        RelativeLayout loadingScreen = ((Activity) context).findViewById(R.id.loadingscreen);
-        EditText email = ((Activity) context).findViewById(R.id.homeScreenEmailInput);
-        EditText password = ((Activity) context).findViewById(R.id.homeScreenPasswordInput);
-        Button login = ((Activity) context).findViewById(R.id.homeScreenLoginButton);
-        TextView register = ((Activity) context).findViewById(R.id.homeScreenRegisterLink);
-        TextView forgotPW = ((Activity) context).findViewById(R.id.homeScreenForgotPasswordLink);
-
-        if(!b) {
-            loadingScreen.setVisibility(View.VISIBLE);
-        } else {
-            loadingScreen.setVisibility(View.GONE);
-        }
-        email.setEnabled(b);
-        password.setEnabled(b);
-        login.setEnabled(b);
-        register.setEnabled(b);
-        forgotPW.setEnabled(b);
     }
 }
