@@ -2,14 +2,18 @@ package de.sharknoon.slash.Login;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import de.sharknoon.slash.Activties.HomeScreenActivity;
 import de.sharknoon.slash.Activties.MainActivity;
+import de.sharknoon.slash.Activties.RegisterActivity;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.Registration.RegistrationResponse;
+import de.sharknoon.slash.Slash;
 
 public class LoginResponseHandler {
 
@@ -28,7 +32,10 @@ public class LoginResponseHandler {
 
             case SERVER_RESPONSE_STATUS_OK:
                 Log.d("Status", SERVER_RESPONSE_STATUS_OK);
-                MainActivity.disableLoadingScreen(true, context);
+      //          MainActivity.disableLoadingScreen(true, context);
+                // Move on to registration page
+                Intent goToHomeScreenActivity = new Intent(Slash.getAppContext(), HomeScreenActivity.class);
+                Slash.getAppContext().startActivity(goToHomeScreenActivity);
                 break;
             case SERVER_RESPONSE_USER_DOES_NOT_EXIST:
                 Log.d("Status", SERVER_RESPONSE_USER_DOES_NOT_EXIST);

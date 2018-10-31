@@ -19,5 +19,6 @@
     <string name="registerScreenEmptyPasswordMessage">Please insert a valid password</string>
     <string name="registerScreenNoMatchPasswordMessage">Inserted passwords does not match</string>
     <string name="registerScreenUnsafePasswordMessage">The inserted password does not correspond to the guidelines</string>
-    <string name="title_activity_home_scree">HomeScreeActivity</string>
+    <string name="homeScreenProjectsHeadline">Projects</string>
+    <string name="homeScreenLastMessageHeadline">Last Messages</string>
 </resources>

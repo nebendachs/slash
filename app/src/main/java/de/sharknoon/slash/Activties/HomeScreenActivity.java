@@ -9,7 +9,7 @@ import android.view.View;
 
 import de.sharknoon.slash.R;
 
-public class HomeScreeActivity extends AppCompatActivity {
+public class HomeScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
