@@ -3,6 +3,8 @@
     package="de.sharknoon.slash">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -22,10 +24,11 @@
         </activity>
         <activity
             android:name=".Activties.RegisterActivity"
-            android:label="@string/registerScreenHeadline"></activity>
+            android:label="@string/registerScreenHeadline" />
+        <activity
+            android:name=".Activties.HomeScreeActivity"
+            android:label="@string/title_activity_home_scree"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

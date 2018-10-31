@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import de.sharknoon.slash.Activties.MainActivity;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.Registration.RegistrationResponse;
 
@@ -27,6 +28,7 @@ public class LoginResponseHandler {
 
             case SERVER_RESPONSE_STATUS_OK:
                 Log.d("Status", SERVER_RESPONSE_STATUS_OK);
+                MainActivity.disableLoadingScreen(true, context);
                 break;
             case SERVER_RESPONSE_USER_DOES_NOT_EXIST:
                 Log.d("Status", SERVER_RESPONSE_USER_DOES_NOT_EXIST);

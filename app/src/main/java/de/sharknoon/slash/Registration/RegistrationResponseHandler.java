@@ -26,8 +26,8 @@ public class RegistrationResponseHandler {
 
             case SERVER_RESPONSE_STATUS_OK:
                 Log.d("Status", SERVER_RESPONSE_STATUS_OK);
-    //            Activity registrationActivity = (Activity) context;
-    //            registrationActivity.finish();
+                Activity registrationActivity = (Activity) context;
+                registrationActivity.finish();
                 break;
 
             case SERVER_RESPONSE_STATUS_WRONG_USERNAME:

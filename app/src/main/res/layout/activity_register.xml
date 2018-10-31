@@ -28,8 +28,8 @@
         android:layout_marginTop="150dp"
         android:maxLines="2"
         android:ellipsize="none"
-        android:scrollHorizontally="false"
-        android:text="The specified email is already taken by another account. Please log in."/>
+        android:maxEms="20"
+        android:scrollHorizontally="false" />
 
 
     <EditText

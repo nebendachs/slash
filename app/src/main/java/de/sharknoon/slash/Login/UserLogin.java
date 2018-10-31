@@ -56,7 +56,7 @@ public class UserLogin {
             Log.d("Websocket", String.valueOf(ex));
         };
 
-        String REGISTRATION_URI = "wss://sharknoon.de/slash/register";
+        String REGISTRATION_URI = "wss://sharknoon.de/slash/login";
         UserLogin.loginClient = new LoginClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);
     }
 

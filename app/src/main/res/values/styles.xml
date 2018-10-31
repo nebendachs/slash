@@ -20,7 +20,16 @@
     </style>
 
     <style name="LoginRegisterScreenInputElement" parent="LoginRegisterScreenInteractionElement">
-       <item name="android:backgroundTint">#ff8800</item>
+        <item name="android:backgroundTint">#ff8800</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

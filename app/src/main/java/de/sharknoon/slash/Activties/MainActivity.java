@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         this.handleLoginStop();
         this.handleLoginButton();
 
-        disableLoadingScreen(true);
+        MainActivity.disableLoadingScreen(true, this);
     }
 
     private void handleRegisterLink() {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         bar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               disableLoadingScreen(true);            }
+               MainActivity.disableLoadingScreen(true, v.getContext());            }
         });
 
     }
@@ -99,19 +99,19 @@ public class MainActivity extends AppCompatActivity {
                 // Try to login User
                 if(mailTrue && passwordTrue) {
                     new UserLogin(insertedEmail, insertedPassword);
-                    disableLoadingScreen(false);
+                    MainActivity.disableLoadingScreen(false, v.getContext());
                 }
             }
         });
     }
 
-    public void disableLoadingScreen(boolean b){
-        RelativeLayout loadingScreen = findViewById(R.id.loadingScreen);
-        EditText email = findViewById(R.id.homeScreenEmailInput);
-        EditText password = findViewById(R.id.homeScreenPasswordInput);
-        Button login = findViewById(R.id.homeScreenLoginButton);
-        TextView register = findViewById(R.id.homeScreenRegisterLink);
-        TextView forgotPW = findViewById(R.id.homeScreenForgotPasswordLink);
+    public static void disableLoadingScreen(boolean b, Context context){
+        RelativeLayout loadingScreen = ((Activity) context).findViewById(R.id.loadingScreen);
+        EditText email = ((Activity) context).findViewById(R.id.homeScreenEmailInput);
+        EditText password = ((Activity) context).findViewById(R.id.homeScreenPasswordInput);
+        Button login = ((Activity) context).findViewById(R.id.homeScreenLoginButton);
+        TextView register = ((Activity) context).findViewById(R.id.homeScreenRegisterLink);
+        TextView forgotPW =((Activity) context).findViewById(R.id.homeScreenForgotPasswordLink);
 
         if(!b) {
             loadingScreen.setVisibility(View.VISIBLE);
