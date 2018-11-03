@@ -9,12 +9,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import java.lang.reflect.Type;
-
 import de.sharknoon.slash.Activties.HomeScreenActivity;
-import de.sharknoon.slash.Activties.MainActivity;
+import de.sharknoon.slash.Activties.LoginActivity;
 import de.sharknoon.slash.R;
-import de.sharknoon.slash.Registration.RegistrationResponse;
 
 public class LoginResponseHandler {
 
@@ -40,7 +37,7 @@ public class LoginResponseHandler {
                     @Override
                     public void run() {
 
-                        // Goto HomeScreen Activity and pass the session id
+                        // Go to HomeScreen Activity and pass the session id
                         Activity loginActivity = (Activity) context;
                         Intent intent = new Intent(context, HomeScreenActivity.class);
                         Bundle bundle = new Bundle();
@@ -58,7 +55,7 @@ public class LoginResponseHandler {
 
                     @Override
                     public void run() {
-                        MainActivity.disableLoadingScreen(true, context);
+                        LoginActivity.disableLoadingScreen(true, context);
                         emailErrorTextView.setText(R.string.homeScreenUserDoesNotExist);
                     }
                 });
@@ -69,7 +66,7 @@ public class LoginResponseHandler {
 
                     @Override
                     public void run() {
-                        MainActivity.disableLoadingScreen(true, context);
+                        LoginActivity.disableLoadingScreen(true, context);
                         passwordErrorTextView.setText(R.string.homeScreenWrongPassword);                    }
                 });
                 break;
@@ -79,7 +76,7 @@ public class LoginResponseHandler {
 
                     @Override
                     public void run() {
-                        MainActivity.disableLoadingScreen(true, context);
+                        LoginActivity.disableLoadingScreen(true, context);
                         emailErrorTextView.setText(R.string.homeScreenUserAlreadyLoggedIn);
                     }
                 });
