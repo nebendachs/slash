@@ -36,7 +36,7 @@ public class UserHomeScreen {
 
         Consumer<String> onMessage = message -> {
             Log.d("Websocket", message);
-            message = "{'projects' : [{'contactname': 'aume', 'contactimageurl': './home'}, {'contactname': 'aume2', 'contactimageurl': './home'}, {'contactname': 'aume3', 'contactimageurl': './home'}], 'contacts': [], 'status':'OK','message':'Successfully logged in','sessionid':'fbac477c-0060-4623-9f0f-aae373611aab'}";
+            message = "{'projects' : [{'contactname': 'aume', 'contactimageurl': './home'}, {'contactname': 'aume2', 'contactimageurl': './home'}, {'contactname': 'aume3', 'contactimageurl': './home'}], 'contacts': [{'contactname': 'pa.kempf', 'contactimageurl': './home'}, {'contactname': 'pa.kempf2', 'contactimageurl': './home'}, {'contactname': 'pa.kempf3', 'contactimageurl': './home'}, {'contactname': 'pa.kempf4', 'contactimageurl': './home'}, {'contactname': 'pa.kempf5', 'contactimageurl': './home'}], 'status':'OK','message':'Successfully logged in','sessionid':'fbac477c-0060-4623-9f0f-aae373611aab'}";
             HomeScreenResponseHandler.handleResponse(message, context);
         };
 

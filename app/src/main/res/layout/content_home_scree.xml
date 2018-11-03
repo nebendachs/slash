@@ -12,104 +12,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/homeScreenProjectsHeadline"
-            android:textSize="25sp"/>
+            android:textSize="25sp" />
 
-        <HorizontalScrollView android:layout_width="wrap_content"
-                             android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/homeScreenProjectsContainer"
-            android:orientation="horizontal"
+        <HorizontalScrollView
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_marginTop = "50dp">
-            
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
 
+            <LinearLayout
+                android:id="@+id/homeScreenProjectsContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+            </LinearLayout>
 
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
-            <!--           <TextView
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:gravity="center"
-                         android:text="Aume"
-                         android:drawableTop="@mipmap/ic_launcher_round"
-                         />
-
-                   <LinearLayout
-                         android:layout_width="50dp"
-                         android:layout_height="wrap_content"
-                         android:orientation="vertical" >
-
-                     <ImageView
-                         android:layout_width="match_parent"
-                         android:layout_height="50dp"
-                         android:src="@drawable/ic_launcher_background" />
-
-                     <TextView
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:gravity="center"
-                         android:text="Aume" />
-
-                     </LinearLayout>
-
-                     <LinearLayout
-                         android:layout_width="50dp"
-                         android:layout_height="wrap_content"
-                         android:layout_marginLeft="20dp"
-                         android:orientation="vertical" >
-
-                         <ImageView
-                             android:layout_width="match_parent"
-                             android:layout_height="50dp"
-                             android:src="@drawable/ic_launcher_background" />
-
-                         <TextView
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:gravity="center"
-                             android:text="Aume" />
-
-                     </LinearLayout>
-
-                     <LinearLayout
-                         android:layout_width="50dp"
-                         android:layout_height="wrap_content"
-                         android:layout_marginLeft="20dp"
-                         android:orientation="vertical" >
-
-                         <ImageView
-                             android:layout_width="match_parent"
-                             android:layout_height="50dp"
-                             android:src="@drawable/ic_launcher_background" />
-
-                         <TextView
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:gravity="center"
-                             android:text="Aume"
-                             />
-
-                     </LinearLayout> -->
-
-
+        </HorizontalScrollView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/homeScreenLastMessageHeadline"
             android:layout_marginTop="200dp"
-            android:textSize="25sp"/>
+            android:text="@string/homeScreenLastMessageHeadline"
+            android:textSize="25sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="225dp">
+
+            <com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/homeScreenContactsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:alignContent="stretch"
+                app:alignItems="stretch"
+                app:flexWrap="wrap">
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </ScrollView>
 
     </RelativeLayout>
 

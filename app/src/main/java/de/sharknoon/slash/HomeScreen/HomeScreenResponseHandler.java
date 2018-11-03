@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.LinearLayout;
 
+import com.google.android.flexbox.FlexboxLayout;
 import com.google.gson.Gson;
 
 import de.sharknoon.slash.Login.LoginResponse;
@@ -23,24 +24,27 @@ public class HomeScreenResponseHandler {
             case SERVER_RESPONSE_STATUS_OK:
 
                 Activity homeScreenActivity = (Activity) context;
-                LinearLayout parentLayout = (LinearLayout) homeScreenActivity.findViewById(R.id.homeScreenProjectsContainer);
+
+                // Handle projects
+                LinearLayout parentLayoutProjects = homeScreenActivity.findViewById(R.id.homeScreenProjectsContainer);
                 Contact projects[] = homeScreenResponse.getProjects();
 
                 if(projects.length != 0){
                     for(Contact currentProject : projects){
-                        new ContactView(homeScreenActivity,parentLayout, currentProject.getContactImageUrl(), currentProject.getContactName());
+                        new ContactView(homeScreenActivity,parentLayoutProjects, currentProject.getContactImageUrl(), currentProject.getContactName());
                     }
                 }
-                // TODO Plus icon einfügen
+
+                // Handle contacts
+                FlexboxLayout parentLayoutContacts = homeScreenActivity.findViewById(R.id.homeScreenContactsContainer);
+                Contact contacts[] = homeScreenResponse.getContacts();
+
+                if(contacts.length !=0){
+                    for(Contact currentContact : contacts){
+                        new ContactView(homeScreenActivity,parentLayoutContacts, currentContact.getContactImageUrl(), currentContact.getContactName());
+                    }
+                }
                 break;
         }
-
-
-
-
-
-
-
-
     }
 }
