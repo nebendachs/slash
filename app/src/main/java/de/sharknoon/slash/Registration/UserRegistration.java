@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public class UserRegistration {
 
     private static final int MIN_PASSWORD_LENGTH = 8;
-    private static RegistrationClient registrationClient = null;
+    private static WebSocketClient webSocketClient = null;
 
     public UserRegistration(String username, String email, String password) {
 
@@ -24,8 +24,8 @@ public class UserRegistration {
             String jsonRegistrationMessage = gson.toJson(registrationMessage);
             Log.d("JSON", jsonRegistrationMessage);
 
-            if(UserRegistration.registrationClient != null){
-                UserRegistration.registrationClient.getWebSocketClient().send(jsonRegistrationMessage);
+            if(UserRegistration.webSocketClient != null){
+                UserRegistration.webSocketClient.send(jsonRegistrationMessage);
             }
 
         } catch (Exception e) {
@@ -36,11 +36,12 @@ public class UserRegistration {
     public static void createRegistrationClient(Context context){
         Consumer<WebSocketClient> onOpen = webSocketClient -> {
             Log.d("Websocket", "Opened");
+            UserRegistration.webSocketClient = webSocketClient;
         };
 
         Consumer<String> onMessage = message -> {
             Log.d("Websocket", message);
-            RegistrationResponseHandler.handlerResponse(message, context);
+            RegistrationResponseHandler.handleResponse(message, context);
         };
 
         Consumer<String> onClose = reason -> {
@@ -52,7 +53,7 @@ public class UserRegistration {
         };
 
         String REGISTRATION_URI = "wss://sharknoon.de/slash/register";
-        UserRegistration.registrationClient = new RegistrationClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);
+        new RegistrationClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);
     }
 
     public static boolean checkForPasswordGuidelines(String password) {

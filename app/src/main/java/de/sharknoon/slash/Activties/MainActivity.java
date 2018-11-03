@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 // Try to login User
                 if(mailTrue && passwordTrue) {
                     new UserLogin(insertedEmail, insertedPassword);
-                 //   MainActivity.disableLoadingScreen(false, v.getContext());
+                    MainActivity.disableLoadingScreen(false, v.getContext());
                 }
             }
         });
