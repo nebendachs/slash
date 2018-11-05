@@ -30,8 +30,8 @@ public class ContactView {
             public void run() {
 
                 // Create TextView with image
-                TextView contactTextView = ContactView.this.createContactTextView(projectName, homeScreenActivity);
-                LinearLayout.LayoutParams contactTextViewParams = new LinearLayout.LayoutParams(getTextViewWidht(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX ), LinearLayout.LayoutParams.WRAP_CONTENT);
+                TextView contactTextView = ContactView.this.createContactTextView(projectName, homeScreenActivity, projectName);
+                LinearLayout.LayoutParams contactTextViewParams = new LinearLayout.LayoutParams(getTextViewWidth(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX), LinearLayout.LayoutParams.WRAP_CONTENT);
                 contactTextViewParams.setMarginStart(20);
                 contactTextView.setLayoutParams(contactTextViewParams);
                 parentLayout.addView(contactTextView);
@@ -59,11 +59,11 @@ public class ContactView {
             public void run() {
 
                 // Create TextView with image
-                TextView contactTextView = ContactView.this.createContactTextView(contactName, homeScreenActivity);
+                TextView contactTextView = ContactView.this.createContactTextView(contactName, homeScreenActivity, contactName);
 
-                LinearLayout.LayoutParams contactTextViewParams = new LinearLayout.LayoutParams(getTextViewWidht(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX ), LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams contactTextViewParams = new LinearLayout.LayoutParams(getTextViewWidth(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX), LinearLayout.LayoutParams.WRAP_CONTENT);
                 contactTextViewParams.setMarginStart(20);
-                contactTextViewParams.setMargins(0,50,0,0);
+                contactTextViewParams.setMargins(0, 50, 0, 0);
                 contactTextView.setLayoutParams(contactTextViewParams);
                 parentLayout.addView(contactTextView);
 
@@ -82,22 +82,54 @@ public class ContactView {
         });
     }
 
-    private void loadImageAsync() {
+    private int loadImageAsync(String imageUrl) {
 
+        int imageInt;
 
+        if(imageUrl == null || imageUrl.isEmpty()){
+            return imageInt = R.mipmap.ic_launcher;
+        }
+
+        switch (imageUrl) {
+
+            case "Scala":
+                imageInt = R.mipmap.ic_scala_round;
+                break;
+            case "AUME":
+                imageInt =  R.mipmap.ic_launcher;
+                break;
+            case "Mobile Computing":
+                imageInt = R.mipmap.ic_mobile_computing_round;
+                break;
+
+            case "sharknoon":
+                imageInt = R.mipmap.ic_sharknoon_round;
+                break;
+
+            case "danielHipp":
+                imageInt = R.mipmap.ic_daniel_hipp_round;
+                break;
+
+             default:
+                imageInt = R.mipmap.ic_launcher;
+                break;
+        }
+
+        return imageInt;
     }
 
-    private TextView createContactTextView(String text, Activity homeScreenActivity){
+    private TextView createContactTextView(String text, Activity homeScreenActivity, String imageUrl) {
         // Create TextView with image
         TextView contactTextView = new TextView(homeScreenActivity);
         contactTextView.setText(text);
         contactTextView.setEllipsize(TextUtils.TruncateAt.END);
-        contactTextView.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.ic_launcher_round, 0, 0);
+        int imageId = this.loadImageAsync(imageUrl);
+        contactTextView.setCompoundDrawablesWithIntrinsicBounds(0, imageId, 0, 0);
         contactTextView.setGravity(Gravity.CENTER);
         return contactTextView;
     }
 
-    private int getTextViewWidht(Activity homeScreenActivity, int widthInPx){
+    private int getTextViewWidth(Activity homeScreenActivity, int widthInPx) {
         DisplayMetrics metrics = new DisplayMetrics();
         homeScreenActivity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         return Utilities.convertIntoDP(widthInPx, metrics);

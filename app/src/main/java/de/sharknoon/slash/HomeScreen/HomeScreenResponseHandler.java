@@ -53,7 +53,7 @@ public class HomeScreenResponseHandler {
                 if (chats.length != 0) {
                     for (Chat currentContact : chats) {
                         new ContactView(homeScreenActivity, parentLayoutContacts, "",
-                                currentContact.getNameB(), currentContact.getPersonB());
+                                currentContact.getPersonBUsername(), currentContact.getPersonB());
                     }
                 }
                 break;
