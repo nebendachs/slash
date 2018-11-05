@@ -13,10 +13,12 @@ public class UserHomeScreen {
 
     private final String STATUS_GET_HOME = "GET_HOME";
     public static HomeScreenClient homeScreenClient;
+    public static String sessionId;
 
     public UserHomeScreen(String sessionId, Context context) {
 
         try {
+            UserHomeScreen.sessionId = sessionId;
             Gson gson = new Gson();
             HomeScreenMessage homeScreenMessage = new HomeScreenMessage(sessionId, STATUS_GET_HOME);
             String jsonHomeScreenMessage = gson.toJson(homeScreenMessage);

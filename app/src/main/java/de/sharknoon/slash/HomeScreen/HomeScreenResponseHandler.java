@@ -41,7 +41,8 @@ public class HomeScreenResponseHandler {
 
                 if (projects.length != 0) {
                     for (Project currentProject : projects) {
-                        new ContactView(homeScreenActivity, parentLayoutProjects, currentProject.getImage(), currentProject.getName());
+                        new ContactView(homeScreenActivity, parentLayoutProjects, currentProject.getImage(),
+                                currentProject.getName(), currentProject.getId());
                     }
                 }
 
@@ -51,7 +52,8 @@ public class HomeScreenResponseHandler {
 
                 if (chats.length != 0) {
                     for (Chat currentContact : chats) {
-                        new ContactView(homeScreenActivity, parentLayoutContacts, "", currentContact.getNameB());
+                        new ContactView(homeScreenActivity, parentLayoutContacts, "",
+                                currentContact.getNameB(), currentContact.getPersonB());
                     }
                 }
                 break;
