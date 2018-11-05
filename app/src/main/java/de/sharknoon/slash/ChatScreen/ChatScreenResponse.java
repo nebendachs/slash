@@ -1,12 +1,13 @@
-package de.sharknoon.slash.Login;
+package de.sharknoon.slash.ChatScreen;
 
-public class LoginResponse {
-
+public class ChatScreenResponse {
+    private String[] chatMessages;
     private String status;
     private String message;
     private String sessionid;
 
-    public LoginResponse(String status, String message, String sessionid) {
+    public ChatScreenResponse(String status, String message, String sessionid, String[] messages) {
+        this.chatMessages = messages;
         this.status = status;
         this.message = message;
         this.sessionid = sessionid;
@@ -23,4 +24,6 @@ public class LoginResponse {
     public String getSessionid() {
         return sessionid;
     }
+
+    public String[] getChatMessages() { return chatMessages; }
 }

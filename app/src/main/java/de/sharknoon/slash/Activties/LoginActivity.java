@@ -15,12 +15,12 @@ import android.widget.TextView;
 import de.sharknoon.slash.Login.UserLogin;
 import de.sharknoon.slash.R;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         // Open Websocket connection
         UserLogin.createLoginClient(this);
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         this.handleLoginStop();
         this.handleLoginButton();
 
-        MainActivity.disableLoadingScreen(true, this);
+        LoginActivity.disableLoadingScreen(true, this);
     }
 
     private void handleRegisterLink() {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         bar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               MainActivity.disableLoadingScreen(true, v.getContext());            }
+               LoginActivity.disableLoadingScreen(true, v.getContext());            }
         });
 
     }
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 // Try to login User
                 if(mailTrue && passwordTrue) {
                     new UserLogin(insertedEmail, insertedPassword);
-                 //   MainActivity.disableLoadingScreen(false, v.getContext());
+                    LoginActivity.disableLoadingScreen(false, v.getContext());
                 }
             }
         });

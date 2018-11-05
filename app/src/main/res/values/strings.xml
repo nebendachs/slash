@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Slash</string>
+
     <string name="homeScreenEmailInput">E-Mail or Username</string>
     <string name="homeScreenPasswordInput">Password</string>
     <string name="homeScreenLoginButton">Login</string>
@@ -10,6 +11,7 @@
     <string name="homeScreenUserDoesNotExist">This user does not exist!</string>
     <string name="homeScreenWrongPassword">This Password does not match!</string>
     <string name="homeScreenUserAlreadyLoggedIn">This user is already logged in!</string>
+
     <string name="registerScreenHeadline">Registration</string>
     <string name="registerScreenEmailInput">E-Mail</string>
     <string name="registerScreenUsernameInput">Username</string>
@@ -20,6 +22,12 @@
     <string name="registerScreenEmptyPasswordMessage">Please insert a valid password</string>
     <string name="registerScreenNoMatchPasswordMessage">Inserted passwords does not match</string>
     <string name="registerScreenUnsafePasswordMessage">The inserted password does not correspond to the guidelines</string>
+    <string name="registerScreenUsernameAlreadyRegisteredMessage">The inserted username is already taken by another user</string>
+    <string name="registerScreenEmailAlreadyRegisteredMessage">The inserted e-mail is already taken by another user</string>
+    <string name="registerScreenSuccessMessage">The registration was successful completed</string>
+
     <string name="homeScreenProjectsHeadline">Projects</string>
     <string name="homeScreenLastMessageHeadline">Last Messages</string>
+
+    <string name="chatScreen">Chat</string>
 </resources>

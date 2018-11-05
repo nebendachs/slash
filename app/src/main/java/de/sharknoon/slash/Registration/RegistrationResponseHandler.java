@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.Slash;
 
 public class RegistrationResponseHandler {
 
@@ -17,7 +19,7 @@ public class RegistrationResponseHandler {
     private static final String SERVER_RESPONSE_STATUS_USERNAME_ALREADY_REGISTERED = "USERNAME_ALREADY_REGISTERED";
     private static final String SERVER_RESPONSE_STATUS_EMAIL_ALREADY_REGISTERED = "EMAIL_ALREADY_REGISTERED";
 
-    public static void handlerResponse(String serverResponse, Context context) {
+    public static void handleResponse(String serverResponse, Context context) {
         Gson gson = new Gson();
         RegistrationResponse registrationResponse = gson.fromJson(serverResponse, RegistrationResponse.class);
 
@@ -28,27 +30,42 @@ public class RegistrationResponseHandler {
                 Log.d("Status", SERVER_RESPONSE_STATUS_OK);
                 Activity registrationActivity = (Activity) context;
                 registrationActivity.finish();
+                RegistrationResponseHandler.showSuccessToast(context);
                 break;
 
             case SERVER_RESPONSE_STATUS_WRONG_USERNAME:
                 Log.d("Status", SERVER_RESPONSE_STATUS_WRONG_USERNAME);
-                usernameErrorTextView.setText(registrationResponse.getMessage());
+                usernameErrorTextView.setText(context.getText(R.string.registerScreenEmptyUsernameMessage));
                 break;
 
             case SERVER_RESPONSE_STATUS_WRONG_EMAIL:
                 Log.d("Status", SERVER_RESPONSE_STATUS_WRONG_EMAIL);
-                usernameErrorTextView.setText(registrationResponse.getMessage());
+                usernameErrorTextView.setText(context.getText(R.string.registerScreenEmptyUsernameMessage));
                 break;
 
             case SERVER_RESPONSE_STATUS_USERNAME_ALREADY_REGISTERED:
                 Log.d("Status", SERVER_RESPONSE_STATUS_USERNAME_ALREADY_REGISTERED);
-                usernameErrorTextView.setText(registrationResponse.getMessage());
+                usernameErrorTextView.setText(context.getText(R.string.registerScreenUsernameAlreadyRegisteredMessage));
                 break;
 
             case SERVER_RESPONSE_STATUS_EMAIL_ALREADY_REGISTERED:
                 Log.d("Status", SERVER_RESPONSE_STATUS_EMAIL_ALREADY_REGISTERED);
+                usernameErrorTextView.setText(context.getText(R.string.registerScreenEmailAlreadyRegisteredMessage));
                 usernameErrorTextView.setText(registrationResponse.getMessage());
                 break;
         }
+    }
+
+    private static void showSuccessToast(Context activityContext){
+        Context appContext = Slash.getAppContext();
+        CharSequence message = activityContext.getString(R.string.registerScreenSuccessMessage);
+        int duration = Toast.LENGTH_SHORT;
+
+        Activity registrationActivity = (Activity) activityContext;
+        registrationActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(registrationActivity, message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
