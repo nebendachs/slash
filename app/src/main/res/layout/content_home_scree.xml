@@ -29,7 +29,7 @@
             <LinearLayout
                 android:id="@+id/homeScreenProjectsContainer"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:orientation="horizontal">
             </LinearLayout>
 

@@ -11,23 +11,26 @@ import java.util.function.Consumer;
 
 public class UserHomeScreen {
 
+    private final String STATUS_GET_HOME = "GET_HOME";
+    public static HomeScreenClient homeScreenClient;
+
     public UserHomeScreen(String sessionId, Context context) {
 
         try {
             Gson gson = new Gson();
-            HomeScreenMessage homeScreenMessage = new HomeScreenMessage(sessionId);
+            HomeScreenMessage homeScreenMessage = new HomeScreenMessage(sessionId, STATUS_GET_HOME);
             String jsonHomeScreenMessage = gson.toJson(homeScreenMessage);
             Log.d("JSON", jsonHomeScreenMessage);
 
             // Open Websocket connection and send session id to server
-            createHomeScreenClient(context, jsonHomeScreenMessage);
+            UserHomeScreen.homeScreenClient = createHomeScreenClient(context, jsonHomeScreenMessage);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void createHomeScreenClient(Context context, String jsonHomeScreenMessage) {
+    private HomeScreenClient createHomeScreenClient(Context context, String jsonHomeScreenMessage) {
 
         Consumer<WebSocketClient> onOpen = webSocketClient -> {
             Log.d("Websocket", "Opened");
@@ -36,7 +39,6 @@ public class UserHomeScreen {
 
         Consumer<String> onMessage = message -> {
             Log.d("Websocket", message);
-            message = "{'projects' : [{'contactname': 'aume', 'contactimageurl': './home'}, {'contactname': 'aume2', 'contactimageurl': './home'}, {'contactname': 'aume3', 'contactimageurl': './home'}], 'contacts': [{'contactname': 'pa.kempf', 'contactimageurl': './home'}, {'contactname': 'pa.kempf2', 'contactimageurl': './home'}, {'contactname': 'pa.kempf3', 'contactimageurl': './home'}, {'contactname': 'pa.kempf4', 'contactimageurl': './home'}, {'contactname': 'pa.kempf5', 'contactimageurl': './home'}], 'status':'OK','message':'Successfully logged in','sessionid':'fbac477c-0060-4623-9f0f-aae373611aab'}";
             HomeScreenResponseHandler.handleResponse(message, context);
         };
 
@@ -49,6 +51,6 @@ public class UserHomeScreen {
         };
 
         String REGISTRATION_URI = "wss://sharknoon.de/slash/home";
-        new HomeScreenClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);
+        return new HomeScreenClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);
     }
 }

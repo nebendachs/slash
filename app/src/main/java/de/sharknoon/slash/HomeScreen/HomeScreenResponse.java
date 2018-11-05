@@ -2,37 +2,28 @@ package de.sharknoon.slash.HomeScreen;
 
 public class HomeScreenResponse {
 
-    private Contact contacts [];
-    private Contact projects [];
+    private Chat chats [];
+    private Project projects [];
     private String status;
-    private String message;
-    private String sessionid;
 
-    public HomeScreenResponse(Contact contacts[], Contact projects[], String status, String message, String sessionid){
-        this.contacts = contacts;
+    public HomeScreenResponse(Chat chats[], Project projects[], String status){
+        this.chats = chats;
         this.projects = projects;
         this.status = status;
-        this.message = message;
-        this.sessionid = sessionid;
-    }
-
-    public Contact[] getContacts() {
-        return contacts;
-    }
-
-    public Contact[] getProjects() {
-        return projects;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public String getMessage() {
-        return message;
+    public Chat[] getChats() {
+        return chats;
     }
 
-    public String getSessionid() {
-        return sessionid;
+    public Project[] getProjects() {
+        return projects;
     }
+
+
+
 }

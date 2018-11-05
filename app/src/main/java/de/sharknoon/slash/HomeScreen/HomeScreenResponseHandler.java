@@ -6,42 +6,52 @@ import android.widget.LinearLayout;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
-import de.sharknoon.slash.Login.LoginResponse;
 import de.sharknoon.slash.R;
 
 public class HomeScreenResponseHandler {
 
-    private static final String SERVER_RESPONSE_STATUS_OK = "OK";
+    private static final String GET_HOME_OK_STATUS = "OK_HOME";
+    private static final String JSON_FIELD_STATUS = "status";
 
-    public static void handleResponse(String serverResponse, Context context){
+    public static void handleResponse(String serverResponse, Context context) {
 
-        Gson gson = new Gson();
-        HomeScreenResponse homeScreenResponse = gson.fromJson(serverResponse, HomeScreenResponse.class);
+        // No open projects or chats
+        if (serverResponse.isEmpty()) {
+            return;
+        }
 
-        switch (homeScreenResponse.getStatus()){
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jsonObject = jsonParser.parse(serverResponse).getAsJsonObject();
+        String status = jsonObject.get(JSON_FIELD_STATUS).getAsString();
 
-            case SERVER_RESPONSE_STATUS_OK:
+        Activity homeScreenActivity = (Activity) context;
 
-                Activity homeScreenActivity = (Activity) context;
+        switch (status) {
 
+            case GET_HOME_OK_STATUS:
+
+                Gson gson = new Gson();
+                HomeScreenResponse homeScreenResponse = gson.fromJson(serverResponse, HomeScreenResponse.class);
                 // Handle projects
                 LinearLayout parentLayoutProjects = homeScreenActivity.findViewById(R.id.homeScreenProjectsContainer);
-                Contact projects[] = homeScreenResponse.getProjects();
+                Project projects[] = homeScreenResponse.getProjects();
 
-                if(projects.length != 0){
-                    for(Contact currentProject : projects){
-                        new ContactView(homeScreenActivity,parentLayoutProjects, currentProject.getContactImageUrl(), currentProject.getContactName());
+                if (projects.length != 0) {
+                    for (Project currentProject : projects) {
+                        new ContactView(homeScreenActivity, parentLayoutProjects, currentProject.getImage(), currentProject.getName());
                     }
                 }
 
                 // Handle contacts
                 FlexboxLayout parentLayoutContacts = homeScreenActivity.findViewById(R.id.homeScreenContactsContainer);
-                Contact contacts[] = homeScreenResponse.getContacts();
+                Chat chats[] = homeScreenResponse.getChats();
 
-                if(contacts.length !=0){
-                    for(Contact currentContact : contacts){
-                        new ContactView(homeScreenActivity,parentLayoutContacts, currentContact.getContactImageUrl(), currentContact.getContactName());
+                if (chats.length != 0) {
+                    for (Chat currentContact : chats) {
+                        new ContactView(homeScreenActivity, parentLayoutContacts, "", currentContact.getNameB());
                     }
                 }
                 break;
