@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activties.MainActivity"
+            android:name=".Activties.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +29,10 @@
         <activity
             android:name=".Activties.HomeScreenActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activties.ChatScreenActivity"
+            android:label="@string/chatScreen" />
     </application>
 
 </manifest>
