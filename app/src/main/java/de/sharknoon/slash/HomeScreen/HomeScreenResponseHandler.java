@@ -82,7 +82,6 @@ public class HomeScreenResponseHandler {
                 Gson chatGson = new Gson();
                 Chat chat = chatGson.fromJson(serverResponse, Chat.class);
                 ChatScreenActivity.fillChatScreen(chat.getMessages(), context);
-
                 break;
         }
     }

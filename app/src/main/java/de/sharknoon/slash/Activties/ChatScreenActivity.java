@@ -39,6 +39,8 @@ public class ChatScreenActivity extends AppCompatActivity {
         if(messages.length > 0){
             LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_message_screen);
 
+            messageScreen.removeAllViews();
+
             for (String s: messages) {
                 TextView view = createTextView(s, context);
 
