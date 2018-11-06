@@ -32,6 +32,17 @@ public class UserHomeScreen {
         }
     }
 
+    public void FindUser(String username){
+        Gson gson = new Gson();
+        FindUser user = new FindUser(sessionId,username);
+        String jsonChatMessage = gson.toJson(user);
+        Log.d("JSON", jsonChatMessage);
+
+        if(homeScreenClient != null){
+            homeScreenClient.getWebSocketClient().send(jsonChatMessage);
+        }
+    }
+
     private HomeScreenClient createHomeScreenClient(Context context, String jsonHomeScreenMessage) {
 
         Consumer<WebSocketClient> onOpen = webSocketClient -> {

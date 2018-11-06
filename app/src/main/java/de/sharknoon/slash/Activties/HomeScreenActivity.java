@@ -7,8 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
+import de.sharknoon.slash.HomeScreen.ContactView;
+import de.sharknoon.slash.HomeScreen.HomeScreenClient;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
+import de.sharknoon.slash.HomeScreen.UserResponse;
 import de.sharknoon.slash.Login.LoginResponseHandler;
 import de.sharknoon.slash.R;
 
@@ -21,19 +25,18 @@ public class HomeScreenActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         // Get the session id from Intent
         Bundle bundle = getIntent().getExtras();
         String sessionId = bundle.getString(LoginResponseHandler.BUNDLE_KEY_SESSION_ID);
         Log.d("SessionId", sessionId);
-        new UserHomeScreen(sessionId, this);
+        UserHomeScreen screen = new UserHomeScreen(sessionId, this);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                screen.FindUser("test");
+            }
+        });
     }
 }
