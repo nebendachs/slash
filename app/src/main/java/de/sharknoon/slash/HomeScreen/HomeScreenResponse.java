@@ -23,7 +23,4 @@ public class HomeScreenResponse {
     public Project[] getProjects() {
         return projects;
     }
-
-
-
 }

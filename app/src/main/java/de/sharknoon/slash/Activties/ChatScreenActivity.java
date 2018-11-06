@@ -4,13 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import de.sharknoon.slash.ChatScreen.UserChatScreen;
+import com.google.gson.Gson;
+
+import de.sharknoon.slash.HomeScreen.ChatMessage;
+import de.sharknoon.slash.HomeScreen.ContactView;
+import de.sharknoon.slash.HomeScreen.HomeScreenClient;
+import de.sharknoon.slash.HomeScreen.UserHomeScreen;
 import de.sharknoon.slash.Login.LoginResponseHandler;
 import de.sharknoon.slash.R;
 
@@ -20,6 +26,10 @@ public class ChatScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_screen);
+
+        // Get the session id from Intent
+        Bundle bundle = getIntent().getExtras();
+        String contactParameter = bundle.getString(ContactView.CONTACT_ID_PARAMETER);
 
         this.handleSendButton();
     }
@@ -36,6 +46,13 @@ public class ChatScreenActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    //Add one single message
+    public static void addMessageToScreen(String s, Context context){
+        LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_send_message);
+        TextView view = createTextView(s, context);
+        messageScreen.addView(view);
     }
 
     //Method to create and design the text-messages
@@ -64,11 +81,24 @@ public class ChatScreenActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Get the session id from Intent
+                // Get the parameters and send a message
                 Bundle bundle = getIntent().getExtras();
-                String sessionId = bundle.getString(LoginResponseHandler.BUNDLE_KEY_SESSION_ID);
+                String contactID = bundle.getString(ContactView.CONTACT_ID_PARAMETER);
+                String sessionId = UserHomeScreen.sessionId;
 
-                new UserChatScreen(sessionId, message, v.getContext());
+                HomeScreenClient client = UserHomeScreen.homeScreenClient;
+
+                Gson gson = new Gson();
+                ChatMessage chat = new ChatMessage(sessionId,contactID, message);
+                String jsonChatMessage = gson.toJson(chat);
+                Log.d("JSON", jsonChatMessage);
+
+                if(client != null){
+                    client.getWebSocketClient().send(jsonChatMessage);
+                }
+
+                addMessageToScreen(message,v.getContext());
+
             }
         });
     }

@@ -8,14 +8,16 @@ public class Chat {
     private String nameA;
     private String nameB;
     private String creationDate;
+    private String[] messages;
 
-    public Chat(String id, String personA, String nameA, String personB, String nameB, String creationDate){
+    public Chat(String id, String personA, String nameA, String personB, String nameB, String creationDate, String[] messages){
         this.id = id;
         this.personA = personA;
         this.nameA = nameA;
         this.personB = personB;
         this.nameB = nameB;
         this.creationDate = creationDate;
+        this.messages = messages;
     }
 
     public String getId() {
@@ -36,6 +38,10 @@ public class Chat {
 
     public String getNameB() {
         return nameB;
+    }
+
+    public String[] getMessages(){
+        return messages;
     }
 
     public String getCreationDate() {

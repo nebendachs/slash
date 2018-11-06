@@ -98,8 +98,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 // Try to login User
                 if(mailTrue && passwordTrue) {
-                    new UserLogin(insertedEmail, insertedPassword);
                     LoginActivity.disableLoadingScreen(false, v.getContext());
+                    new UserLogin(insertedEmail, insertedPassword);
                 }
             }
         });
