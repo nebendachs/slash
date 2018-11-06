@@ -2,11 +2,13 @@ package de.sharknoon.slash.HomeScreen;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -40,7 +42,7 @@ public class HomeScreenResponseHandler {
                 Gson gson = new Gson();
                 HomeScreenResponse homeScreenResponse = gson.fromJson(serverResponse, HomeScreenResponse.class);
                 // Handle projects
-                LinearLayout parentLayoutProjects = homeScreenActivity.findViewById(R.id.homeScreenContactsContainer);
+                LinearLayout parentLayoutProjects = homeScreenActivity.findViewById(R.id.homeScreenProjectsContainer);
                 Project projects[] = homeScreenResponse.getProjects();
 
                 if (projects.length != 0) {
@@ -57,7 +59,8 @@ public class HomeScreenResponseHandler {
                 if (chats.length != 0) {
                     for (Chat currentContact : chats) {
                         new ContactView(homeScreenActivity, parentLayoutContacts, "",
-                                currentContact.getPersonBUsername(), currentContact.getPersonB());
+                                currentContact.getPartnerUsername(), currentContact.getPersonB(),
+                                currentContact.getMessages(), currentContact.getId());
                     }
                 }
                 break;
@@ -73,16 +76,19 @@ public class HomeScreenResponseHandler {
 
 
                 new ContactView(homeScreenActivity, parentLayout, "",
-                        username, userID);
+                        username, userID, null, "");
 
                 break;
 
             case ADD_MESSAGE_OK_STATUS:
 
-                Gson chatGson = new Gson();
-                Chat chat = chatGson.fromJson(serverResponse, Chat.class);
-                ChatScreenActivity.fillChatScreen(chat.getMessages(), context);
+                JsonParser parser = new JsonParser();
+                JsonObject object = parser.parse(serverResponse).getAsJsonObject();
+                JsonObject chat1 = object.getAsJsonObject("chat");
 
+                Gson chatGson = new Gson();
+                Chat chat = chatGson.fromJson(chat1, Chat.class);
+                ChatScreenActivity.fillChatScreen(chat.getMessages());
                 break;
         }
     }
