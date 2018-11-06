@@ -35,7 +35,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                screen.FindUser("test@test.test");
+                screen.FindUser("test");
             }
         });
     }

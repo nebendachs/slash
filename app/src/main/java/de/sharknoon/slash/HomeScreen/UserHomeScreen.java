@@ -34,7 +34,7 @@ public class UserHomeScreen {
 
     public void FindUser(String username){
         Gson gson = new Gson();
-        FindUser user = new FindUser(username);
+        FindUser user = new FindUser(sessionId,username);
         String jsonChatMessage = gson.toJson(user);
         Log.d("JSON", jsonChatMessage);
 

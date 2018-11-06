@@ -37,7 +37,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     //Fill the Layout with all messages got from server
     public static void fillChatScreen(String[] messages, Context context){
         if(messages.length > 0){
-            LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_send_message);
+            LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_message_screen);
 
             for (String s: messages) {
                 TextView view = createTextView(s, context);
@@ -50,7 +50,7 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     //Add one single message
     public static void addMessageToScreen(String s, Context context){
-        LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_send_message);
+        LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_message_screen);
         TextView view = createTextView(s, context);
         messageScreen.addView(view);
     }
@@ -74,7 +74,7 @@ public class ChatScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText textMessage = findViewById(R.id.chatscreen_text_message);
-                String message = String.valueOf(textMessage);
+                String message = textMessage.getText().toString();
 
                 //If Empty Message
                 if(message.isEmpty()){
