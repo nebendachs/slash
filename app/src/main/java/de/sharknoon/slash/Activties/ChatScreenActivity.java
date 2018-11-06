@@ -41,23 +41,26 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     //Fill the Layout with all messages got from server
     public static void fillChatScreen(String[] messages){
-
+        ((Activity) context).runOnUiThread(() -> {
         if(messages != null) {
             if (messages.length > 0) {
                 LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_message_screen);
+
+                messageScreen.removeAllViews();
 
                 for (String s : messages) {
                     Log.i("FillScreen", s);
                     TextView view = createTextView(s, context);
 
-                    ((Activity) context).runOnUiThread(() -> {
+
                         messageScreen.addView(view);
-                    });
+
                 }
             }
         } else {
             Log.i("messages", "Messages = null");
         }
+        });
     }
 
     //Add one single message
