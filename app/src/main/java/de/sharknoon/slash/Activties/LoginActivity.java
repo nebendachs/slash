@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         UserLogin.createLoginClient(this);
 
         this.handleRegisterLink();
-        this.handleLoginStop();
         this.handleLoginButton();
 
         LoginActivity.disableLoadingScreen(true, this);
@@ -71,18 +70,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(goToRegisterActivity);
             }
         });
-    }
-
-    private void handleLoginStop() {
-        //Get progression bar to stop Login
-        ProgressBar bar = findViewById(R.id.progressBar);
-        bar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginActivity.disableLoadingScreen(true, v.getContext());
-            }
-        });
-
     }
 
     private void handleLoginButton() {
