@@ -14,6 +14,9 @@ import android.support.v4.app.NotificationCompat;
 public class PushReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        //ToDo: Intent nach Inhalt abfragen
+
         String notificationTitle = "MyApp";
         String notificationText = "Test notification";
 
