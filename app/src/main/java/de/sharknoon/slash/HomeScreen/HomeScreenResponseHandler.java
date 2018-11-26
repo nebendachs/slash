@@ -2,6 +2,8 @@ package de.sharknoon.slash.HomeScreen;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import de.sharknoon.slash.Activties.ChatScreenActivity;
+import de.sharknoon.slash.Activties.HomeScreenActivity;
 import de.sharknoon.slash.R;
 
 public class HomeScreenResponseHandler {
@@ -21,6 +24,7 @@ public class HomeScreenResponseHandler {
     private static final String JSON_FIELD_STATUS = "status";
     private static final String GET_USER_OK_STATUS = "OK_USER";
     private static final String ADD_MESSAGE_OK_STATUS = "OK_CHAT";
+    private static final String NO_USER_FOUND_STATUS = "NO_USER_FOUND";
 
     public static void handleResponse(String serverResponse, Context context) {
 
@@ -67,16 +71,17 @@ public class HomeScreenResponseHandler {
 
             case GET_USER_OK_STATUS:
 
-                Gson user = new Gson();
-                UserResponse userResponse = user.fromJson(serverResponse, UserResponse.class);
-                String username = userResponse.getUsername();
-                String userID = userResponse.getUserID();
+                ((Activity) context).runOnUiThread(new Runnable() {
 
-                FlexboxLayout parentLayout = homeScreenActivity.findViewById(R.id.homeScreenContactsContainer);
+                    @Override
+                    public void run() {
 
-
-                new ContactView(homeScreenActivity, parentLayout, "",
-                        username, userID, null, "");
+                        // Open a new ChatScreenActivity
+                        Activity loginActivity = (Activity) context;
+                        Intent intent = new Intent(context, ChatScreenActivity.class);
+                        loginActivity.startActivity(intent);
+                    }
+                });
 
                 break;
 
