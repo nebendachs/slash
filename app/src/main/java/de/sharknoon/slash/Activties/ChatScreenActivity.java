@@ -11,13 +11,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import com.google.gson.Gson;
 
 import de.sharknoon.slash.HomeScreen.ChatMessage;
 import de.sharknoon.slash.HomeScreen.ContactView;
 import de.sharknoon.slash.HomeScreen.HomeScreenClient;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
-import de.sharknoon.slash.Login.LoginResponseHandler;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
@@ -33,9 +35,11 @@ public class ChatScreenActivity extends AppCompatActivity {
         this.context = this;
 
         // Get the session id from Intent
+        /*
         Bundle bundle = getIntent().getExtras();
         String[] messages = bundle.getStringArray("messages");
         fillChatScreen(messages);
+        */
 
         this.handleSendButton();
     }
@@ -103,10 +107,16 @@ public class ChatScreenActivity extends AppCompatActivity {
                 String contactID = bundle.getString(ContactView.CONTACT_ID_PARAMETER);
                 String sessionId = ParameterManager.getSession(v.getContext());
 
+                //ToDo Set Type
+                String type = "OK";
+
+                //ToDo Set Header
+                String header = "BUILD THE SET HEADER FUNCTION!";
+
                 HomeScreenClient client = UserHomeScreen.homeScreenClient;
 
                 Gson gson = new Gson();
-                ChatMessage chat = new ChatMessage(sessionId,chatID, message);
+                ChatMessage chat = new ChatMessage(sessionId,chatID, type, message, header);
                 String jsonChatMessage = gson.toJson(chat);
                 Log.d("JSON", jsonChatMessage);
 
