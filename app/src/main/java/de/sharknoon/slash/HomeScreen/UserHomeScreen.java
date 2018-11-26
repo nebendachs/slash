@@ -12,6 +12,7 @@ import org.java_websocket.client.WebSocketClient;
 
 import java.util.function.Consumer;
 
+import de.sharknoon.slash.Activties.CreateClientProjektActivity;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class UserHomeScreen {
