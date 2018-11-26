@@ -24,12 +24,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // Get the session id from Intent
-        Bundle bundle = getIntent().getExtras();
-        String sessionId = bundle.getString(LoginResponseHandler.BUNDLE_KEY_SESSION_ID);
-        Log.d("SessionId", sessionId);
-        UserHomeScreen screen = new UserHomeScreen(sessionId, this);
+        UserHomeScreen screen = new UserHomeScreen(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

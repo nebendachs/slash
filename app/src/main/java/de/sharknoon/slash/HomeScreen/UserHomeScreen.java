@@ -12,23 +12,19 @@ import org.java_websocket.client.WebSocketClient;
 
 import java.util.function.Consumer;
 
-import de.sharknoon.slash.Activties.CreateClientProjektActivity;
-import de.sharknoon.slash.Activties.HomeScreenActivity;
-import de.sharknoon.slash.Activties.LoginActivity;
-
-import static de.sharknoon.slash.Login.LoginResponseHandler.BUNDLE_KEY_SESSION_ID;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class UserHomeScreen {
 
     private final String STATUS_GET_HOME = "GET_HOME";
     public static HomeScreenClient homeScreenClient;
-    public static String sessionId;
+    private String sessionId;
 
-    public UserHomeScreen(String sessionId, Context context) {
+    public UserHomeScreen(Context context) {
 
         try {
-            UserHomeScreen.sessionId = sessionId;
             Gson gson = new Gson();
+            sessionId = ParameterManager.getSession(context);
             HomeScreenMessage homeScreenMessage = new HomeScreenMessage(sessionId, STATUS_GET_HOME);
             String jsonHomeScreenMessage = gson.toJson(homeScreenMessage);
             Log.d("JSON", jsonHomeScreenMessage);

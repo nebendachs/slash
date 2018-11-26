@@ -21,6 +21,7 @@ import de.sharknoon.slash.HomeScreen.ContactView;
 import de.sharknoon.slash.HomeScreen.HomeScreenClient;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class ChatScreenActivity extends AppCompatActivity {
 
@@ -104,7 +105,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                 Bundle bundle = getIntent().getExtras();
                 String chatID = bundle.getString("chatID");
                 String contactID = bundle.getString(ContactView.CONTACT_ID_PARAMETER);
-                String sessionId = UserHomeScreen.sessionId;
+                String sessionId = ParameterManager.getSession(v.getContext());
 
                 //ToDo Set Type
                 String type = "OK";

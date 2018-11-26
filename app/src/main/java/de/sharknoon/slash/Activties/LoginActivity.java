@@ -23,26 +23,27 @@ import java.util.concurrent.CompletableFuture;
 
 import de.sharknoon.slash.Login.UserLogin;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 import me.pushy.sdk.Pushy;
 import me.pushy.sdk.util.exceptions.PushyException;
 
 public class LoginActivity extends AppCompatActivity {
-
-    SharedPreferences prefs;
-    final String key = "token";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Pushy.listen(this);
 
-        prefs = getSharedPreferences("de.sharknoon.slash", MODE_PRIVATE);
-
         // Check whether the user has granted us the READ/WRITE_EXTERNAL_STORAGE permissions
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // Request both READ_EXTERNAL_STORAGE and WRITE_EXTERNAL_STORAGE so that the
             // Pushy SDK will be able to persist the device token in the external storage
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
+
+        if(ParameterManager.getSession(this) != null) {
+            Intent goToHomeScreenActivity = new Intent(getApplicationContext(), HomeScreenActivity.class);
+            startActivity(goToHomeScreenActivity);
         }
 
         setContentView(R.layout.activity_login);
@@ -115,13 +116,11 @@ public class LoginActivity extends AppCompatActivity {
 
                     String deviceToken = CompletableFuture.supplyAsync(() -> {
                         try {
-                            if(!prefs.contains(key)) {
+                            if(ParameterManager.getDeviceId(v.getContext()) == null) {
                                 String token = Pushy.register(getApplicationContext());
-                                prefs.edit().putString(key,token).apply();
-                                return token;
-                            } else {
-                                return prefs.getString(key,"");
+                                ParameterManager.setDeviceId(v.getContext(), token);
                             }
+                            return ParameterManager.getDeviceId(v.getContext());
                         } catch (PushyException e) {
                             Log.i("PushyException", String.valueOf(e));
                             return "";
