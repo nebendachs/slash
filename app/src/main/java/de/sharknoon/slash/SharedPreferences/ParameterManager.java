@@ -21,7 +21,7 @@ public class ParameterManager {
     public static void setSession(Context context, String input) {
         SharedPreferences.Editor editor = getPreferences(context).edit();
         editor.putString("session", input);
-        editor.commit();
+        editor.apply();
     }
 
     public static String getDeviceId(Context context) {
@@ -31,6 +31,6 @@ public class ParameterManager {
     public static void setDeviceId(Context context, String input) {
         SharedPreferences.Editor editor = getPreferences(context).edit();
         editor.putString("device", input);
-        editor.commit();
+        editor.apply();
     }
 }
