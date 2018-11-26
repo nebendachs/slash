@@ -30,4 +30,5 @@
     <string name="homeScreenLastMessageHeadline">Last Messages</string>
 
     <string name="chatScreen">Chat</string>
+    <string name="createChatUsername">Username</string>
 </resources>

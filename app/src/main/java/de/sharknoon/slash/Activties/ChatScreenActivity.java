@@ -34,9 +34,11 @@ public class ChatScreenActivity extends AppCompatActivity {
         this.context = this;
 
         // Get the session id from Intent
+        /*
         Bundle bundle = getIntent().getExtras();
         String[] messages = bundle.getStringArray("messages");
         fillChatScreen(messages);
+        */
 
         this.handleSendButton();
     }
@@ -103,7 +105,6 @@ public class ChatScreenActivity extends AppCompatActivity {
                 String chatID = bundle.getString("chatID");
                 String contactID = bundle.getString(ContactView.CONTACT_ID_PARAMETER);
                 String sessionId = UserHomeScreen.sessionId;
-                Date currentTime = Calendar.getInstance().getTime();
 
                 //ToDo Set Type
                 String type = "OK";
@@ -114,7 +115,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                 HomeScreenClient client = UserHomeScreen.homeScreenClient;
 
                 Gson gson = new Gson();
-                ChatMessage chat = new ChatMessage(sessionId,chatID, type, currentTime, message, header);
+                ChatMessage chat = new ChatMessage(sessionId,chatID, type, message, header);
                 String jsonChatMessage = gson.toJson(chat);
                 Log.d("JSON", jsonChatMessage);
 

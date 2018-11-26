@@ -8,15 +8,13 @@ public class ChatMessage {
     private final String status = "ADD_MESSAGE";
     private String chatID;
     private String type;
-    private Date date;
     private String message;
     private String header;
 
-    public ChatMessage(String sessionId, String chatID, String type, Date date, String message, String header){
+    public ChatMessage(String sessionId, String chatID, String type, String message, String header){
         this.chatID = chatID;
         this.sessionid = sessionId;
         this.type = type;
-        this.date = date;
         this.message = message;
         this.header = header;
     }
@@ -32,6 +30,4 @@ public class ChatMessage {
     public String getMessage(){ return  message; }
 
     public String getHeader(){ return  header; }
-
-    public Date getDate(){ return date; }
 }
