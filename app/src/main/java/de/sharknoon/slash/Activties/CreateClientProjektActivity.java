@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import de.sharknoon.slash.HomeScreen.UserCreateClientOrProjekt;
+import de.sharknoon.slash.ChatMessages.UserCreateClientOrProjekt;
 import de.sharknoon.slash.R;
 
 

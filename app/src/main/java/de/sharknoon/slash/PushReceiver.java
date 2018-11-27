@@ -15,22 +15,52 @@ public class PushReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        //ToDo: Intent nach Inhalt abfragen
+        String type = "NO_TYPE_DEFINED";
+        String from = "NO_USER_DEFINED";
+        String[] content = {};
 
-        String notificationTitle = "MyApp";
-        String notificationText = "Test notification";
+        String subject = "NO_SUBJECT_DEFINED";
+        String message = "NO_MESSAGE_DEFINED";
+        String category = "NO_CATEGORY_DEFINED";
 
-        // Attempt to extract the "message" property from the payload: {"message":"Hello World!"}
-        if (intent.getStringExtra("message") != null) {
-            notificationText = intent.getStringExtra("message");
+        String status = "NO_STATUS_DEFINED";
+
+        if(intent.getStringExtra("type") != null){
+            type = intent.getStringExtra("type");
+        }
+
+        if(intent.getStringExtra("from") != null){
+            from = intent.getStringExtra("from");
+        }
+
+        if(intent.getStringArrayExtra("content") != null){
+            content = intent.getStringArrayExtra("content");
+
+            if(intent.getStringExtra("subject") != null){
+                subject = intent.getStringExtra("subject");
+            }
+
+            if(intent.getStringExtra("message") != null){
+                message = intent.getStringExtra("message");
+            }
+
+            if(intent.getStringExtra("category") != null){
+                category = intent.getStringExtra("category");
+            }
+        } else {
+            message = "NO_CONTENT_DEFINED";
+        }
+
+        if(intent.getStringExtra("status") != null){
+            status = intent.getStringExtra("status");
         }
 
         // Prepare a notification with vibration, sound and lights
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setAutoCancel(true)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle(notificationTitle)
-                .setContentText(notificationText)
+                .setContentTitle(from)
+                .setContentText(message)
                 .setLights(Color.RED, 1000, 1000)
                 .setVibrate(new long[]{0, 400, 250, 400})
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))

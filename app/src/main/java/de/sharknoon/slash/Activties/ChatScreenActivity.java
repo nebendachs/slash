@@ -11,12 +11,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import com.google.gson.Gson;
 
-import de.sharknoon.slash.HomeScreen.ChatMessage;
+import de.sharknoon.slash.ChatMessages.ChatMessage;
 import de.sharknoon.slash.HomeScreen.ContactView;
 import de.sharknoon.slash.HomeScreen.HomeScreenClient;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
@@ -116,13 +113,14 @@ public class ChatScreenActivity extends AppCompatActivity {
                 HomeScreenClient client = UserHomeScreen.homeScreenClient;
 
                 Gson gson = new Gson();
-                ChatMessage chat = new ChatMessage(sessionId,chatID, type, message, header);
+                /*ChatMessage chat = new ChatMessage(sessionId,chatID, type, message, header);
                 String jsonChatMessage = gson.toJson(chat);
                 Log.d("JSON", jsonChatMessage);
 
                 if(client != null){
                     client.getWebSocketClient().send(jsonChatMessage);
                 }
+                */
 
             }
         });

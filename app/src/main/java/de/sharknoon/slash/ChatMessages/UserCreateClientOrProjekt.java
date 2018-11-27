@@ -1,10 +1,11 @@
-package de.sharknoon.slash.HomeScreen;
+package de.sharknoon.slash.ChatMessages;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
+import de.sharknoon.slash.HomeScreen.FindUser;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;

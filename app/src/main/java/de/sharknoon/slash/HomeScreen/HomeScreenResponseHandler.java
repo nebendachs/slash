@@ -77,9 +77,9 @@ public class HomeScreenResponseHandler {
                     public void run() {
 
                         // Open a new ChatScreenActivity
-                        Activity loginActivity = (Activity) context;
+                        Activity activity = (Activity) context;
                         Intent intent = new Intent(context, ChatScreenActivity.class);
-                        loginActivity.startActivity(intent);
+                        activity.startActivity(intent);
                     }
                 });
 
