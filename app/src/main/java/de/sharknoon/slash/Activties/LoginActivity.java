@@ -57,6 +57,14 @@ public class LoginActivity extends AppCompatActivity {
         LoginActivity.disableLoadingScreen(true, this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoginActivity.disableLoadingScreen(true, this);
+        // Open Websocket connection
+        UserLogin.createLoginClient(this);
+    }
+
     private void handleRegisterLink() {
 
         // Get text view element for registration and handover event listener
