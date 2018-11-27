@@ -11,9 +11,6 @@ import android.widget.TextView;
 import de.sharknoon.slash.HomeScreen.UserCreateClientOrProjekt;
 import de.sharknoon.slash.R;
 
-import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
-import static de.sharknoon.slash.HomeScreen.UserHomeScreen.sessionId;
-
 public class CreateClientProjektActivity extends AppCompatActivity {
 
     private UserCreateClientOrProjekt ccp;
