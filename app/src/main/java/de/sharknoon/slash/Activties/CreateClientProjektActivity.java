@@ -1,12 +1,10 @@
 package de.sharknoon.slash.Activties;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import de.sharknoon.slash.HomeScreen.UserCreateClientOrProjekt;
 import de.sharknoon.slash.R;

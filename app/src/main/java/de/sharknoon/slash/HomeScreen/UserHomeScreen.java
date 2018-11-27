@@ -39,7 +39,7 @@ public class UserHomeScreen {
     }
 
     //Create new Window to create a new Chat or Project
-    public void CreateChatOrProject(Context context){
+    public static void CreateChatOrProject(Context context){
         Activity activity = (Activity) context;
         Intent intent = new Intent(context, CreateClientProjektActivity.class);
         activity.startActivity(intent);
