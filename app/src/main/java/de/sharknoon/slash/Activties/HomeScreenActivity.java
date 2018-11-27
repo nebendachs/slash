@@ -1,19 +1,15 @@
 package de.sharknoon.slash.Activties;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 
-import de.sharknoon.slash.HomeScreen.ContactView;
-import de.sharknoon.slash.HomeScreen.HomeScreenClient;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
-import de.sharknoon.slash.HomeScreen.UserResponse;
-import de.sharknoon.slash.Login.LoginResponseHandler;
 import de.sharknoon.slash.R;
 
 public class HomeScreenActivity extends AppCompatActivity {
@@ -31,6 +27,23 @@ public class HomeScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 screen.CreateChatOrProject(view.getContext());
+            }
+        });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        // do something here
+                        return true;
+                    case R.id.navigation_profile:
+                        // do something here
+                        return true;
+                }
+                return false;
             }
         });
     }
