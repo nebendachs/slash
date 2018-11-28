@@ -12,6 +12,7 @@ import org.java_websocket.client.WebSocketClient;
 
 import java.util.function.Consumer;
 
+import de.sharknoon.slash.Activties.CreateClientProjektActivity;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class UserHomeScreen {
@@ -38,7 +39,7 @@ public class UserHomeScreen {
     }
 
     //Create new Window to create a new Chat or Project
-    public void CreateChatOrProject(Context context){
+    public static void CreateChatOrProject(Context context){
         Activity activity = (Activity) context;
         Intent intent = new Intent(context, CreateClientProjektActivity.class);
         activity.startActivity(intent);

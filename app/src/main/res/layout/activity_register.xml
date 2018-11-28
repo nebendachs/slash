@@ -9,7 +9,7 @@
         android:id="@+id/registerScreenUsernameInput"
         style="@style/LoginRegisterScreenInputElement"
         android:layout_marginTop="50dp"
-        android:backgroundTint="#ff8800"
+        android:backgroundTint="@color/colorPrimary"
         android:inputType="text"
         android:maxLines="1"
         android:hint="@string/registerScreenUsernameInput" />
@@ -18,7 +18,7 @@
         android:id="@+id/registerScreenEmailInput"
         style="@style/LoginRegisterScreenInputElement"
         android:layout_marginTop="100dp"
-        android:backgroundTint="#ff8800"
+        android:backgroundTint="@color/colorPrimary"
         android:hint="@string/registerScreenEmailInput"
         android:inputType="textEmailAddress" />
 
@@ -36,7 +36,7 @@
         android:id="@+id/registerScreenPasswordInput"
         style="@style/LoginRegisterScreenInputElement"
         android:layout_marginTop="200dp"
-        android:backgroundTint="#ff8800"
+        android:backgroundTint="@color/colorPrimary"
         android:hint="@string/registerScreenPasswordInput"
         android:inputType="textPassword" />
 
@@ -44,7 +44,7 @@
         android:id="@+id/registerScreenConfirmPasswordInput"
         style="@style/LoginRegisterScreenInputElement"
         android:layout_marginTop="250dp"
-        android:backgroundTint="#ff8800"
+        android:backgroundTint="@color/colorPrimary"
         android:hint="@string/registerScreenConfirmPasswordInput"
         android:inputType="textPassword" />
 

@@ -11,9 +11,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import com.google.gson.Gson;
 
 import de.sharknoon.slash.HomeScreen.ChatMessage;
