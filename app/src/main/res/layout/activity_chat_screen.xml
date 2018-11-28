@@ -11,54 +11,80 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="bottom">
 
-        <TextView
-            android:id="@+id/chatscreen_chatpartner_name"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/chatscreen_message_screen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/chatscreen_menu_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Another User" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="bottom">
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/chatscreen_message_screen"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-
-            </ScrollView>
+            android:background="@color/colorPrimary"
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:minHeight="50dp"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-                <EditText
-                    android:id="@+id/chatscreen_text_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textMultiLine" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    />
 
-                <Button
-                    android:id="@+id/chatscreen_send_message"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Send" />
+                    android:layout_weight="50"
+                    android:gravity="center"
+                    android:text="@string/activity_chat_screen_template"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center"
+                    android:text="@string/activity_chat_screen_meme_generator"/>
 
             </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/chatscreen_button_addon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="K"/>
+
+            <Button
+                android:id="@+id/chatscreen_button_send"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="S"/>
 
         </LinearLayout>
 

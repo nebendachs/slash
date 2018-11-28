@@ -39,11 +39,12 @@ public class HomeScreenResponseHandler {
 
         Activity homeScreenActivity = (Activity) context;
 
+        Gson gson = new Gson();
+
         switch (status) {
 
             case GET_HOME_OK_STATUS:
 
-                Gson gson = new Gson();
                 HomeScreenResponse homeScreenResponse = gson.fromJson(serverResponse, HomeScreenResponse.class);
                 // Handle projects
                 LinearLayout parentLayoutProjects = homeScreenActivity.findViewById(R.id.homeScreenProjectsContainer);
@@ -70,6 +71,8 @@ public class HomeScreenResponseHandler {
                 break;
 
             case GET_USER_OK_STATUS:
+                SearchedUsers response = gson.fromJson(serverResponse, SearchedUsers.class);
+                String name = response.getUsers()[0].getUsername();
 
                 ((Activity) context).runOnUiThread(new Runnable() {
 
@@ -78,6 +81,9 @@ public class HomeScreenResponseHandler {
 
                         // Open a new ChatScreenActivity
                         Activity activity = (Activity) context;
+                        Bundle bundle = new Bundle();
+                        bundle.putString("USERNAME", name);
+
                         Intent intent = new Intent(context, ChatScreenActivity.class);
                         activity.startActivity(intent);
                     }
