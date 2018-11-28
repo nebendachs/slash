@@ -25,7 +25,6 @@ import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -42,7 +41,7 @@ public class Profile extends Fragment {
         // Required empty public constructor
     }
 
-    public static Profile newInstance(String param1, String param2) {
+    public static Profile newInstance() {
         Profile fragment = new Profile();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -59,6 +58,12 @@ public class Profile extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        this.handleLogoutButton(view);
+
+        return view;
+    }
+
+    private void handleLogoutButton(View view) {
         Button logoutButton = view.findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,8 +97,6 @@ public class Profile extends Fragment {
                 alertDialog.show();
             }
         });
-
-        return view;
     }
 
     @Override

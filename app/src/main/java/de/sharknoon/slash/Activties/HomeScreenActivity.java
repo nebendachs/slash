@@ -29,8 +29,8 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         // define your fragments here
-        final Fragment home = new Home();
-        final Fragment profile = new Profile();
+        final Fragment home = Home.newInstance();
+        final Fragment profile = Profile.newInstance();
 
         FragmentTransaction fragmentTransaction;
         fragmentTransaction = fragmentManager.beginTransaction();

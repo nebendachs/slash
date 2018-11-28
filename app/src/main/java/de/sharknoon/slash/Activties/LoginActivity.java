@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (mailTrue && passwordTrue) {
                     LoginActivity.disableLoadingScreen(false, v.getContext());
 
-                    String deviceToken = CompletableFuture.supplyAsync(() -> {
+                    String deviceID = CompletableFuture.supplyAsync(() -> {
                         try {
                             if(ParameterManager.getDeviceId(v.getContext()) == null) {
                                 String token = Pushy.register(getApplicationContext());
@@ -135,9 +135,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }).join();
 
-                    Log.i("Pushy", deviceToken);
+                    Log.i("Pushy", deviceID);
 
-                    new UserLogin(insertedEmail, insertedPassword, deviceToken);
+                    new UserLogin(insertedEmail, insertedPassword, deviceID);
                 }
             }
         });

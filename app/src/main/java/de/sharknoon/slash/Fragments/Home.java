@@ -28,7 +28,7 @@ public class Home extends Fragment {
         // Required empty public constructor
     }
 
-    public static Home newInstance(String param1, String param2) {
+    public static Home newInstance() {
         Home fragment = new Home();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -45,6 +45,12 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        this.handleCreateChatButton(view);
+
+        return view;
+    }
+
+    private void handleCreateChatButton(View view) {
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,9 +58,6 @@ public class Home extends Fragment {
                 UserHomeScreen.CreateChatOrProject(view.getContext());
             }
         });
-
-        // Inflate the layout for this fragment
-        return view;
     }
 
     @Override
