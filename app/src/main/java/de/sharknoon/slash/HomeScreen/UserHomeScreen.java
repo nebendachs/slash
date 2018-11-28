@@ -1,6 +1,9 @@
 package de.sharknoon.slash.HomeScreen;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -9,17 +12,20 @@ import org.java_websocket.client.WebSocketClient;
 
 import java.util.function.Consumer;
 
+import de.sharknoon.slash.Activties.CreateClientProjektActivity;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
+
 public class UserHomeScreen {
 
     private final String STATUS_GET_HOME = "GET_HOME";
     public static HomeScreenClient homeScreenClient;
-    public static String sessionId;
+    private String sessionId;
 
-    public UserHomeScreen(String sessionId, Context context) {
+    public UserHomeScreen(Context context) {
 
         try {
-            UserHomeScreen.sessionId = sessionId;
             Gson gson = new Gson();
+            sessionId = ParameterManager.getSession(context);
             HomeScreenMessage homeScreenMessage = new HomeScreenMessage(sessionId, STATUS_GET_HOME);
             String jsonHomeScreenMessage = gson.toJson(homeScreenMessage);
             Log.d("JSON", jsonHomeScreenMessage);
@@ -32,15 +38,11 @@ public class UserHomeScreen {
         }
     }
 
-    public void FindUser(String username){
-        Gson gson = new Gson();
-        FindUser user = new FindUser(sessionId,username);
-        String jsonChatMessage = gson.toJson(user);
-        Log.d("JSON", jsonChatMessage);
-
-        if(homeScreenClient != null){
-            homeScreenClient.getWebSocketClient().send(jsonChatMessage);
-        }
+    //Create new Window to create a new Chat or Project
+    public static void CreateChatOrProject(Context context){
+        Activity activity = (Activity) context;
+        Intent intent = new Intent(context, CreateClientProjektActivity.class);
+        activity.startActivity(intent);
     }
 
     private HomeScreenClient createHomeScreenClient(Context context, String jsonHomeScreenMessage) {

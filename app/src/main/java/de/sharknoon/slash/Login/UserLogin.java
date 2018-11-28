@@ -17,15 +17,16 @@ import java.security.MessageDigest;
 import java.util.function.Consumer;
 
 import de.sharknoon.slash.R;
+import me.pushy.sdk.Pushy;
 
 public class UserLogin {
     private static LoginClient loginClient = null;
 
-    public UserLogin(String usernameOrEmail, String password) {
+    public UserLogin(String usernameOrEmail, String password, String deviceID) {
         try {
             String hashedPassword = UserLogin.hashPassword(password);
             Gson gson = new Gson();
-            LoginMessage loginMessage = new LoginMessage(usernameOrEmail, hashedPassword);
+            LoginMessage loginMessage = new LoginMessage(usernameOrEmail, hashedPassword, deviceID);
             String jsonLoginMessage = gson.toJson(loginMessage);
             Log.d("JSON", jsonLoginMessage);
 
