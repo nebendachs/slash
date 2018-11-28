@@ -5,11 +5,13 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
+
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
-public class UserCreateClientOrProjekt {
+public class UserCreateClientOrProjekt implements Serializable {
 
     public void searchSinglePerson(Context context, String username){
         Gson gson = new Gson();

@@ -1,17 +1,22 @@
 package de.sharknoon.slash.Activties;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
+import de.sharknoon.slash.Fragments.CreateChat;
+import de.sharknoon.slash.Fragments.CreateProject;
 import de.sharknoon.slash.HomeScreen.UserCreateClientOrProjekt;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.UISupport.ViewPagerAdapter;
 
-public class CreateClientProjektActivity extends AppCompatActivity {
+public class CreateClientProjektActivity extends AppCompatActivity implements CreateChat.OnFragmentInteractionListener, CreateProject.OnFragmentInteractionListener {
 
     private UserCreateClientOrProjekt ccp;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,20 +25,24 @@ public class CreateClientProjektActivity extends AppCompatActivity {
 
         ccp = new UserCreateClientOrProjekt();
 
-        this.searchForUser();
+        viewPager = findViewById(R.id.view_pager);
+        setupViewPager(viewPager);
+
+        tabLayout = findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_person);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_people);
     }
 
-    private void searchForUser() {
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(CreateChat.newInstance(ccp), "Chat");
+        adapter.addFragment(CreateProject.newInstance(), "Project");
+        viewPager.setAdapter(adapter);
+    }
 
-        // Get text view element for registration and handover event listener
-        EditText searchWindow = findViewById(R.id.createChatEditWindow);
-        Button searchButton = findViewById(R.id.createChatFindButton);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Search for User
-                ccp.searchSinglePerson(v.getContext(), searchWindow.getText().toString());
-            }
-        });
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
