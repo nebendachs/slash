@@ -83,6 +83,36 @@
                         android:maxEms="20"
                         android:maxLines="2"
                         android:scrollHorizontally="false" />
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:id="@+id/createChatListScreen"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@color/colorPrimary"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ICH BIN EIN USER"/>
+
+                        </LinearLayout>
+                    </ScrollView>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -105,18 +135,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:visibility="visible">
-
-                <LinearLayout
-                    android:id="@+id/createProjektFillScreen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-
-                </LinearLayout>
 
             </RelativeLayout>
 

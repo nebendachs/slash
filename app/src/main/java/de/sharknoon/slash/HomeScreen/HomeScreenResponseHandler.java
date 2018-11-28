@@ -72,20 +72,13 @@ public class HomeScreenResponseHandler {
 
             case GET_USER_OK_STATUS:
                 SearchedUsers response = gson.fromJson(serverResponse, SearchedUsers.class);
-                String name = response.getUsers()[0].getUsername();
 
                 ((Activity) context).runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
 
-                        // Open a new ChatScreenActivity
-                        Activity activity = (Activity) context;
-                        Bundle bundle = new Bundle();
-                        bundle.putString("USERNAME", name);
-
-                        Intent intent = new Intent(context, ChatScreenActivity.class);
-                        activity.startActivity(intent);
+                        //Show a list
                     }
                 });
 
