@@ -1,13 +1,17 @@
 package de.sharknoon.slash.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
+import de.sharknoon.slash.Activties.AddPeople;
 import de.sharknoon.slash.R;
 
 
@@ -50,8 +54,47 @@ public class CreateProject extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_project, container, false);
-        // do stuff
+
+        this.handleContinueButton(view);
+
         return view;
+    }
+
+    private void handleContinueButton(View view) {
+        Button button = view.findViewById(R.id.continueButton);
+        EditText editName = view.findViewById(R.id.projectName);
+        EditText editDesc = view.findViewById(R.id.projectDescription);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = editName.getText().toString();
+                String desc = editDesc.getText().toString();
+
+                boolean tryagain = false;
+                if(name.isEmpty()) {
+                    editName.setError("Name is required");
+                    tryagain = true;
+                }
+                if(false) { //Todo Check if project already exists
+                    editName.setError("A project with this name already exists");
+                    tryagain = true;
+                }
+                if(desc.isEmpty()) {
+                    editDesc.setError("Description is required");
+                    tryagain = true;
+                }
+                if(!tryagain) {
+                    /*Gson gson = new Gson();
+                    GetProjectMessage getProjectMessage = new GetProjectMessage(ParameterManager.getSession(view.getContext()), name);
+                    String jsonGetProjectMessage = gson.toJson(getProjectMessage);
+                    if(projectClient != null){
+                        projectClient.getWebSocketClient().send(jsonGetProjectMessage);
+                    }*/
+                    Intent goToAddPeopleActivity = new Intent(view.getContext(), AddPeople.class);
+                    getActivity().startActivity(goToAddPeopleActivity);
+                }
+            }
+        });
     }
 
     @Override

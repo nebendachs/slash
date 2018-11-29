@@ -34,4 +34,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_project">New Project</string>
+    <string name="project_name">Project Name</string>
+    <string name="description">Description</string>
+    <string name="ButtonNext">Continue</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_add_people">Add People</string>
 </resources>

@@ -26,19 +26,15 @@ public class CreateClientProjektActivity extends AppCompatActivity implements Cr
         ccp = new UserCreateClientOrProjekt();
 
         viewPager = findViewById(R.id.view_pager);
-        setupViewPager(viewPager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(CreateChat.newInstance(ccp), "Chat");
+        adapter.addFragment(CreateProject.newInstance(), "Project");
+        viewPager.setAdapter(adapter);
 
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_person);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_people);
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(CreateChat.newInstance(ccp), "Chat");
-        adapter.addFragment(CreateProject.newInstance(), "Project");
-        viewPager.setAdapter(adapter);
     }
 
     @Override
