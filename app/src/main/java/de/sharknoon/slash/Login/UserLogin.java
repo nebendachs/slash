@@ -22,11 +22,11 @@ import me.pushy.sdk.Pushy;
 public class UserLogin {
     private static LoginClient loginClient = null;
 
-    public UserLogin(String usernameOrEmail, String password, String deviceToken) {
+    public UserLogin(String usernameOrEmail, String password, String deviceID) {
         try {
             String hashedPassword = UserLogin.hashPassword(password);
             Gson gson = new Gson();
-            LoginMessage loginMessage = new LoginMessage(usernameOrEmail, hashedPassword, deviceToken);
+            LoginMessage loginMessage = new LoginMessage(usernameOrEmail, hashedPassword, deviceID);
             String jsonLoginMessage = gson.toJson(loginMessage);
             Log.d("JSON", jsonLoginMessage);
 

@@ -78,7 +78,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="@string/homeScreenRegisterLink"
-                    android:textColor="#ff8800"
+                    android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
                 <Button
@@ -96,7 +96,7 @@
                     android:ems="10"
                     android:gravity="center"
                     android:text="@string/homeScreenForgotPassword"
-                    android:textColor="#ff8800" />
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 

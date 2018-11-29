@@ -1,22 +1,22 @@
 package de.sharknoon.slash.Activties;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.view.MenuItem;
 
-import de.sharknoon.slash.HomeScreen.ContactView;
-import de.sharknoon.slash.HomeScreen.HomeScreenClient;
+import de.sharknoon.slash.Fragments.Home;
+import de.sharknoon.slash.Fragments.Profile;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
-import de.sharknoon.slash.HomeScreen.UserResponse;
-import de.sharknoon.slash.Login.LoginResponseHandler;
 import de.sharknoon.slash.R;
 
-public class HomeScreenActivity extends AppCompatActivity {
+public class HomeScreenActivity extends AppCompatActivity implements Home.OnFragmentInteractionListener, Profile.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +26,45 @@ public class HomeScreenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         UserHomeScreen screen = new UserHomeScreen(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                screen.CreateChatOrProject(view.getContext());
-            }
-        });
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // define your fragments here
+        final Fragment home = Home.newInstance();
+        final Fragment profile = Profile.newInstance();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("USERHOMESCREEN", screen);
+        home.setArguments(bundle);
+
+        FragmentTransaction fragmentTransaction;
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment, home).commit();
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+
+        // handle navigation selection
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        FragmentTransaction fragmentTransaction;
+                        switch (item.getItemId()) {
+                            case R.id.navigation_home:
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.fragment, home).commit();
+                                return true;
+                            case R.id.navigation_profile:
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.fragment, profile).commit();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri){
+        //you can leave it empty
     }
 }

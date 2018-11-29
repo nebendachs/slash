@@ -10,23 +10,26 @@ import com.google.gson.Gson;
 
 import org.java_websocket.client.WebSocketClient;
 
+import java.io.Serializable;
 import java.util.function.Consumer;
 
 import de.sharknoon.slash.Activties.CreateClientProjektActivity;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
-public class UserHomeScreen {
+public class UserHomeScreen implements Serializable {
 
-    private final String STATUS_GET_HOME = "GET_HOME";
     public static HomeScreenClient homeScreenClient;
-    private String sessionId;
+    private Context context;
 
     public UserHomeScreen(Context context) {
+        this.context = context;
+        this.askForProjectsChats();
+    }
 
+    public void askForProjectsChats(){
         try {
             Gson gson = new Gson();
-            sessionId = ParameterManager.getSession(context);
-            HomeScreenMessage homeScreenMessage = new HomeScreenMessage(sessionId, STATUS_GET_HOME);
+            HomeScreenMessage homeScreenMessage = new HomeScreenMessage(ParameterManager.getSession(context), "GET_HOME");
             String jsonHomeScreenMessage = gson.toJson(homeScreenMessage);
             Log.d("JSON", jsonHomeScreenMessage);
 
@@ -39,7 +42,7 @@ public class UserHomeScreen {
     }
 
     //Create new Window to create a new Chat or Project
-    public void CreateChatOrProject(Context context){
+    public static void CreateChatOrProject(Context context){
         Activity activity = (Activity) context;
         Intent intent = new Intent(context, CreateClientProjektActivity.class);
         activity.startActivity(intent);
