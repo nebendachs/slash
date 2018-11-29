@@ -1,68 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.CreateChat">
+    tools:context=".Fragments.CreateChat"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/createChatScreen"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:paddingTop="10dp" >
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/createChatEditWindow"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="@string/createChatUsername"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <Button
+            android:id="@+id/createChatFindButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Search" />
 
-                <EditText
-                    android:id="@+id/createChatEditWindow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="@string/createChatUsername"/>
+    </LinearLayout>
 
-                <Button
-                    android:id="@+id/createChatFindButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Search" />
-            </LinearLayout>
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="de.sharknoon.slash.Fragments.PeopleSelector"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/createChatErrorMessageTextView"
-                style="@style/LoginRegisterScreenErrorMessageTextView"
-                android:maxLines="2"
-                android:ellipsize="none"
-                android:maxEms="20"
-                android:scrollHorizontally="false" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/createChatFillScreen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="vertical">
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-</FrameLayout>
+</LinearLayout>

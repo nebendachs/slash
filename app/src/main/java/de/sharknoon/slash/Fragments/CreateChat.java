@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import de.sharknoon.slash.HomeScreen.UserCreateClientOrProjekt;
+import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 
 
@@ -38,6 +40,7 @@ public class CreateChat extends Fragment {
         Bundle args = new Bundle();
         args.putSerializable(UserCreateClientOrProjektKey, ccp);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -53,7 +56,25 @@ public class CreateChat extends Fragment {
         View view = inflater.inflate(R.layout.fragment_create_chat, container, false);
         ccp = (UserCreateClientOrProjekt) getArguments().getSerializable(UserCreateClientOrProjektKey);
         this.searchForUser(view);
+
+        Fragment peopleSelector = PeopleSelector.newInstance();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment2, peopleSelector, "PeopleList").commit();
+
+        this.handleSearchButton(view, (PeopleSelector)peopleSelector);
+
         return view;
+    }
+
+    private void handleSearchButton(View view, PeopleSelector peopleSelector) {
+        Button button = view.findViewById(R.id.createChatFindButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //PeopleSelector peopleSelector = (PeopleSelector) getChildFragmentManager().findFragmentByTag("PeopleList");
+                peopleSelector.setPeople(Person.createPeopleList(10));
+            }
+        });
     }
 
     private void searchForUser(View view) {

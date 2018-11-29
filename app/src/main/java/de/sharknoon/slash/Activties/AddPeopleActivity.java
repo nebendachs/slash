@@ -24,16 +24,15 @@ public class AddPeopleActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         // Lookup the recyclerview in activity layout
-        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.people_list);
+        RecyclerView rvPeople = (RecyclerView) findViewById(R.id.people_list);
 
         // Initialize contacts
         people = Person.createPeopleList(20);
         // Create adapter passing in the sample user data
         PeopleAdapter adapter = new PeopleAdapter(people);
         // Attach the adapter to the recyclerview to populate items
-        rvContacts.setAdapter(adapter);
+        rvPeople.setAdapter(adapter);
         // Set layout manager to position the items
-        rvContacts.setLayoutManager(new LinearLayoutManager(this));
-        // That's all!
+        rvPeople.setLayoutManager(new LinearLayoutManager(this));
     }
 }

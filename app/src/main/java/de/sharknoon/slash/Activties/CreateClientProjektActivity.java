@@ -8,11 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import de.sharknoon.slash.Fragments.CreateChat;
 import de.sharknoon.slash.Fragments.CreateProject;
+import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.HomeScreen.UserCreateClientOrProjekt;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.UISupport.ViewPagerAdapter;
 
-public class CreateClientProjektActivity extends AppCompatActivity implements CreateChat.OnFragmentInteractionListener, CreateProject.OnFragmentInteractionListener {
+public class CreateClientProjektActivity extends AppCompatActivity implements CreateChat.OnFragmentInteractionListener, CreateProject.OnFragmentInteractionListener, PeopleSelector.OnFragmentInteractionListener {
 
     private UserCreateClientOrProjekt ccp;
     private TabLayout tabLayout;
