@@ -24,17 +24,12 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        UserHomeScreen screen = new UserHomeScreen(this);
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         // define your fragments here
         final Fragment home = Home.newInstance();
         final Fragment profile = Profile.newInstance();
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("USERHOMESCREEN", screen);
-        home.setArguments(bundle);
 
         FragmentTransaction fragmentTransaction;
         fragmentTransaction = fragmentManager.beginTransaction();

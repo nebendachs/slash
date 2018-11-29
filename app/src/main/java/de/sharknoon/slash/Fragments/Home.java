@@ -45,12 +45,7 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        try {
-            UserHomeScreen screen = (UserHomeScreen) getArguments().getSerializable("USERHOMESCREEN");
-            screen.askForProjectsChats();
-        } catch (NullPointerException e){
-            e.getStackTrace();
-        }
+        UserHomeScreen screen = new UserHomeScreen(getActivity());
 
         this.handleCreateChatButton(view);
 
