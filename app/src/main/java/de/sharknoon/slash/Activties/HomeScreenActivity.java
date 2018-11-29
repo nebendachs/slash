@@ -22,8 +22,7 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
         UserHomeScreen screen = new UserHomeScreen(this);
 
         final FragmentManager fragmentManager = getSupportFragmentManager();

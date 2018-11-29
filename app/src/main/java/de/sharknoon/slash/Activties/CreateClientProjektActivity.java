@@ -6,14 +6,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import de.sharknoon.slash.Fragments.CreateChat;
 import de.sharknoon.slash.Fragments.CreateProject;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.HomeScreen.UserCreateClientOrProjekt;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.UISupport.ViewPagerAdapter;
 
-public class CreateClientProjektActivity extends AppCompatActivity implements CreateChat.OnFragmentInteractionListener, CreateProject.OnFragmentInteractionListener, PeopleSelector.OnFragmentInteractionListener {
+public class CreateClientProjektActivity extends AppCompatActivity implements CreateProject.OnFragmentInteractionListener, PeopleSelector.OnFragmentInteractionListener {
 
     private UserCreateClientOrProjekt ccp;
     private TabLayout tabLayout;
@@ -28,7 +27,7 @@ public class CreateClientProjektActivity extends AppCompatActivity implements Cr
 
         viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(CreateChat.newInstance(ccp), "Chat");
+        adapter.addFragment(PeopleSelector.newInstance(), "Chat");
         adapter.addFragment(CreateProject.newInstance(), "Project");
         viewPager.setAdapter(adapter);
 

@@ -1,12 +1,10 @@
 package de.sharknoon.slash.People;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,13 +37,14 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             itemView.setOnClickListener(this);
         }
 
-        // Handles the row being being clicked
+        // Handles the row being clicked
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition(); // gets item position
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
                 Person person = people.get(position);
-                //do stuff
+                //todo: Ausgewählte Person an CreateClientProjektActivity zurückgeben
+
             }
         }
     }

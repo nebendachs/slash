@@ -70,16 +70,9 @@ public class CreateProject extends Fragment {
                 String name = editName.getText().toString();
                 String desc = editDesc.getText().toString();
 
-                boolean tryagain = false;
                 if(name.isEmpty()) {
                     editName.setError("Name is required");
-                    tryagain = true;
-                }
-                if(false) { //Todo Check if project already exists
-                    editName.setError("A project with this name already exists");
-                    tryagain = true;
-                }
-                if(!tryagain) {
+                } else {
                     /*Gson gson = new Gson();
                     GetProjectMessage getProjectMessage = new GetProjectMessage(ParameterManager.getSession(view.getContext()), name);
                     String jsonGetProjectMessage = gson.toJson(getProjectMessage);
@@ -121,7 +114,6 @@ public class CreateProject extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

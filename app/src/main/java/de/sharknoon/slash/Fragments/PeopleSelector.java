@@ -8,19 +8,27 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import de.sharknoon.slash.HomeScreen.FindUser;
+import de.sharknoon.slash.HomeScreen.HomeScreenClient;
+import de.sharknoon.slash.HomeScreen.UserHomeScreen;
 import de.sharknoon.slash.Login.LogoutMessage;
 import de.sharknoon.slash.People.PeopleAdapter;
 import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.Registration.RegistrationMessage;
+import de.sharknoon.slash.Registration.UserRegistration;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
@@ -70,7 +78,6 @@ public class PeopleSelector extends Fragment {
 
         // Lookup the recyclerview in activity layout
         RecyclerView rvPeople = (RecyclerView) view.findViewById(R.id.people_view);
-
         // Create adapter passing in the people list
         adapter = new PeopleAdapter(people);
         // Attach the adapter to the recyclerview to populate items
@@ -78,17 +85,30 @@ public class PeopleSelector extends Fragment {
         // Set layout manager to position the items
         rvPeople.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
+        this.handleSearchButton(view);
+
         return view;
     }
 
-    public ArrayList<Person> getPeople() {
-        return people;
-    }
+    private void handleSearchButton(View view) {
+        Button button = view.findViewById(R.id.createChatFindButton);
+        TextView search = view.findViewById(R.id.createChatEditWindow);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(search != null) {
+                    Gson gson = new Gson();
+                    FindUser findUser = new FindUser(ParameterManager.getSession(view.getContext()), search.toString());
+                    String jsonRegistrationMessage = gson.toJson(findUser);
+                    Log.d("JSON", jsonRegistrationMessage);
 
-    public void setPeople(ArrayList<Person> people) {
-        this.people.clear();
-        this.people.addAll(people);
-        adapter.notifyDataSetChanged();
+                    //todo Suche an Server schicken und Recyclerview mit Ergebnisliste füllen
+                    people.addAll(Person.createPeopleList(10)); //Add dummy people to recyclerview
+
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
@@ -119,7 +139,6 @@ public class PeopleSelector extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
