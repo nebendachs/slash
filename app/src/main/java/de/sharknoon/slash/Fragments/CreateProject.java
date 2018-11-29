@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import de.sharknoon.slash.Activties.AddPeople;
+import de.sharknoon.slash.Activties.AddPeopleActivity;
 import de.sharknoon.slash.R;
 
 
@@ -79,10 +79,6 @@ public class CreateProject extends Fragment {
                     editName.setError("A project with this name already exists");
                     tryagain = true;
                 }
-                if(desc.isEmpty()) {
-                    editDesc.setError("Description is required");
-                    tryagain = true;
-                }
                 if(!tryagain) {
                     /*Gson gson = new Gson();
                     GetProjectMessage getProjectMessage = new GetProjectMessage(ParameterManager.getSession(view.getContext()), name);
@@ -90,7 +86,7 @@ public class CreateProject extends Fragment {
                     if(projectClient != null){
                         projectClient.getWebSocketClient().send(jsonGetProjectMessage);
                     }*/
-                    Intent goToAddPeopleActivity = new Intent(view.getContext(), AddPeople.class);
+                    Intent goToAddPeopleActivity = new Intent(view.getContext(), AddPeopleActivity.class);
                     getActivity().startActivity(goToAddPeopleActivity);
                 }
             }

@@ -89,9 +89,8 @@
             android:name=".Activties.CreateClientProjektActivity"
             android:label="New" />
         <activity
-            android:name=".Activties.AddPeople"
-            android:label="@string/title_activity_add_people"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".Activties.AddPeopleActivity"
+            android:label="Add People" />
     </application>
 
 </manifest>
