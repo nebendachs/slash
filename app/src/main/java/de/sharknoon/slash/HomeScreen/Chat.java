@@ -1,5 +1,7 @@
 package de.sharknoon.slash.HomeScreen;
 
+import java.util.List;
+
 public class Chat {
 
     private String id;
@@ -8,9 +10,9 @@ public class Chat {
     private String personAUsername;
     private String partnerUsername;
     private String creationDate;
-    private String[] messages;
+    private List<Message> messages;
 
-    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String creationDate, String[] messages){
+    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String creationDate, List<Message> messages){
         this.id = id;
         this.personA = personA;
         this.personAUsername = personAUsername;
@@ -40,11 +42,20 @@ public class Chat {
         return partnerUsername;
     }
 
-    public String[] getMessages(){
+    public List<Message> getMessages(){
         return messages;
     }
 
     public String getCreationDate() {
         return creationDate;
+    }
+
+    public class Message{
+        public String sender;
+        public String creationDate;
+        public String type;
+        public String content;
+        public String subject;
+        public String emotion;
     }
 }

@@ -16,7 +16,10 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import de.sharknoon.slash.ChatMessages.ChatMessage;
+import de.sharknoon.slash.HomeScreen.Chat;
 import de.sharknoon.slash.HomeScreen.ContactView;
 import de.sharknoon.slash.HomeScreen.HomeScreenClient;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
@@ -61,17 +64,16 @@ public class ChatScreenActivity extends AppCompatActivity {
     }
 
     //Fill the Layout with all messages got from server
-    public static void fillChatScreen(String[] messages){
+    public static void fillChatScreen(List<Chat.Message> messages){
         ((Activity) context).runOnUiThread(() -> {
         if(messages != null) {
-            if (messages.length > 0) {
+            if (messages.size() > 0) {
                 LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_message_screen);
 
                 messageScreen.removeAllViews();
 
-                for (String s : messages) {
-                    Log.i("FillScreen", s);
-                    TextView view = createTextView(s, context);
+                for (Chat.Message s : messages) {
+                    TextView view = createTextView(s.content, context);
 
                         messageScreen.addView(view);
                 }
