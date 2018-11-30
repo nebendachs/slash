@@ -42,8 +42,11 @@ import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
  * create an instance of this fragment.
  */
 public class PeopleSelector extends Fragment {
+    private static final String ARG_PARAM1 = "purpose";
+
     private ArrayList<Person> people;
     private PeopleAdapter adapter;
+    private String purpose;
 
     private OnFragmentInteractionListener mListener;
 
@@ -57,9 +60,10 @@ public class PeopleSelector extends Fragment {
      *
      * @return A new instance of fragment PeopleSelector.
      */
-    public static PeopleSelector newInstance() {
+    public static PeopleSelector newInstance(String purpose) {
         PeopleSelector fragment = new PeopleSelector();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, purpose);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,6 +71,9 @@ public class PeopleSelector extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            purpose = getArguments().getString(ARG_PARAM1);
+        }
         people = new ArrayList<Person>();
     }
 
@@ -79,7 +86,7 @@ public class PeopleSelector extends Fragment {
         // Lookup the recyclerview in activity layout
         RecyclerView rvPeople = (RecyclerView) view.findViewById(R.id.people_view);
         // Create adapter passing in the people list
-        adapter = new PeopleAdapter(people);
+        adapter = new PeopleAdapter(people, purpose);
         // Attach the adapter to the recyclerview to populate items
         rvPeople.setAdapter(adapter);
         // Set layout manager to position the items
@@ -103,8 +110,10 @@ public class PeopleSelector extends Fragment {
                     Log.d("JSON", jsonRegistrationMessage);
 
                     //todo Suche an Server schicken und Recyclerview mit Ergebnisliste füllen
+                    people.clear();
                     people.addAll(Person.createPeopleList(10)); //Add dummy people to recyclerview
 
+                    //Refresh list in UI
                     adapter.notifyDataSetChanged();
                 }
             }

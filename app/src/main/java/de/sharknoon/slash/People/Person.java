@@ -1,8 +1,9 @@
 package de.sharknoon.slash.People;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Person {
+public class Person implements Serializable {
     private String name;
 
     public Person(String name) {

@@ -1,7 +1,9 @@
 package de.sharknoon.slash.People;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +12,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import de.sharknoon.slash.Activties.AddPeopleActivity;
+import de.sharknoon.slash.Activties.CreateClientProjektActivity;
 import de.sharknoon.slash.R;
 
 public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder> {
     // Store a member variable for the contacts
     private List<Person> people;
+    private String purpose;
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -43,15 +48,26 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             int position = getAdapterPosition(); // gets item position
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
                 Person person = people.get(position);
-                //todo: Ausgewählte Person an CreateClientProjektActivity zurückgeben
 
+                Intent intent = new Intent();
+                if(purpose.equals("Chat"))
+                    intent.setAction(CreateClientProjektActivity.ChatPersonReceiver.ACTION);
+                else //if(purpose.equals("Project"))
+                    intent.setAction(AddPeopleActivity.ProjectPersonReceiver.ACTION);
+                intent.putExtra("Person", person);
+                context.sendBroadcast(intent);
+
+                //Remove selected person from result list (important for adding people to projects)
+                people.remove(position);
+                notifyItemRemoved(position);
             }
         }
     }
 
     // Pass in the contact array into the constructor
-    public PeopleAdapter(List<Person> people) {
+    public PeopleAdapter(List<Person> people, String purpose) {
         this.people = people;
+        this.purpose = purpose;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
