@@ -1,11 +1,9 @@
 package de.sharknoon.slash.ChatMessages;
 
-import java.util.Date;
-
 public class ChatMessage {
 
     private String sessionid;
-    private final String status = "ADD_MESSAGE";
+    private final String status = "ADD_CHAT_MESSAGE";
     private String chatID;
     private String messageType;
     private String messageContent;

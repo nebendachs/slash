@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 import de.sharknoon.slash.Activties.CreateClientProjektActivity;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
-public class UserHomeScreen implements Serializable {
+public class UserHomeScreen{
 
     public static HomeScreenClient homeScreenClient;
     private Context context;

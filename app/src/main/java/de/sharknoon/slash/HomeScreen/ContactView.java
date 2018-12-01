@@ -57,7 +57,7 @@ public class ContactView {
     }
 
     public ContactView(Activity homeScreenActivity, FlexboxLayout parentLayout,
-                       String imageUrl, String contactName, String contactId, List<Chat.Message> messages, String chatId) {
+                       String contactName, Chat chat) {
 
         homeScreenActivity.runOnUiThread(new Runnable() {
 
@@ -79,9 +79,7 @@ public class ContactView {
                         // Go to HomeScreen ChatView and pass the contact Id
                         Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putString("chatID", chatId);
-                        bundle.putSerializable("messages", (Serializable) messages);
-                        bundle.putString(CONTACT_ID_PARAMETER, contactId);
+                        bundle.putSerializable("CHAT", chat);
                         intent.putExtras(bundle);
                         homeScreenActivity.startActivity(intent);
                     }

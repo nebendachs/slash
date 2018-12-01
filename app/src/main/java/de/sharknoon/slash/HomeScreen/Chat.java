@@ -1,8 +1,9 @@
 package de.sharknoon.slash.HomeScreen;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Chat {
+public class Chat implements Serializable{
 
     private String id;
     private String personA;
@@ -50,7 +51,7 @@ public class Chat {
         return creationDate;
     }
 
-    public class Message{
+    public class Message implements Serializable {
         public String sender;
         public String creationDate;
         public String type;

@@ -24,7 +24,6 @@ public class HomeScreenResponseHandler {
     private static final String JSON_FIELD_STATUS = "status";
     private static final String GET_USER_OK_STATUS = "OK_USER";
     private static final String ADD_MESSAGE_OK_STATUS = "OK_CHAT";
-    private static final String NO_USER_FOUND_STATUS = "NO_USER_FOUND";
 
     public static void handleResponse(String serverResponse, Context context) {
 
@@ -66,9 +65,8 @@ public class HomeScreenResponseHandler {
 
                 if (chats.length != 0) {
                     for (Chat currentContact : chats) {
-                        new ContactView(homeScreenActivity, parentLayoutContacts, "",
-                                currentContact.getPartnerUsername(), currentContact.getPersonB(),
-                                currentContact.getMessages(), currentContact.getId());
+                        new ContactView(homeScreenActivity, parentLayoutContacts,
+                                currentContact.getPartnerUsername(), currentContact);
                     }
                 }
                 break;
@@ -88,14 +86,20 @@ public class HomeScreenResponseHandler {
                 break;
 
             case ADD_MESSAGE_OK_STATUS:
-
                 JsonParser parser = new JsonParser();
                 JsonObject object = parser.parse(serverResponse).getAsJsonObject();
                 JsonObject chat1 = object.getAsJsonObject("chat");
 
                 Gson chatGson = new Gson();
                 Chat chat = chatGson.fromJson(chat1, Chat.class);
-                ChatScreenActivity.fillChatScreen(chat.getMessages());
+
+                ((Activity) context).runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        ChatScreenActivity.setChat(chat, context);
+                    }
+                });
                 break;
         }
     }

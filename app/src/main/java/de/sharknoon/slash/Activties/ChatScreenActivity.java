@@ -2,16 +2,19 @@ package de.sharknoon.slash.Activties;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -19,6 +22,8 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import de.sharknoon.slash.ChatMessages.ChatMessage;
+import de.sharknoon.slash.ChatMessages.MessageBuilder;
+import de.sharknoon.slash.ChatMessages.UserChatScreen;
 import de.sharknoon.slash.HomeScreen.Chat;
 import de.sharknoon.slash.HomeScreen.ContactView;
 import de.sharknoon.slash.HomeScreen.HomeScreenClient;
@@ -26,14 +31,27 @@ import de.sharknoon.slash.HomeScreen.UserHomeScreen;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
+import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
+
 public class ChatScreenActivity extends AppCompatActivity {
 
-    public static Context context;
+    private static String chatId;
+    private static UserChatScreen screen;
+    private static LinearLayout messageScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_screen);
+
+        Chat chat = (Chat)getIntent().getExtras().getSerializable("CHAT");
+        messageScreen = findViewById(R.id.chatscreen_message_screen);
+
+        screen = new UserChatScreen();
+
+        screen.fillChatScreen(chat, this, messageScreen);
+
+        messageScreen = findViewById(R.id.chatscreen_message_screen);
 
         Button btn = findViewById(R.id.chatscreen_button_addon);
 
@@ -44,7 +62,34 @@ public class ChatScreenActivity extends AppCompatActivity {
             }
         });
 
-        this.handleSendButton();
+        Button createTemplate = findViewById(R.id.chatscreen_button_template);
+
+        createTemplate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Activity templateActivity = (Activity) v.getContext();
+                Intent intent = new Intent(v.getContext(), CreateTemplateActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("CHATID", chat.getId());
+                intent.putExtras(bundle);
+                templateActivity.startActivity(intent);
+            }
+        });
+
+        Button createMeme = findViewById(R.id.chatscreen_button_meme);
+
+        createMeme.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //TODO: DO STUFF
+            }
+        });
+
+        this.handleSendButton(chat);
+    }
+
+    public static void setChat(Chat chat, Context context){
+        screen.fillChatScreen(chat, context, messageScreen);
     }
 
     public void moveAddonScreenUpDown(){
@@ -63,66 +108,24 @@ public class ChatScreenActivity extends AppCompatActivity {
         }
     }
 
-    //Fill the Layout with all messages got from server
-    public static void fillChatScreen(List<Chat.Message> messages){
-        ((Activity) context).runOnUiThread(() -> {
-        if(messages != null) {
-            if (messages.size() > 0) {
-                LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_message_screen);
-
-                messageScreen.removeAllViews();
-
-                for (Chat.Message s : messages) {
-                    TextView view = createTextView(s.content, context);
-
-                        messageScreen.addView(view);
-                }
-            }
-        } else {
-            Log.i("messages", "Messages = null");
-        }
-        });
-    }
-
-    //Add one single message
-    public static void addMessageToScreen(String s, Context context){
-        LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_message_screen);
-        TextView view = createTextView(s, context);
-        messageScreen.addView(view);
-    }
-
-    //Method to create and design the text-messages
-    private static TextView createTextView(String message, Context context){
-
-        TextView view = new TextView(context);
-        view.setText(message);
-
-        //ToDo: Chatnachrichten anpassen (runde Ecken, Hintergrundfarbe etc.)
-
-        return view;
-    }
-
     //Listener for "onClick" on button to send messages
-    private void handleSendButton(){
-        /*
-        Button sendButton = findViewById(R.id.chatscreen_send_message);
+    private void handleSendButton(Chat chat){
+        Button sendButton = findViewById(R.id.chatscreen_button_send);
+        EditText editText = findViewById(R.id.chatscreen_message_field);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Add message class
-
-                HomeScreenClient client = UserHomeScreen.homeScreenClient;
                 Gson gson = new Gson();
-                String jsonChatMessage = gson.toJson(null);
+                ChatMessage chatMessage = new ChatMessage(ParameterManager.getSession(v.getContext()), chat.getId() ,"TEXT", editText.getText().toString(), "", "");
+                String jsonChatMessage = gson.toJson(chatMessage);
                 Log.d("JSON", jsonChatMessage);
 
-                if(client != null){
-                    client.getWebSocketClient().send(jsonChatMessage);
+                if(homeScreenClient != null){
+                    homeScreenClient.getWebSocketClient().send(jsonChatMessage);
                 }
 
             }
         });
-        */
     }
 }
