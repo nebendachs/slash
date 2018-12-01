@@ -16,7 +16,7 @@ public class UserChatScreen {
                 messageScreen.removeAllViews();
 
                 for (Chat.Message s : chat.getMessages()) {
-                    MessageBuilder builder = new MessageBuilder(context, s, chat);
+                    MessageBuilder builder = new MessageBuilder(context, s, chat, true);
                     View view = builder.getView();
                     messageScreen.addView(view);
                 }
