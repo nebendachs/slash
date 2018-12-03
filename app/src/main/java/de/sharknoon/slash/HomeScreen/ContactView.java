@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.sharknoon.slash.Activties.ChatScreenActivity;
+import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.Utilities;
 
@@ -27,7 +28,7 @@ public class ContactView {
     public static final String CONTACT_ID_PARAMETER = "contactId";
     public static final String PROJECT_ID_PARAMETER = "projectId";
 
-    public ContactView(Activity homeScreenActivity, LinearLayout parentLayout, String imageUrl, String projectName, String projectId) {
+    public ContactView(Activity homeScreenActivity, LinearLayout parentLayout, String projectName, Project project) {
 
         homeScreenActivity.runOnUiThread(new Runnable() {
 
@@ -40,6 +41,7 @@ public class ContactView {
                 contactTextViewParams.setMarginStart(20);
                 contactTextView.setLayoutParams(contactTextViewParams);
                 parentLayout.addView(contactTextView);
+                ChatOrProject chatOrProject = new ChatOrProject(null, project);
 
                 contactTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -47,7 +49,8 @@ public class ContactView {
                         // Go to HomeScreen ChatView and pass the contact Id
                         Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putString(PROJECT_ID_PARAMETER, projectId);
+                        bundle.putSerializable("CHATORPROJECT", project);
+                        bundle.putString("NAME", projectName);
                         intent.putExtras(bundle);
                         homeScreenActivity.startActivity(intent);
                     }
@@ -56,8 +59,7 @@ public class ContactView {
         });
     }
 
-    public ContactView(Activity homeScreenActivity, FlexboxLayout parentLayout,
-                       String contactName, Chat chat) {
+    public ContactView(Activity homeScreenActivity, FlexboxLayout parentLayout,String contactName, Chat chat) {
 
         homeScreenActivity.runOnUiThread(new Runnable() {
 
@@ -72,6 +74,7 @@ public class ContactView {
                 contactTextViewParams.setMargins(0, 50, 0, 0);
                 contactTextView.setLayoutParams(contactTextViewParams);
                 parentLayout.addView(contactTextView);
+                ChatOrProject chatOrProject = new ChatOrProject(chat, null);
 
                 contactTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -79,7 +82,8 @@ public class ContactView {
                         // Go to HomeScreen ChatView and pass the contact Id
                         Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("CHAT", chat);
+                        bundle.putSerializable("CHATORPROJECT", chatOrProject);
+                        bundle.putString("NAME", contactName);
                         intent.putExtras(bundle);
                         homeScreenActivity.startActivity(intent);
                     }

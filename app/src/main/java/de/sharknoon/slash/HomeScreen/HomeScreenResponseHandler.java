@@ -16,6 +16,7 @@ import com.google.gson.JsonParser;
 
 import de.sharknoon.slash.Activties.ChatScreenActivity;
 import de.sharknoon.slash.Activties.HomeScreenActivity;
+import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.R;
 
 public class HomeScreenResponseHandler {
@@ -56,8 +57,7 @@ public class HomeScreenResponseHandler {
 
                 if (projects.length != 0) {
                     for (Project currentProject : projects) {
-                        new ContactView(homeScreenActivity, parentLayoutProjects, currentProject.getImage(),
-                                currentProject.getName(), currentProject.getId());
+                        new ContactView(homeScreenActivity, parentLayoutProjects, currentProject.getName(), currentProject);
                     }
                 }
 
@@ -92,12 +92,13 @@ public class HomeScreenResponseHandler {
 
                 Gson chatGson = new Gson();
                 Chat chat = chatGson.fromJson(chat1, Chat.class);
+                ChatOrProject chatOrProject = new ChatOrProject(chat, null);
 
                 ((Activity) context).runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-                        ChatScreenActivity.setChat(chat, context);
+                        ChatScreenActivity.setChat(chatOrProject, context);
                     }
                 });
                 break;
