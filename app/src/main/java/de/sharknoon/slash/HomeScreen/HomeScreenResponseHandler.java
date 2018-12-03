@@ -2,29 +2,25 @@ package de.sharknoon.slash.HomeScreen;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import de.sharknoon.slash.Activties.ChatScreenActivity;
-import de.sharknoon.slash.Activties.HomeScreenActivity;
+import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.R;
 
 public class HomeScreenResponseHandler {
 
     private static final String GET_HOME_OK_STATUS = "OK_HOME";
     private static final String JSON_FIELD_STATUS = "status";
-    private static final String GET_USER_OK_STATUS = "OK_USER";
-    private static final String ADD_MESSAGE_OK_STATUS = "OK_CHAT";
-    private static final String NO_USER_FOUND_STATUS = "NO_USER_FOUND";
+    private static final String JSON_FIELD_CHAT = "chat";
+    private static final String JSON_FIELD_PROJECT = "project";
+    private static final String CHAT_OK_STATUS = "OK_CHAT";
+    private static final String PROJECT_OK_STATUS = "OK_PROJECT";
 
     public static void handleResponse(String serverResponse, Context context) {
 
@@ -38,6 +34,7 @@ public class HomeScreenResponseHandler {
         String status = jsonObject.get(JSON_FIELD_STATUS).getAsString();
 
         Activity homeScreenActivity = (Activity) context;
+        ChatOrProject chatOrProject = new ChatOrProject(null, null);
 
         Gson gson = new Gson();
 
@@ -57,8 +54,7 @@ public class HomeScreenResponseHandler {
 
                 if (projects.length != 0) {
                     for (Project currentProject : projects) {
-                        new ContactView(homeScreenActivity, parentLayoutProjects, currentProject.getImage(),
-                                currentProject.getName(), currentProject.getId());
+                        new ContactView(homeScreenActivity, parentLayoutProjects, currentProject.getName(), currentProject);
                     }
                 }
 
@@ -66,36 +62,42 @@ public class HomeScreenResponseHandler {
 
                 if (chats.length != 0) {
                     for (Chat currentContact : chats) {
-                        new ContactView(homeScreenActivity, parentLayoutContacts, "",
-                                currentContact.getPartnerUsername(), currentContact.getPersonB(),
-                                currentContact.getMessages(), currentContact.getId());
+                        new ContactView(homeScreenActivity, parentLayoutContacts,
+                                currentContact.getPartnerUsername(), currentContact);
                     }
                 }
                 break;
 
-            case GET_USER_OK_STATUS:
-                SearchedUsers response = gson.fromJson(serverResponse, SearchedUsers.class);
+            case CHAT_OK_STATUS:
+                JsonParser chatParser = new JsonParser();
+                JsonObject chatObject = chatParser.parse(serverResponse).getAsJsonObject();
+                JsonObject chatMessage = chatObject.getAsJsonObject(JSON_FIELD_CHAT);
+                Chat chat = gson.fromJson(chatMessage, Chat.class);
+                chatOrProject.setChat(chat);
 
                 ((Activity) context).runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-
-                        //Show a list
+                        ChatScreenActivity.setChat(chatOrProject, context);
                     }
                 });
-
                 break;
 
-            case ADD_MESSAGE_OK_STATUS:
+            case PROJECT_OK_STATUS:
+                JsonParser projectParser = new JsonParser();
+                JsonObject projectObject = projectParser.parse(serverResponse).getAsJsonObject();
+                JsonObject projectMessage = projectObject.getAsJsonObject(JSON_FIELD_PROJECT);
+                Project project = gson.fromJson(projectMessage, Project.class);
+                chatOrProject.setProject(project);
 
-                JsonParser parser = new JsonParser();
-                JsonObject object = parser.parse(serverResponse).getAsJsonObject();
-                JsonObject chat1 = object.getAsJsonObject("chat");
+                ((Activity) context).runOnUiThread(new Runnable() {
 
-                Gson chatGson = new Gson();
-                Chat chat = chatGson.fromJson(chat1, Chat.class);
-                ChatScreenActivity.fillChatScreen(chat.getMessages());
+                    @Override
+                    public void run() {
+                        ChatScreenActivity.setChat(chatOrProject, context);
+                    }
+                });
                 break;
         }
     }

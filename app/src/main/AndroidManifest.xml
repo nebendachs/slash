@@ -78,6 +78,9 @@
         <activity
             android:name=".Activties.CreateClientProjektActivity"
             android:label="@string/chatScreen" />
+        <activity
+            android:name=".Activties.CreateTemplateActivity"
+            android:label="MessageTemplates" />
     </application>
 
 </manifest>
