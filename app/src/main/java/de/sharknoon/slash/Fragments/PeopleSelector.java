@@ -1,7 +1,10 @@
 package de.sharknoon.slash.Fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,10 +21,12 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import de.sharknoon.slash.HomeScreen.FindUser;
 import de.sharknoon.slash.HomeScreen.HomeScreenClient;
+import de.sharknoon.slash.HomeScreen.PersonSearchResult;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
 import de.sharknoon.slash.Login.LogoutMessage;
 import de.sharknoon.slash.People.PeopleAdapter;
@@ -33,14 +38,6 @@ import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PeopleSelector.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PeopleSelector#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PeopleSelector extends Fragment {
     private static final String ARG_PARAM1 = "purpose";
 
@@ -48,11 +45,7 @@ public class PeopleSelector extends Fragment {
     private PeopleAdapter adapter;
     private String purpose;
 
-    private OnFragmentInteractionListener mListener;
-
-    public PeopleSelector() {
-        // Required empty public constructor
-    }
+    private PeopleSearchResultReceiver peopleSearchResultReceiver = null;
 
     /**
      * Use this factory method to create a new instance of
@@ -74,7 +67,11 @@ public class PeopleSelector extends Fragment {
         if (getArguments() != null) {
             purpose = getArguments().getString(ARG_PARAM1);
         }
-        people = new ArrayList<Person>();
+        people = new ArrayList<>();
+
+        peopleSearchResultReceiver = new PeopleSearchResultReceiver();
+        IntentFilter inf = new IntentFilter(PeopleSearchResultReceiver.ACTION);
+        getActivity().registerReceiver(peopleSearchResultReceiver, inf);
     }
 
     @Override
@@ -84,7 +81,7 @@ public class PeopleSelector extends Fragment {
         View view = inflater.inflate(R.layout.fragment_people_selector, container, false);
 
         // Lookup the recyclerview in activity layout
-        RecyclerView rvPeople = (RecyclerView) view.findViewById(R.id.people_view);
+        RecyclerView rvPeople = view.findViewById(R.id.people_view);
         // Create adapter passing in the people list
         adapter = new PeopleAdapter(people, purpose);
         // Attach the adapter to the recyclerview to populate items
@@ -100,54 +97,34 @@ public class PeopleSelector extends Fragment {
     private void handleSearchButton(View view) {
         Button button = view.findViewById(R.id.createChatFindButton);
         TextView search = view.findViewById(R.id.createChatEditWindow);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(search != null) {
-                    Gson gson = new Gson();
-                    FindUser findUser = new FindUser(ParameterManager.getSession(view.getContext()), search.toString());
-                    String jsonRegistrationMessage = gson.toJson(findUser);
-                    Log.d("JSON", jsonRegistrationMessage);
+        button.setOnClickListener(view1 -> {
+            if (search != null) {
+                Gson gson = new Gson();
+                FindUser findUser = new FindUser(ParameterManager.getSession(view1.getContext()), search.getText().toString());
+                String jsonSearchMessage = gson.toJson(findUser);
+                Log.d("JSON", jsonSearchMessage);
 
-                    //todo Suche an Server schicken und Recyclerview mit Ergebnisliste füllen
-                    people.clear();
-                    people.addAll(Person.createPeopleList(10)); //Add dummy people to recyclerview
+                homeScreenClient.getWebSocketClient().send(jsonSearchMessage);
+                //todo Suche an Server schicken und Recyclerview mit Ergebnisliste füllen
 
-                    //Refresh list in UI
-                    adapter.notifyDataSetChanged();
-                }
             }
         });
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+
+    public class PeopleSearchResultReceiver extends BroadcastReceiver {
+        PeopleSelector ps = null;
+        public static final String ACTION = "de.sharknoon.slash.RECEIVE_PERSON_SEARCH_RESULT";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            PersonSearchResult searchResult = (PersonSearchResult) intent.getSerializableExtra(ACTION);
+            people.clear();
+
+            people.addAll(searchResult.getUsers());
+
+            //Refresh list in UI
+            adapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
     }
 }

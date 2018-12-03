@@ -4,14 +4,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Person implements Serializable {
-    private String name;
+    private String username;
+    private String id;
 
-    public Person(String name) {
-        this.name = name;
+    public Person(String username) {
+        this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     private static int lastPersonId = 0;

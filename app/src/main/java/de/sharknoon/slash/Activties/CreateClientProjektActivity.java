@@ -18,7 +18,7 @@ import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.UISupport.ViewPagerAdapter;
 
-public class CreateClientProjektActivity extends AppCompatActivity implements CreateProject.OnFragmentInteractionListener, PeopleSelector.OnFragmentInteractionListener {
+public class CreateClientProjektActivity extends AppCompatActivity {
 
     private UserCreateClientOrProjekt ccp;
     private TabLayout tabLayout;
@@ -47,11 +47,6 @@ public class CreateClientProjektActivity extends AppCompatActivity implements Cr
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_person);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_people);
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     public class ChatPersonReceiver extends BroadcastReceiver {

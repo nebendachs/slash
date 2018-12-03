@@ -22,7 +22,7 @@ import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.People.PeopleAdapter;
 import de.sharknoon.slash.R;
 
-public class AddPeopleActivity extends AppCompatActivity implements PeopleSelector.OnFragmentInteractionListener {
+public class AddPeopleActivity extends AppCompatActivity {
     ArrayList<Person> people;
     private ProjectPersonReceiver personReceiver = null;
 
@@ -39,11 +39,6 @@ public class AddPeopleActivity extends AppCompatActivity implements PeopleSelect
         //todo add button onClick Event that creates the project with the selected people
 
         Fragment peopleSelector = PeopleSelector.newInstance("Project");
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     public class ProjectPersonReceiver extends BroadcastReceiver {

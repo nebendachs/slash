@@ -3,7 +3,6 @@ package de.sharknoon.slash.People;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +91,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
 
         // Set item views based on your views and data model
         TextView name = viewHolder.nameTextView;
-        name.setText(person.getName());
+        name.setText(person.getUsername());
         //todo Profilbild setzen
         ImageView picture = viewHolder.profilePicture;
         picture.setImageResource(R.drawable.ic_person);

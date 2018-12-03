@@ -16,6 +16,7 @@ import com.google.gson.JsonParser;
 
 import de.sharknoon.slash.Activties.ChatScreenActivity;
 import de.sharknoon.slash.Activties.HomeScreenActivity;
+import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.R;
 
 public class HomeScreenResponseHandler {
@@ -25,6 +26,7 @@ public class HomeScreenResponseHandler {
     private static final String GET_USER_OK_STATUS = "OK_USER";
     private static final String ADD_MESSAGE_OK_STATUS = "OK_CHAT";
     private static final String NO_USER_FOUND_STATUS = "NO_USER_FOUND";
+    private static final String OK_USERS = "OK_USERS";
 
     public static void handleResponse(String serverResponse, Context context) {
 
@@ -94,6 +96,15 @@ public class HomeScreenResponseHandler {
                 Gson chatGson = new Gson();
                 Chat chat = chatGson.fromJson(chat1, Chat.class);
                 ChatScreenActivity.fillChatScreen(chat.getMessages());
+                break;
+
+            case OK_USERS:
+                Gson personSearchGson = new Gson();
+                PersonSearchResult personSearchResult = personSearchGson.fromJson(serverResponse, PersonSearchResult.class);
+
+                Intent setPersonSearchResultIntent = new Intent(PeopleSelector.PeopleSearchResultReceiver.ACTION);
+                setPersonSearchResultIntent.putExtra(PeopleSelector.PeopleSearchResultReceiver.ACTION, personSearchResult);
+                context.sendBroadcast(setPersonSearchResultIntent);
                 break;
         }
     }
