@@ -99,6 +99,7 @@ public class HomeScreenResponseHandler {
                 break;
 
             case OK_USERS:
+
                 Gson personSearchGson = new Gson();
                 PersonSearchResult personSearchResult = personSearchGson.fromJson(serverResponse, PersonSearchResult.class);
 

@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.w3c.dom.Text;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -39,11 +41,16 @@ import de.sharknoon.slash.SharedPreferences.ParameterManager;
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
 public class PeopleSelector extends Fragment {
+    public static final String CHAT = "Chat";
+    public static final String PROJECT = "Project";
+    public static final String SELECTED = "Selected";
+
     private static final String ARG_PARAM1 = "purpose";
 
     private ArrayList<Person> people;
     private PeopleAdapter adapter;
     private String purpose;
+    private TextView no_results;
 
     private PeopleSearchResultReceiver peopleSearchResultReceiver = null;
 
@@ -68,15 +75,14 @@ public class PeopleSelector extends Fragment {
             purpose = getArguments().getString(ARG_PARAM1);
         }
         people = new ArrayList<>();
-
-        peopleSearchResultReceiver = new PeopleSearchResultReceiver();
-        IntentFilter inf = new IntentFilter(PeopleSearchResultReceiver.ACTION);
-        getActivity().registerReceiver(peopleSearchResultReceiver, inf);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        peopleSearchResultReceiver = new PeopleSearchResultReceiver();
+        IntentFilter inf = new IntentFilter(PeopleSearchResultReceiver.ACTION);
+        getActivity().registerReceiver(peopleSearchResultReceiver, inf);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_people_selector, container, false);
 
@@ -88,6 +94,8 @@ public class PeopleSelector extends Fragment {
         rvPeople.setAdapter(adapter);
         // Set layout manager to position the items
         rvPeople.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        no_results = view.findViewById(R.id.people_no_results);
 
         this.handleSearchButton(view);
 
@@ -103,14 +111,10 @@ public class PeopleSelector extends Fragment {
                 FindUser findUser = new FindUser(ParameterManager.getSession(view1.getContext()), search.getText().toString());
                 String jsonSearchMessage = gson.toJson(findUser);
                 Log.d("JSON", jsonSearchMessage);
-
                 homeScreenClient.getWebSocketClient().send(jsonSearchMessage);
-                //todo Suche an Server schicken und Recyclerview mit Ergebnisliste füllen
-
             }
         });
     }
-
 
     public class PeopleSearchResultReceiver extends BroadcastReceiver {
         PeopleSelector ps = null;
@@ -120,11 +124,21 @@ public class PeopleSelector extends Fragment {
         public void onReceive(Context context, Intent intent) {
             PersonSearchResult searchResult = (PersonSearchResult) intent.getSerializableExtra(ACTION);
             people.clear();
-
             people.addAll(searchResult.getUsers());
+
+            if(people.isEmpty())
+                no_results.setVisibility(View.VISIBLE);
+            else
+                no_results.setVisibility(View.GONE);
 
             //Refresh list in UI
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(peopleSearchResultReceiver);
     }
 }

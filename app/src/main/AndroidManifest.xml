@@ -80,7 +80,7 @@
             android:label="@string/registerScreenHeadline" />
         <activity
             android:name=".Activties.HomeScreenActivity"
-            android:label="Home"
+            android:label="@string/home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activties.ChatScreenActivity"

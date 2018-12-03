@@ -20,10 +20,6 @@ public class CreateProject extends Fragment {
 
     //private String mParam1;
 
-    public CreateProject() {
-        // Required empty public constructor
-    }
-
     public static CreateProject newInstance() {
         CreateProject fragment = new CreateProject();
         Bundle args = new Bundle();

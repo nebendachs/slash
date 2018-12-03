@@ -8,11 +8,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Contacts;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -23,12 +28,22 @@ import de.sharknoon.slash.People.PeopleAdapter;
 import de.sharknoon.slash.R;
 
 public class AddPeopleActivity extends AppCompatActivity {
-    ArrayList<Person> people;
+    private ArrayList<Person> people;
+    private ArrayList<Person> selected;
+    private PeopleAdapter adapter_selected;
     private ProjectPersonReceiver personReceiver = null;
+    private PeopleSelector peopleSelector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = PeopleSelector.newInstance(PeopleSelector.PROJECT);
+        fragmentTransaction.add(R.id.add_people_selector_1, fragment);
+        fragmentTransaction.commit();
+
         setContentView(R.layout.activity_add_people);
 
         personReceiver = new ProjectPersonReceiver();
@@ -36,9 +51,27 @@ public class AddPeopleActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter(AddPeopleActivity.ProjectPersonReceiver.ACTION);
         registerReceiver(personReceiver, intentFilter);
 
-        //todo add button onClick Event that creates the project with the selected people
+        selected = new ArrayList<>();
+        // Lookup the recyclerview in activity layout
+        RecyclerView rvSelected = findViewById(R.id.selected_people);
+        // Create adapter passing in the people list
+        adapter_selected = new PeopleAdapter(selected, PeopleSelector.SELECTED);
+        // Attach the adapter to the recyclerview to populate items
+        rvSelected.setAdapter(adapter_selected);
+        // Set layout manager to position the items
+        rvSelected.setLayoutManager(new GridLayoutManager(this, 3));
 
-        Fragment peopleSelector = PeopleSelector.newInstance("Project");
+        this.handleCreateProjectButton();
+    }
+
+    private void handleCreateProjectButton() {
+        Button button = findViewById(R.id.add_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo create project
+            }
+        });
     }
 
     public class ProjectPersonReceiver extends BroadcastReceiver {
@@ -48,11 +81,18 @@ public class AddPeopleActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Person person = (Person) intent.getSerializableExtra("Person");
-            //todo Person zu RecyclerView hinzufügen
+            selected.add(person);
+            adapter_selected.notifyItemInserted(adapter_selected.getItemCount());
         }
 
         public void setActivity(AddPeopleActivity activity) {
             this.activity = activity;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(personReceiver);
     }
 }

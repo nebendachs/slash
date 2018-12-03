@@ -13,10 +13,10 @@ import java.util.List;
 
 import de.sharknoon.slash.Activties.AddPeopleActivity;
 import de.sharknoon.slash.Activties.CreateClientProjektActivity;
+import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.R;
 
 public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder> {
-    // Store a member variable for the contacts
     private List<Person> people;
     private String purpose;
 
@@ -49,10 +49,11 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
                 Person person = people.get(position);
 
                 Intent intent = new Intent();
-                if(purpose.equals("Chat"))
+                if(purpose.equals(PeopleSelector.CHAT))
                     intent.setAction(CreateClientProjektActivity.ChatPersonReceiver.ACTION);
-                else //if(purpose.equals("Project"))
+                else if(purpose.equals(PeopleSelector.PROJECT))
                     intent.setAction(AddPeopleActivity.ProjectPersonReceiver.ACTION);
+                //else if(purpose.equals(PeopleSelector.SELECTED))
                 intent.putExtra("Person", person);
                 context.sendBroadcast(intent);
 

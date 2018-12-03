@@ -14,6 +14,7 @@ import android.util.Log;
 import de.sharknoon.slash.Fragments.CreateProject;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.HomeScreen.UserCreateClientOrProjekt;
+import de.sharknoon.slash.People.PeopleAdapter;
 import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.UISupport.ViewPagerAdapter;
@@ -39,7 +40,7 @@ public class CreateClientProjektActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(PeopleSelector.newInstance("Chat"), "Chat");
+        adapter.addFragment(PeopleSelector.newInstance(PeopleSelector.CHAT), "Chat");
         adapter.addFragment(CreateProject.newInstance(), "Project");
         viewPager.setAdapter(adapter);
 
@@ -65,5 +66,11 @@ public class CreateClientProjektActivity extends AppCompatActivity {
         public void setActivity(CreateClientProjektActivity activity) {
             this.activity = activity;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(personReceiver);
     }
 }
