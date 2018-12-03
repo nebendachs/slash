@@ -15,6 +15,16 @@ public class ChatOrProject implements  Serializable{
         this.project = project;
     }
 
+    public void setChat(Chat chat){
+        this.project = null;
+        this.chat = chat;
+    }
+
+    public void setProject(Project project){
+        this.project = project;
+        this.chat = null;
+    }
+
     public Chat getChat(){
         return chat;
     }

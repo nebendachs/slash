@@ -138,7 +138,7 @@ public class MessageBuilder {
 
         layoutBubble.setOrientation(LinearLayout.VERTICAL);
         layoutBubble.setPadding(25,20,25,20);
-        layoutBubble.setBackground(ContextCompat.getDrawable(context, R.drawable.layout_orange_border));
+        layoutBubble.setBackground(ContextCompat.getDrawable(context, R.drawable.layout_speech_bubble));
 
         TextView viewHeader;
         TextView viewSubject;
