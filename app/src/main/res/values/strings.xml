@@ -36,11 +36,12 @@
     <string name="new_project">New Project</string>
     <string name="project_name">Project Name</string>
     <string name="description">Description</string>
-    <string name="ButtonNext">Continue</string>
+    <string name="ButtonNext">Create Project</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
     <string name="title_activity_add_people">Add People</string>
     <string name="create_project">Create Project</string>
     <string name="home">Home</string>
     <string name="no_matches_found">No matches found</string>
+    <string name="add_people">Add People</string>
 </resources>

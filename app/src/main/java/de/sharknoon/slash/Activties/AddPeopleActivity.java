@@ -19,13 +19,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.Fragments.Profile;
+import de.sharknoon.slash.HomeScreen.FindUser;
+import de.sharknoon.slash.HomeScreen.HomeScreenClient;
 import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.People.PeopleAdapter;
+import de.sharknoon.slash.Project.AddProjectMessage;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
+
+import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
 public class AddPeopleActivity extends AppCompatActivity {
     private ArrayList<Person> people;
@@ -69,7 +78,8 @@ public class AddPeopleActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo create project
+
+                finish();
             }
         });
     }

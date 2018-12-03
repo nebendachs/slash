@@ -36,7 +36,7 @@
         android:id="@+id/add_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/create_project"
+        android:text="@string/add_people"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"/>
 

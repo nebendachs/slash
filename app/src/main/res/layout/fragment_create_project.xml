@@ -32,6 +32,13 @@
         android:layout_marginTop="10dp" />
 
     <Button
+        android:id="@+id/AddPeopleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_people"
+        android:layout_marginTop="10dp" />
+
+    <Button
         android:id="@+id/continueButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

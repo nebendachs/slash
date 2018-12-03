@@ -41,9 +41,21 @@ public class CreateProject extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_project, container, false);
 
+        this.handleAddPeopleButton(view);
         this.handleContinueButton(view);
 
         return view;
+    }
+
+    private void handleAddPeopleButton(View view) {
+        Button button = view.findViewById(R.id.continueButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goToAddPeopleActivity = new Intent(view.getContext(), AddPeopleActivity.class);
+                getActivity().startActivity(goToAddPeopleActivity);
+            }
+        });
     }
 
     private void handleContinueButton(View view) {
@@ -57,14 +69,15 @@ public class CreateProject extends Fragment {
             if(name.isEmpty()) {
                 editName.setError("Name is required");
             } else {
-                /*Gson gson = new Gson();
-                GetProjectMessage getProjectMessage = new GetProjectMessage(ParameterManager.getSession(view.getContext()), name);
-                String jsonGetProjectMessage = gson.toJson(getProjectMessage);
-                if(projectClient != null){
-                    projectClient.getWebSocketClient().send(jsonGetProjectMessage);
-                }*/
-                Intent goToAddPeopleActivity = new Intent(view1.getContext(), AddPeopleActivity.class);
-                getActivity().startActivity(goToAddPeopleActivity);
+                /*List<String> selectedList = new ArrayList<>();
+                selected.forEach(person -> selectedList.add(person.getId()));
+
+                Gson gson = new Gson();
+                AddProjectMessage projectMessage = new AddProjectMessage(ParameterManager.getSession(view.getContext()), projectName, projectDescription, selectedList);
+                String jsonProjectMessage = gson.toJson(projectMessage);
+                Log.d("JSON", jsonProjectMessage);
+                homeScreenClient.getWebSocketClient().send(jsonProjectMessage);*/
+
             }
         });
     }
