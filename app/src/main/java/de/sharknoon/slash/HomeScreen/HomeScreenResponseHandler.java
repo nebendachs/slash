@@ -27,6 +27,7 @@ public class HomeScreenResponseHandler {
     private static final String ADD_MESSAGE_OK_STATUS = "OK_CHAT";
     private static final String NO_USER_FOUND_STATUS = "NO_USER_FOUND";
     private static final String OK_USERS = "OK_USERS";
+    private static final String OK_PROJEKT = "OK_PROJEKT";
 
     public static void handleResponse(String serverResponse, Context context) {
 

@@ -82,8 +82,9 @@ public class Profile extends Fragment {
                                 if(homeScreenClient != null){
                                     homeScreenClient.getWebSocketClient().send(jsonLogoutMessage);
                                 }
-                                //Remove session id from device
+                                //Remove session id and user id from device
                                 ParameterManager.setSession(view.getContext(), null);
+                                ParameterManager.setUserId(view.getContext(), null);
                                 //Close activity, which reveals login window
                                 getActivity().finish();
                             }

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AddProjectMessage {
     private String sessionid;
-    private static final String status = "ADD_PROJECT";
+    private final String status = "ADD_PROJECT";
     private String projectName;
     private String projectDescription;
     private List<String> projectMembers;
@@ -24,7 +24,7 @@ public class AddProjectMessage {
         this.sessionid = sessionid;
     }
 
-    public static String getStatus() {
+    public String getStatus() {
         return status;
     }
 

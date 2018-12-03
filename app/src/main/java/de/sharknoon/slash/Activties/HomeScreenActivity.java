@@ -59,6 +59,12 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //todo: Refresh projects and chats
+    }
+
+    @Override
     public void onFragmentInteraction(Uri uri){
         //you can leave it empty
     }

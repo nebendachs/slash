@@ -123,10 +123,13 @@ public class PeopleSelector extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             PersonSearchResult searchResult = (PersonSearchResult) intent.getSerializableExtra(ACTION);
-            //todo: Don't show current user
             //todo: [Project] Don't show selected users
             people.clear();
             people.addAll(searchResult.getUsers());
+            for(int i=0; i<people.size(); i++) {
+                if(people.get(i).getId().equals(ParameterManager.getUserId(context)))
+                    people.remove(i);
+            }
 
             if(people.isEmpty())
                 no_results.setVisibility(View.VISIBLE);

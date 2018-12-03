@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.sharknoon.slash.Fragments.CreateProject;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.Fragments.Profile;
 import de.sharknoon.slash.HomeScreen.FindUser;
@@ -47,8 +48,7 @@ public class AddPeopleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment = PeopleSelector.newInstance(PeopleSelector.PROJECT);
         fragmentTransaction.add(R.id.add_people_selector_1, fragment);
         fragmentTransaction.commit();
@@ -68,7 +68,7 @@ public class AddPeopleActivity extends AppCompatActivity {
         // Attach the adapter to the recyclerview to populate items
         rvSelected.setAdapter(adapter_selected);
         // Set layout manager to position the items
-        rvSelected.setLayoutManager(new GridLayoutManager(this, 3));
+        rvSelected.setLayoutManager(new GridLayoutManager(this, 4));
 
         this.handleCreateProjectButton();
     }
@@ -78,7 +78,9 @@ public class AddPeopleActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(CreateProject.ProjectPeopleReveiver.ACTION);
+                intent.putExtra(CreateProject.ProjectPeopleReveiver.ACTION, selected);
+                sendBroadcast(intent);
                 finish();
             }
         });

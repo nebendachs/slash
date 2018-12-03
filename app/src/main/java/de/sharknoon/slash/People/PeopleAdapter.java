@@ -77,7 +77,11 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.layout_recycle_view_element, parent, false);
+        View contactView;
+        if(purpose.equals(PeopleSelector.SELECTED))
+            contactView = inflater.inflate(R.layout.layout_grid_view_element, parent, false);
+        else
+            contactView = inflater.inflate(R.layout.layout_recycle_view_element, parent, false);
 
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(context, contactView);
