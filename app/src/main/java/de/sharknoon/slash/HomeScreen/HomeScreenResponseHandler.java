@@ -17,7 +17,8 @@ public class HomeScreenResponseHandler {
 
     private static final String GET_HOME_OK_STATUS = "OK_HOME";
     private static final String JSON_FIELD_STATUS = "status";
-    private static final String GET_USER_OK_STATUS = "OK_USER";
+    private static final String JSON_FIELD_CHAT = "chat";
+    private static final String JSON_FIELD_PROJECT = "project";
     private static final String CHAT_OK_STATUS = "OK_CHAT";
     private static final String PROJECT_OK_STATUS = "OK_PROJECT";
 
@@ -67,22 +68,11 @@ public class HomeScreenResponseHandler {
                 }
                 break;
 
-            case GET_USER_OK_STATUS:
-                SearchedUsers response = gson.fromJson(serverResponse, SearchedUsers.class);
-
-                ((Activity) context).runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                        //Show a list
-                    }
-                });
-
-                break;
-
             case CHAT_OK_STATUS:
-                Chat chat = gson.fromJson(serverResponse, Chat.class);
+                JsonParser chatParser = new JsonParser();
+                JsonObject chatObject = chatParser.parse(serverResponse).getAsJsonObject();
+                JsonObject chatMessage = chatObject.getAsJsonObject(JSON_FIELD_CHAT);
+                Chat chat = gson.fromJson(chatMessage, Chat.class);
                 chatOrProject.setChat(chat);
 
                 ((Activity) context).runOnUiThread(new Runnable() {
@@ -95,7 +85,10 @@ public class HomeScreenResponseHandler {
                 break;
 
             case PROJECT_OK_STATUS:
-                Project project = gson.fromJson(serverResponse, Project.class);
+                JsonParser projectParser = new JsonParser();
+                JsonObject projectObject = projectParser.parse(serverResponse).getAsJsonObject();
+                JsonObject projectMessage = projectObject.getAsJsonObject(JSON_FIELD_PROJECT);
+                Project project = gson.fromJson(projectMessage, Project.class);
                 chatOrProject.setProject(project);
 
                 ((Activity) context).runOnUiThread(new Runnable() {

@@ -89,7 +89,6 @@ public class UserChatScreen implements Serializable {
     private void sendJson(SendMessage message){
         Gson gson = new Gson();
         String jsonChatMessage = gson.toJson(message);
-        Log.d("JSON", jsonChatMessage);
 
         if(homeScreenClient != null){
             homeScreenClient.getWebSocketClient().send(jsonChatMessage);

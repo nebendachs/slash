@@ -76,6 +76,7 @@ public class ChatScreenActivity extends AppCompatActivity {
             }
         });
 
+
         Button createTemplate = findViewById(R.id.chatscreen_button_template);
         createTemplate.setOnClickListener(new View.OnClickListener(){
             @Override
