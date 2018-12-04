@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import de.sharknoon.slash.Activties.ChatScreenActivity;
+import de.sharknoon.slash.Activties.HomeScreenActivity;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.R;
