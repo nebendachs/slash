@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -60,12 +61,13 @@ public class CreateClientProjektActivity extends AppCompatActivity {
             Gson gson = new Gson();
             GetChat getChat = new GetChat(ParameterManager.getSession(context), person.getId());
             String jsonChatMessage = gson.toJson(getChat);
+            Log.i("XXXXXX",jsonChatMessage);
 
             if(homeScreenClient != null){
                 homeScreenClient.getWebSocketClient().send(jsonChatMessage);
             }
 
-            //activity.finish();
+            activity.finish();
         }
 
         public void setActivity(CreateClientProjektActivity activity) {

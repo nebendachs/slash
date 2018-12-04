@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import de.sharknoon.slash.HomeScreen.Chat;
 import de.sharknoon.slash.HomeScreen.Project;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class MessageBuilder {
 
@@ -22,7 +23,6 @@ public class MessageBuilder {
     private Context context;
     private boolean project_b;
     private ArrayList<Sender> senders;
-    private String ownId = "";
 
     public MessageBuilder(Context context, Chat.Message message, ChatOrProject chatOrProject){
         view = new LinearLayout(context);
@@ -33,9 +33,8 @@ public class MessageBuilder {
 
         if(chatOrProject.getChatOrProject() == 0) {
             Chat chat = chatOrProject.getChat();
-            Sender persA = new Sender(chat.getPartnerUsername(), chat.getPersonA());
-            Sender persB = new Sender("You", chat.getPersonB());
-            ownId = chat.getPersonB();
+            Sender persA = new Sender("", chat.getPersonA());
+            Sender persB = new Sender("", chat.getPersonB());
             this.senders.add(persA);
             this.senders.add(persB);
 
@@ -71,7 +70,7 @@ public class MessageBuilder {
                 if(project_b) {
                     sender = s.name;
                 }
-                if(s.id.equals(ownId)){
+                if(s.id.equals(ParameterManager.getUserId(context))){
                     left_b = false;
                 }
             }

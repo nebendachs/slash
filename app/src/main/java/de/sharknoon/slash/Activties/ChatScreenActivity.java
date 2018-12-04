@@ -1,5 +1,6 @@
 package de.sharknoon.slash.Activties;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,10 +23,12 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     private static UserChatScreen screen;
     private static LinearLayout messageScreen;
+    public static boolean active = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        active = true;
         setContentView(R.layout.activity_chat_screen);
 
         //Stop keypad from spawning directly at beginning
@@ -57,6 +60,18 @@ public class ChatScreenActivity extends AppCompatActivity {
         }
 
         this.handleButtons(chatOrProject);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        active = false;
     }
 
     public static void setChat(ChatOrProject chatOrProject, Context context){
