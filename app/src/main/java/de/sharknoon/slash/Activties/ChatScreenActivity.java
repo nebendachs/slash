@@ -121,7 +121,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     public void moveAddonScreenUpDown(){
         RelativeLayout layout = findViewById(R.id.chatscreen_menu_bottom);
 
-        if(layout.getVisibility() == View.VISIBLE){
+        if(layout.getVisibility() == View.GONE){
             //Show the panel
             Animation bottomUp = AnimationUtils.loadAnimation(this, R.anim.new_chat_message_up);
             layout.startAnimation(bottomUp);
