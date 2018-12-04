@@ -74,6 +74,9 @@ public class CreateProject extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent goToAddPeopleActivity = new Intent(view.getContext(), AddPeopleActivity.class);
+                //Bundle bundle = new Bundle();
+                //bundle.putSerializable("People", people);
+                goToAddPeopleActivity.putExtra("People", people);
                 startActivity(goToAddPeopleActivity);
             }
         });

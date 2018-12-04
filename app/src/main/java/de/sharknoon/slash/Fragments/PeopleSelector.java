@@ -34,6 +34,7 @@ public class PeopleSelector extends Fragment {
     public static final String SELECTED = "Selected";
 
     private static final String ARG_PARAM1 = "purpose";
+    private static final String ARG_PARAM2 = "removees";
 
     private ArrayList<Person> people;
     private PeopleAdapter adapter;
@@ -51,10 +52,11 @@ public class PeopleSelector extends Fragment {
      *
      * @return A new instance of fragment PeopleSelector.
      */
-    public static PeopleSelector newInstance(String purpose) {
+    public static PeopleSelector newInstance(String purpose, ArrayList<Person> removees) {
         PeopleSelector fragment = new PeopleSelector();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, purpose);
+        args.putSerializable(ARG_PARAM2,removees);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,17 +64,21 @@ public class PeopleSelector extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        selectedIDs = new ArrayList<>();
+        people = new ArrayList<>();
         if (getArguments() != null) {
             purpose = getArguments().getString(ARG_PARAM1);
+            ArrayList<Person> removees = ((ArrayList<Person>)getArguments().getSerializable(ARG_PARAM2));
+            if(removees != null) {
+                removees.forEach(person -> selectedIDs.add(person.getId()));
+            }
         }
-        people = new ArrayList<>();
-        selectedIDs = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Registe People Receiver
+        //Register People Receiver
         peopleSearchResultReceiver = new PeopleSearchResultReceiver();
         IntentFilter inf = new IntentFilter(PeopleSearchResultReceiver.ACTION);
         getActivity().registerReceiver(peopleSearchResultReceiver, inf);

@@ -33,7 +33,7 @@ public class CreateClientProjektActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(PeopleSelector.newInstance(PeopleSelector.CHAT), "Chat");
+        adapter.addFragment(PeopleSelector.newInstance(PeopleSelector.CHAT, null), "Chat");
         adapter.addFragment(CreateProject.newInstance(), "Project");
         viewPager.setAdapter(adapter);
 
