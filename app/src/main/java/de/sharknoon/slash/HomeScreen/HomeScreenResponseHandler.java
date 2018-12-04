@@ -25,6 +25,7 @@ public class HomeScreenResponseHandler {
     private static final String JSON_FIELD_PROJECT = "project";
     private static final String CHAT_OK_STATUS = "OK_CHAT";
     private static final String PROJECT_OK_STATUS = "OK_PROJECT";
+    private static final String CONNECTED = "CONNECTED";
 
     public static void handleResponse(String serverResponse, Context context) {
 
@@ -113,6 +114,15 @@ public class HomeScreenResponseHandler {
                 setPersonSearchResultIntent.putExtra(PeopleSelector.PeopleSearchResultReceiver.ACTION, personSearchResult);
                 context.sendBroadcast(setPersonSearchResultIntent);
                 break;
+
+            case CONNECTED:
+                break;
+
+                default: //Every other case is an error, send error toast notification
+                    Intent intent = new Intent(HomeScreenActivity.ErrorToastReceiver.ACTION);
+                    intent.putExtra(HomeScreenActivity.ErrorToastReceiver.ACTION, serverResponse);
+                    context.sendBroadcast(intent);
+                    break;
         }
     }
 }

@@ -43,7 +43,6 @@ public class AddPeopleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_people);
 
         personReceiver = new ProjectPersonReceiver();
-        personReceiver.setActivity(this);
         IntentFilter intentFilter = new IntentFilter(AddPeopleActivity.ProjectPersonReceiver.ACTION);
         registerReceiver(personReceiver, intentFilter);
 
@@ -73,7 +72,6 @@ public class AddPeopleActivity extends AppCompatActivity {
     }
 
     public class ProjectPersonReceiver extends BroadcastReceiver {
-        AddPeopleActivity activity = null;
         public static final String ACTION = "de.sharknoon.slash.RECEIVE_PERSON_PROJECT";
 
         @Override
@@ -81,10 +79,6 @@ public class AddPeopleActivity extends AppCompatActivity {
             Person person = (Person) intent.getSerializableExtra("Person");
             selected.add(person);
             adapter_selected.notifyItemInserted(adapter_selected.getItemCount());
-        }
-
-        public void setActivity(AddPeopleActivity activity) {
-            this.activity = activity;
         }
     }
 
