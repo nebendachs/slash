@@ -100,23 +100,22 @@ public class LoginActivity extends AppCompatActivity {
                 String insertedPassword = String.valueOf(passwordInput.getText());
 
 
-                boolean mailTrue = true;
-                boolean passwordTrue = true;
+                boolean input_ok = true;
 
                 //False EMail
                 if (insertedEmail.isEmpty()) {
                     emailErrorTextView.setText(R.string.homeScreenIncorrectEmailMessage);
-                    mailTrue = false;
+                    input_ok = false;
                 }
 
                 // Empty password
                 if (insertedPassword.isEmpty() || insertedPassword.length() < 8) {
                     passwordErrorTextView.setText(R.string.homeScreenIncorrectPasswordMessage);
-                    passwordTrue = false;
+                    input_ok = false;
                 }
 
                 // Try to login User
-                if (mailTrue && passwordTrue) {
+                if (input_ok) {
                     LoginActivity.disableLoadingScreen(false, v.getContext());
 
                     String deviceID = CompletableFuture.supplyAsync(() -> {
