@@ -22,18 +22,21 @@ import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 
 public class AddPeopleActivity extends AppCompatActivity {
-    private ArrayList<Person> people;
     private ArrayList<Person> selected;
     private PeopleAdapter adapter_selected;
     private ProjectPersonReceiver personReceiver = null;
-    private PeopleSelector peopleSelector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        selected = new ArrayList<>();
+        //ArrayList<Person> previous = new ArrayList<>();
+        //previous.addAll((ArrayList<Person>)getIntent().getSerializableExtra("People"));
+        selected.addAll((ArrayList<Person>)getIntent().getSerializableExtra("People"));
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = PeopleSelector.newInstance(PeopleSelector.PROJECT);
+        Fragment fragment = PeopleSelector.newInstance(PeopleSelector.PROJECT, selected);
         fragmentTransaction.add(R.id.add_people_selector_1, fragment);
         fragmentTransaction.commit();
 
@@ -44,7 +47,6 @@ public class AddPeopleActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter(AddPeopleActivity.ProjectPersonReceiver.ACTION);
         registerReceiver(personReceiver, intentFilter);
 
-        selected = new ArrayList<>();
         // Lookup the recyclerview in activity layout
         RecyclerView rvSelected = findViewById(R.id.selected_people);
         // Create adapter passing in the people list

@@ -48,18 +48,35 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
                 Person person = people.get(position);
 
-                Intent intent = new Intent();
-                if(purpose.equals(PeopleSelector.CHAT))
-                    intent.setAction(CreateClientProjektActivity.ChatPersonReceiver.ACTION);
-                else if(purpose.equals(PeopleSelector.PROJECT))
-                    intent.setAction(AddPeopleActivity.ProjectPersonReceiver.ACTION);
-                //else if(purpose.equals(PeopleSelector.SELECTED))
-                intent.putExtra("Person", person);
-                context.sendBroadcast(intent);
+                if(purpose.equals(PeopleSelector.CHAT)) {
+                    //Send broadcast to Create Chat
+                    Intent intent = new Intent(CreateClientProjektActivity.ChatPersonReceiver.ACTION);
+                    intent.putExtra("Person", person);
+                    context.sendBroadcast(intent);
+                } else if(purpose.equals(PeopleSelector.PROJECT)) {
+                    //Send broadcast to Add People
+                    Intent intent = new Intent(AddPeopleActivity.ProjectPersonReceiver.ACTION);
+                    intent.putExtra("Person", person);
+                    context.sendBroadcast(intent);
 
-                //Remove selected person from result list (important for adding people to projects)
-                people.remove(position);
-                notifyItemRemoved(position);
+                    //Send broadcast to People Selector
+                    Intent intent2 = new Intent(PeopleSelector.PeopleSelectedReceiver.ACTION);
+                    intent2.putExtra(PeopleSelector.PeopleSelectedReceiver.ACTION, person.getId());
+                    context.sendBroadcast(intent2);
+
+                    //Remove selected person from list
+                    people.remove(position);
+                    notifyItemRemoved(position);
+                } else if(purpose.equals(PeopleSelector.SELECTED)) {
+                    //Send broadcast to People Selector
+                    Intent intent = new Intent(PeopleSelector.PeopleDeselectedReceiver.ACTION);
+                    intent.putExtra(PeopleSelector.PeopleDeselectedReceiver.ACTION, person.getId());
+                    context.sendBroadcast(intent);
+
+                    //Remove selected person from list
+                    people.remove(position);
+                    notifyItemRemoved(position);
+                }
             }
         }
     }
