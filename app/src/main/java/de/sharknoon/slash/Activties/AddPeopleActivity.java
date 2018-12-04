@@ -22,11 +22,9 @@ import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 
 public class AddPeopleActivity extends AppCompatActivity {
-    private ArrayList<Person> people;
     private ArrayList<Person> selected;
     private PeopleAdapter adapter_selected;
     private ProjectPersonReceiver personReceiver = null;
-    private PeopleSelector peopleSelector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

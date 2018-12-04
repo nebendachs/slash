@@ -39,8 +39,11 @@ public class PeopleSelector extends Fragment {
     private PeopleAdapter adapter;
     private String purpose;
     private TextView no_results;
+    private ArrayList<String> selectedIDs;
 
     private PeopleSearchResultReceiver peopleSearchResultReceiver = null;
+    private PeopleSelectedReceiver peopleSelectedReceiver = null;
+    private PeopleDeselectedReceiver peopleDeselectedReceiver = null;
 
     /**
      * Use this factory method to create a new instance of
@@ -63,14 +66,27 @@ public class PeopleSelector extends Fragment {
             purpose = getArguments().getString(ARG_PARAM1);
         }
         people = new ArrayList<>();
+        selectedIDs = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Registe People Receiver
         peopleSearchResultReceiver = new PeopleSearchResultReceiver();
         IntentFilter inf = new IntentFilter(PeopleSearchResultReceiver.ACTION);
         getActivity().registerReceiver(peopleSearchResultReceiver, inf);
+
+        //Register Selected Receiver
+        peopleSelectedReceiver = new PeopleSelectedReceiver();
+        IntentFilter inf2 = new IntentFilter(PeopleSelectedReceiver.ACTION);
+        getActivity().registerReceiver(peopleSelectedReceiver, inf2);
+
+        //Register Deselected Receiver
+        peopleDeselectedReceiver = new PeopleDeselectedReceiver();
+        IntentFilter inf3 = new IntentFilter(PeopleDeselectedReceiver.ACTION);
+        getActivity().registerReceiver(peopleDeselectedReceiver, inf3);
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_people_selector, container, false);
 
@@ -111,14 +127,20 @@ public class PeopleSelector extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             PersonSearchResult searchResult = (PersonSearchResult) intent.getSerializableExtra(ACTION);
-            //todo: [Project] Don't show selected users
             people.clear();
             people.addAll(searchResult.getUsers());
+            ArrayList<Person> removees = new ArrayList<>();
             for(int i=0; i<people.size(); i++) {
+                //Remove current user
                 if(people.get(i).getId().equals(ParameterManager.getUserId(context)))
-                    people.remove(i);
+                    removees.add(people.get(i));
+                //Remove already selected users
+                else if(selectedIDs.contains(people.get(i).getId()))
+                    removees.add(people.get(i));
             }
+            people.removeAll(removees);
 
+            //Show "no results found" if list is empty
             if(people.isEmpty())
                 no_results.setVisibility(View.VISIBLE);
             else
@@ -129,9 +151,31 @@ public class PeopleSelector extends Fragment {
         }
     }
 
+    public class PeopleSelectedReceiver extends BroadcastReceiver {
+        public static final String ACTION = "de.sharknoon.slash.RECEIVE_PERSON_SELECTED";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String id = (String) intent.getSerializableExtra(ACTION);
+            selectedIDs.add(id);
+        }
+    }
+
+    public class PeopleDeselectedReceiver extends BroadcastReceiver {
+        public static final String ACTION = "de.sharknoon.slash.RECEIVE_PERSON_DESELECTED";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String id = (String) intent.getSerializableExtra(ACTION);
+            selectedIDs.remove(id);
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         getActivity().unregisterReceiver(peopleSearchResultReceiver);
+        getActivity().unregisterReceiver(peopleSelectedReceiver);
+        getActivity().unregisterReceiver(peopleDeselectedReceiver);
     }
 }
