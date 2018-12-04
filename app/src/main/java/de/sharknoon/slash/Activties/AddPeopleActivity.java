@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -53,7 +54,8 @@ public class AddPeopleActivity extends AppCompatActivity {
         // Attach the adapter to the recyclerview to populate items
         rvSelected.setAdapter(adapter_selected);
         // Set layout manager to position the items
-        rvSelected.setLayoutManager(new GridLayoutManager(this, 4));
+        //rvSelected.setLayoutManager(new GridLayoutManager(this, 4));
+        rvSelected.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         this.handleCreateProjectButton();
     }
