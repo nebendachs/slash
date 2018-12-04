@@ -1,8 +1,15 @@
 package de.sharknoon.slash.HomeScreen;
 
-import java.util.List;
+import android.util.Log;
 
-public class Chat {
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+
+public class Chat implements Serializable{
 
     private String id;
     private String personA;
@@ -50,12 +57,25 @@ public class Chat {
         return creationDate;
     }
 
-    public class Message{
+    public class Message implements Serializable, Comparable<Message> {
+
         public String sender;
         public String creationDate;
         public String type;
         public String content;
         public String subject;
         public String emotion;
+
+        @Override
+        public int compareTo(Message m) {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.GERMANY);
+            try {
+                return format.parse(creationDate).compareTo(format.parse(m.creationDate));
+            } catch (ParseException e){
+                Log.i("Chat", "Parse Exception while parsing time");
+                return 0;
+            }
+
+        }
     }
 }

@@ -3,4 +3,13 @@
     <color name="colorPrimary">#ff8800</color>
     <color name="colorPrimaryDark">#ff5e00</color>
     <color name="colorAccent">#ff5e00</color>
+    <color name="colorSuccess">#049F06</color>
+    <color name="colorOk">#049F06</color>
+    <color name="colorInfo">#1155cc</color>
+    <color name="colorQuestion">#1155cc</color>
+    <color name="colorHelp">#1155cc</color>
+    <color name="colorHurry">#ef6c00</color>
+    <color name="colorCriticism">#990000</color>
+    <color name="colorIncomprehension">#990000</color>
+    <color name="colorTextStandard">#000000</color>
 </resources>

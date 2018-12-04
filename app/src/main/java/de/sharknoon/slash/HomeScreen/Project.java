@@ -1,8 +1,9 @@
 package de.sharknoon.slash.HomeScreen;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Project {
+public class Project implements Serializable {
 
     private String id;
     private String name;

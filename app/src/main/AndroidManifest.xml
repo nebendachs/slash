@@ -90,7 +90,10 @@
             android:label="New" />
         <activity
             android:name=".Activties.AddPeopleActivity"
-            android:label="Add People" />
+            android:label="@string/chatScreen" />
+        <activity
+            android:name=".Activties.CreateTemplateActivity"
+            android:label="MessageTemplates" />
     </application>
 
 </manifest>
