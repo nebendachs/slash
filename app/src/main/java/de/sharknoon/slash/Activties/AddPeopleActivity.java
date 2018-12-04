@@ -4,38 +4,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import de.sharknoon.slash.Fragments.CreateProject;
 import de.sharknoon.slash.Fragments.PeopleSelector;
-import de.sharknoon.slash.Fragments.Profile;
-import de.sharknoon.slash.HomeScreen.FindUser;
-import de.sharknoon.slash.HomeScreen.HomeScreenClient;
-import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.People.PeopleAdapter;
-import de.sharknoon.slash.Project.AddProjectMessage;
+import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
-import de.sharknoon.slash.SharedPreferences.ParameterManager;
-
-import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
 public class AddPeopleActivity extends AppCompatActivity {
     private ArrayList<Person> people;

@@ -3,14 +3,12 @@ package de.sharknoon.slash.HomeScreen;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
 import org.java_websocket.client.WebSocketClient;
 
-import java.io.Serializable;
 import java.util.function.Consumer;
 
 import de.sharknoon.slash.Activties.CreateClientProjektActivity;

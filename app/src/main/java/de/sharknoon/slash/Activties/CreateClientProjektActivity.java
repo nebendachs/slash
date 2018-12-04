@@ -4,24 +4,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import de.sharknoon.slash.Fragments.CreateProject;
 import de.sharknoon.slash.Fragments.PeopleSelector;
-import de.sharknoon.slash.HomeScreen.UserCreateClientOrProjekt;
-import de.sharknoon.slash.People.PeopleAdapter;
 import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.UISupport.ViewPagerAdapter;
 
 public class CreateClientProjektActivity extends AppCompatActivity {
 
-    private UserCreateClientOrProjekt ccp;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ChatPersonReceiver personReceiver = null;
@@ -30,8 +25,6 @@ public class CreateClientProjektActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_chat_projekt);
-
-        ccp = new UserCreateClientOrProjekt();
 
         personReceiver = new ChatPersonReceiver();
         personReceiver.setActivity(this);

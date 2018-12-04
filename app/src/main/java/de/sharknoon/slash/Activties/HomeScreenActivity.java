@@ -7,8 +7,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import de.sharknoon.slash.Fragments.Home;
@@ -18,6 +18,9 @@ import de.sharknoon.slash.R;
 
 public class HomeScreenActivity extends AppCompatActivity implements Home.OnFragmentInteractionListener, Profile.OnFragmentInteractionListener{
     private UserHomeScreen screen;
+    private FragmentManager fragmentManager;
+    private Fragment home;
+    private Fragment profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,37 +29,52 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
 
         screen = new UserHomeScreen(this);
 
-        final FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
         // define your fragments here
-        final Fragment home = Home.newInstance();
-        final Fragment profile = Profile.newInstance();
+        home = Home.newInstance();
+        profile = Profile.newInstance();
 
         FragmentTransaction fragmentTransaction;
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment, home).commit();
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+        this.handleBottomNavigation();
+        this.handlePullRefresh();
 
-        // handle navigation selection
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        FragmentTransaction fragmentTransaction;
-                        switch (item.getItemId()) {
-                            case R.id.navigation_home:
-                                fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.fragment, home).commit();
-                                return true;
-                            case R.id.navigation_profile:
-                                fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.fragment, profile).commit();
-                                return true;
-                        }
-                        return false;
-                    }
-                });
+
+    }
+
+    private void handleBottomNavigation() {
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction fragmentTransaction;
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment, home).commit();
+                        return true;
+                    case R.id.navigation_profile:
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment, profile).commit();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void handlePullRefresh() {
+        SwipeRefreshLayout swipe = findViewById(R.id.coordinatorLayout);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                screen.askForProjectsChats();
+                swipe.setRefreshing(false);
+            }
+        });
     }
 
     @Override

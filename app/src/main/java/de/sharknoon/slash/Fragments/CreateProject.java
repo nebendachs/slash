@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +25,6 @@ import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
-
 
 public class CreateProject extends Fragment {
     //private static final String ARG_PARAM1 = "param1";

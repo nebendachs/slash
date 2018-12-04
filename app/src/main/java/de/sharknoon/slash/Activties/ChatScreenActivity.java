@@ -1,9 +1,8 @@
 package de.sharknoon.slash.Activties;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,7 +16,6 @@ import android.widget.RelativeLayout;
 
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.ChatMessages.UserChatScreen;
-import de.sharknoon.slash.HomeScreen.Chat;
 import de.sharknoon.slash.R;
 
 public class ChatScreenActivity extends AppCompatActivity {
