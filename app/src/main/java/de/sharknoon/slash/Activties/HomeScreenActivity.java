@@ -17,13 +17,14 @@ import de.sharknoon.slash.HomeScreen.UserHomeScreen;
 import de.sharknoon.slash.R;
 
 public class HomeScreenActivity extends AppCompatActivity implements Home.OnFragmentInteractionListener, Profile.OnFragmentInteractionListener{
+    private UserHomeScreen screen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        UserHomeScreen screen = new UserHomeScreen(this);
+        screen = new UserHomeScreen(this);
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -61,7 +62,7 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
     @Override
     public void onResume() {
         super.onResume();
-        //todo: Refresh projects and chats
+        screen.askForProjectsChats();
     }
 
     @Override

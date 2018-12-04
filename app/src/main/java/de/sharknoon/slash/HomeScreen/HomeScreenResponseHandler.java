@@ -2,6 +2,7 @@ package de.sharknoon.slash.HomeScreen;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.LinearLayout;
 
 import com.google.android.flexbox.FlexboxLayout;

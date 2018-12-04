@@ -23,7 +23,7 @@ public class UserHomeScreen {
 
     public UserHomeScreen(Context context) {
         this.context = context;
-        this.askForProjectsChats();
+        //this.askForProjectsChats();
     }
 
     public void askForProjectsChats(){

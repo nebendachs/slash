@@ -2,13 +2,10 @@ package de.sharknoon.slash.Fragments;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,26 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import org.w3c.dom.Text;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import de.sharknoon.slash.HomeScreen.FindUser;
-import de.sharknoon.slash.HomeScreen.HomeScreenClient;
 import de.sharknoon.slash.HomeScreen.PersonSearchResult;
-import de.sharknoon.slash.HomeScreen.UserHomeScreen;
-import de.sharknoon.slash.Login.LogoutMessage;
 import de.sharknoon.slash.People.PeopleAdapter;
 import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
-import de.sharknoon.slash.Registration.RegistrationMessage;
-import de.sharknoon.slash.Registration.UserRegistration;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
