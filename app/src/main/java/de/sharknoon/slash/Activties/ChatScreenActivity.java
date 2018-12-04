@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -79,7 +80,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     }
 
     public void handleButtons(ChatOrProject chatOrProject){
-        Button btn = findViewById(R.id.chatscreen_button_addon);
+        ImageButton btn = findViewById(R.id.chatscreen_button_addon);
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -105,7 +106,7 @@ public class ChatScreenActivity extends AppCompatActivity {
             }
         });
 
-        Button sendButton = findViewById(R.id.chatscreen_button_send);
+        ImageButton sendButton = findViewById(R.id.chatscreen_button_send);
         EditText editText = findViewById(R.id.chatscreen_message_field);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
