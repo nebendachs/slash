@@ -9,11 +9,17 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
+import de.sharknoon.slash.ChatMessages.GetChat;
 import de.sharknoon.slash.Fragments.CreateProject;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 import de.sharknoon.slash.UISupport.ViewPagerAdapter;
+
+import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
 public class CreateClientProjektActivity extends AppCompatActivity {
 
@@ -51,9 +57,15 @@ public class CreateClientProjektActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Person person = (Person) intent.getSerializableExtra("Person");
 
-            //todo Neuen Chat mit der Person öffnen bzw. in bestehenden Chat springen
+            Gson gson = new Gson();
+            GetChat getChat = new GetChat(ParameterManager.getSession(context), person.getId());
+            String jsonChatMessage = gson.toJson(getChat);
 
-            activity.finish();
+            if(homeScreenClient != null){
+                homeScreenClient.getWebSocketClient().send(jsonChatMessage);
+            }
+
+            //activity.finish();
         }
 
         public void setActivity(CreateClientProjektActivity activity) {

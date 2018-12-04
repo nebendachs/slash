@@ -43,8 +43,8 @@ public class MessageBuilder {
             project_b = true;
 
             Project project = chatOrProject.getProject();
-            for (String user:project.getUsers()){
-                Sender sender = new Sender(user, user);
+            for (Project.Username user:project.getUsernames()){
+                Sender sender = new Sender(user.getUsername(), user.getId());
                 this.senders.add(sender);
             }
         }

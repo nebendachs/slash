@@ -22,7 +22,6 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     private static UserChatScreen screen;
     private static LinearLayout messageScreen;
-    private String id = "NO_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,6 @@ public class ChatScreenActivity extends AppCompatActivity {
         screen = new UserChatScreen();
 
         if(chatOrProject != null) {
-            id = chatOrProject.getId();
             screen.setChat(chatOrProject, this, messageScreen);
         } else {
             Log.i("Chat", "No chatOrProject!");
@@ -79,7 +77,7 @@ public class ChatScreenActivity extends AppCompatActivity {
         createTemplate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                screen.startMessageBuilder(v.getContext(), chatOrProject.getStatus(), id);
+                screen.startMessageBuilder(v.getContext(), chatOrProject.getStatus(), chatOrProject.getId());
             }
         });
 
@@ -87,8 +85,7 @@ public class ChatScreenActivity extends AppCompatActivity {
         createMeme.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO: Aufbau wie Template
-                screen.sendMessage(0, v.getContext(), id,  chatOrProject.getStatus(), "","", "");
+                screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
                 hideKeyboard();
             }
         });
@@ -99,7 +96,7 @@ public class ChatScreenActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                screen.sendMessage(0, v.getContext(), id, "ADD_CHAT_MESSAGE", editText.getText().toString(), "", "");
+                screen.sendMessage(0, v.getContext(), chatOrProject.getId(), chatOrProject.getStatus(), editText.getText().toString(), "", "");
                 editText.setText("");
                 hideKeyboard();
             }

@@ -20,11 +20,7 @@ public class HomeScreenResponseHandler {
 
     private static final String GET_HOME_OK_STATUS = "OK_HOME";
     private static final String JSON_FIELD_STATUS = "status";
-    private static final String GET_USER_OK_STATUS = "OK_USER";
-    private static final String ADD_MESSAGE_OK_STATUS = "OK_CHAT";
-    private static final String NO_USER_FOUND_STATUS = "NO_USER_FOUND";
     private static final String OK_USERS = "OK_USERS";
-    private static final String OK_PROJEKT = "OK_PROJEKT";
     private static final String JSON_FIELD_CHAT = "chat";
     private static final String JSON_FIELD_PROJECT = "project";
     private static final String CHAT_OK_STATUS = "OK_CHAT";

@@ -9,16 +9,16 @@ public class Project implements Serializable {
     private String name;
     private String image;
     private String creationDate;
-    private List<String> users;
+    private List<Username> usernames;
     private List<Chat.Message> messages;
 
-    public Project(String id, String name, String image, String creationDate, List<String> users, List<Chat.Message> messages){
+    public Project(String id, String name, String image, String creationDate, List<Username> usernames, List<Chat.Message> messages){
         this.id = id;
         this.name = name;
         this.image = image;
         this.creationDate = creationDate;
-        this.users = users;
         this.messages = messages;
+        this.usernames = usernames;
     }
 
     public String getId() {
@@ -37,9 +37,27 @@ public class Project implements Serializable {
         return creationDate;
     }
 
-    public List<String> getUsers() {
-        return users;
+    public List<Chat.Message> getMessages() { return messages; }
+
+    public List<Username> getUsernames() {
+        return usernames;
     }
 
-    public List<Chat.Message> getMessages() { return messages; }
+    public class Username implements Serializable{
+        private String id;
+        private String username;
+
+        public Username(String id, String username){
+            this.id = id;
+            this.username = username;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+    }
 }
