@@ -33,7 +33,6 @@
                 android:orientation="vertical"
                 android:gravity="top">
 
-
             </LinearLayout>
 
         </ScrollView>
@@ -43,7 +42,8 @@
             android:id="@+id/chatscreen_menu_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,17 +84,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/chatscreen_button_addon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:text="K"/>
+                android:src="@drawable/ic_attachment" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/chatscreen_button_send"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:text="S"/>
+                android:src="@drawable/ic_send_fill" />
 
         </LinearLayout>
 

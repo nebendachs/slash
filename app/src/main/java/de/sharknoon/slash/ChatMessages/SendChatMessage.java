@@ -1,6 +1,6 @@
 package de.sharknoon.slash.ChatMessages;
 
-public class SendMessage {
+public class SendChatMessage {
 
     private String sessionid;
     private String status;
@@ -10,7 +10,7 @@ public class SendMessage {
     private String messageSubject;
     private String messageEmotion;
 
-    public SendMessage(String sessionId, String chatID, String messageType, String messageContent, String messageSubject, String messageEmotion, String status){
+    public SendChatMessage(String sessionId, String chatID, String messageType, String messageContent, String messageSubject, String messageEmotion, String status){
         this.chatID = chatID;
         this.sessionid = sessionId;
         this.messageType = messageType;

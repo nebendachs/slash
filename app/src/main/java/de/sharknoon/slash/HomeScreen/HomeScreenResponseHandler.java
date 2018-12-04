@@ -3,6 +3,7 @@ package de.sharknoon.slash.HomeScreen;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -15,20 +16,19 @@ import de.sharknoon.slash.Activties.HomeScreenActivity;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.R;
+import static de.sharknoon.slash.Activties.ChatScreenActivity.active;
+
 
 public class HomeScreenResponseHandler {
 
     private static final String GET_HOME_OK_STATUS = "OK_HOME";
     private static final String JSON_FIELD_STATUS = "status";
-    private static final String GET_USER_OK_STATUS = "OK_USER";
-    private static final String ADD_MESSAGE_OK_STATUS = "OK_CHAT";
-    private static final String NO_USER_FOUND_STATUS = "NO_USER_FOUND";
     private static final String OK_USERS = "OK_USERS";
-    private static final String OK_PROJEKT = "OK_PROJEKT";
     private static final String JSON_FIELD_CHAT = "chat";
     private static final String JSON_FIELD_PROJECT = "project";
     private static final String CHAT_OK_STATUS = "OK_CHAT";
     private static final String PROJECT_OK_STATUS = "OK_PROJECT";
+    private static final String CONNECTED = "CONNECTED";
 
     public static void handleResponse(String serverResponse, Context context) {
 
@@ -87,7 +87,16 @@ public class HomeScreenResponseHandler {
 
                     @Override
                     public void run() {
-                        ChatScreenActivity.setChat(chatOrProject, context);
+                        if(!active) {
+                            Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("CHATORPROJECT", chatOrProject);
+                            bundle.putString("NAME", chatOrProject.getName());
+                            intent.putExtras(bundle);
+                            homeScreenActivity.startActivity(intent);
+                        } else {
+                            ChatScreenActivity.setChat(chatOrProject, context);
+                        }
                     }
                 });
                 break;
@@ -103,7 +112,16 @@ public class HomeScreenResponseHandler {
 
                     @Override
                     public void run() {
-                        ChatScreenActivity.setChat(chatOrProject, context);
+                        if(!active){
+                            Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("CHATORPROJECT", chatOrProject);
+                            bundle.putString("NAME", chatOrProject.getName());
+                            intent.putExtras(bundle);
+                            homeScreenActivity.startActivity(intent);
+                        } else {
+                            ChatScreenActivity.setChat(chatOrProject, context);
+                        }
                     }
                 });
                 break;
@@ -117,6 +135,15 @@ public class HomeScreenResponseHandler {
                 setPersonSearchResultIntent.putExtra(PeopleSelector.PeopleSearchResultReceiver.ACTION, personSearchResult);
                 context.sendBroadcast(setPersonSearchResultIntent);
                 break;
+
+            case CONNECTED:
+                break;
+
+                default: //Every other case is an error, send error toast notification
+                    Intent intent = new Intent(HomeScreenActivity.ErrorToastReceiver.ACTION);
+                    intent.putExtra(HomeScreenActivity.ErrorToastReceiver.ACTION, serverResponse);
+                    context.sendBroadcast(intent);
+                    break;
         }
     }
 }

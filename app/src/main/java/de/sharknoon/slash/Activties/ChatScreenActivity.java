@@ -1,5 +1,6 @@
 package de.sharknoon.slash.Activties;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -22,11 +24,12 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     private static UserChatScreen screen;
     private static LinearLayout messageScreen;
-    private String id = "NO_ID";
+    public static boolean active = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        active = true;
         setContentView(R.layout.activity_chat_screen);
 
         //Stop keypad from spawning directly at beginning
@@ -52,7 +55,6 @@ public class ChatScreenActivity extends AppCompatActivity {
         screen = new UserChatScreen();
 
         if(chatOrProject != null) {
-            id = chatOrProject.getId();
             screen.setChat(chatOrProject, this, messageScreen);
         } else {
             Log.i("Chat", "No chatOrProject!");
@@ -61,12 +63,24 @@ public class ChatScreenActivity extends AppCompatActivity {
         this.handleButtons(chatOrProject);
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        active = false;
+    }
+
     public static void setChat(ChatOrProject chatOrProject, Context context){
         screen.setChat(chatOrProject, context, messageScreen);
     }
 
     public void handleButtons(ChatOrProject chatOrProject){
-        Button btn = findViewById(R.id.chatscreen_button_addon);
+        ImageButton btn = findViewById(R.id.chatscreen_button_addon);
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -79,7 +93,7 @@ public class ChatScreenActivity extends AppCompatActivity {
         createTemplate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                screen.startMessageBuilder(v.getContext(), chatOrProject.getStatus(), id);
+                screen.startMessageBuilder(v.getContext(), chatOrProject.getStatus(), chatOrProject.getId());
             }
         });
 
@@ -87,19 +101,18 @@ public class ChatScreenActivity extends AppCompatActivity {
         createMeme.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO: Aufbau wie Template
-                screen.sendMessage(0, v.getContext(), id,  chatOrProject.getStatus(), "","", "");
+                screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
                 hideKeyboard();
             }
         });
 
-        Button sendButton = findViewById(R.id.chatscreen_button_send);
+        ImageButton sendButton = findViewById(R.id.chatscreen_button_send);
         EditText editText = findViewById(R.id.chatscreen_message_field);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                screen.sendMessage(0, v.getContext(), id, "ADD_CHAT_MESSAGE", editText.getText().toString(), "", "");
+                screen.sendMessage(0, v.getContext(), chatOrProject.getId(), chatOrProject.getStatus(), editText.getText().toString(), "", "");
                 editText.setText("");
                 hideKeyboard();
             }
@@ -109,7 +122,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     public void moveAddonScreenUpDown(){
         RelativeLayout layout = findViewById(R.id.chatscreen_menu_bottom);
 
-        if(layout.getVisibility() == View.VISIBLE){
+        if(layout.getVisibility() == View.GONE){
             //Show the panel
             Animation bottomUp = AnimationUtils.loadAnimation(this, R.anim.new_chat_message_up);
             layout.startAnimation(bottomUp);

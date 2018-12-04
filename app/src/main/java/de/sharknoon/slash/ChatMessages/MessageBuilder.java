@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import de.sharknoon.slash.HomeScreen.Chat;
 import de.sharknoon.slash.HomeScreen.Project;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class MessageBuilder {
 
@@ -22,7 +23,6 @@ public class MessageBuilder {
     private Context context;
     private boolean project_b;
     private ArrayList<Sender> senders;
-    private String ownId = "";
 
     public MessageBuilder(Context context, Chat.Message message, ChatOrProject chatOrProject){
         view = new LinearLayout(context);
@@ -33,9 +33,8 @@ public class MessageBuilder {
 
         if(chatOrProject.getChatOrProject() == 0) {
             Chat chat = chatOrProject.getChat();
-            Sender persA = new Sender(chat.getPartnerUsername(), chat.getPersonA());
-            Sender persB = new Sender("You", chat.getPersonB());
-            ownId = chat.getPersonB();
+            Sender persA = new Sender("", chat.getPersonA());
+            Sender persB = new Sender("", chat.getPersonB());
             this.senders.add(persA);
             this.senders.add(persB);
 
@@ -43,8 +42,8 @@ public class MessageBuilder {
             project_b = true;
 
             Project project = chatOrProject.getProject();
-            for (String user:project.getUsers()){
-                Sender sender = new Sender(user, user);
+            for (Project.Username user:project.getUsernames()){
+                Sender sender = new Sender(user.getUsername(), user.getId());
                 this.senders.add(sender);
             }
         }
@@ -60,6 +59,7 @@ public class MessageBuilder {
 
         String sender = "";
         String messageToSend = "";
+        String emotionToSend = "";
         int headlineColor = R.color.colorPrimary;
         int logo = R.drawable.logo2;
 
@@ -71,7 +71,7 @@ public class MessageBuilder {
                 if(project_b) {
                     sender = s.name;
                 }
-                if(s.id.equals(ownId)){
+                if(s.id.equals(ParameterManager.getUserId(context))){
                     left_b = false;
                 }
             }
@@ -81,39 +81,47 @@ public class MessageBuilder {
             messageToSend = message.content;
         } else if(message.type.equals("EMOTION")) {
             template_b = true;
-            messageToSend = message.subject + ":\n" + message.content;
+            messageToSend = "#"+message.subject + ":\n" + message.content;
             switch (message.emotion) {
                 case "SUCCESS":
                     logo = R.drawable.ic_checkmark_full;
                     headlineColor = R.color.colorSuccess;
+                    emotionToSend = "Erfolg";
                     break;
                 case "OK":
                     logo = R.drawable.ic_thumps_up_full;
                     headlineColor = R.color.colorOk;
+                    emotionToSend = "Zustimmung";
                     break;
                 case "INFO":
                     logo = R.drawable.ic_info_full;
                     headlineColor = R.color.colorInfo;
+                    emotionToSend = "Information";
                     break;
                 case "QUESTION":
                     logo = R.drawable.ic_help_full;
                     headlineColor = R.color.colorQuestion;
+                    emotionToSend = "Frage";
                     break;
                 case "HELP":
                     logo = R.drawable.ic_man_full;
                     headlineColor = R.color.colorHelp;
+                    emotionToSend = "Benötige Hilfe";
                     break;
                 case "HURRY":
                     logo = R.drawable.ic_warning_full;
                     headlineColor = R.color.colorHurry;
+                    emotionToSend = "Dringend";
                     break;
                 case "CRITICISM":
                     logo = R.drawable.ic_warning_round_full;
                     headlineColor = R.color.colorCriticism;
+                    emotionToSend = "Kritik";
                     break;
                 case "INCOMPREHENSION":
                     logo = R.drawable.ic_bold_round_full;
                     headlineColor = R.color.colorIncomprehension;
+                    emotionToSend ="Unverständnis";
                     break;
             }
         }
@@ -176,7 +184,7 @@ public class MessageBuilder {
             viewSubject = new TextView(context);
             viewSubject.setTypeface(null,Typeface.BOLD);
             viewSubject.setTextColor(ContextCompat.getColor(context, headlineColor));
-            viewSubject.setText(message.emotion);
+            viewSubject.setText(emotionToSend);
 
             innerlayout.addView(viewImage);
             innerlayout.addView(viewSubject);

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -24,8 +23,10 @@ public class UserChatScreen implements Serializable {
 
     public void setChat(ChatOrProject chatOrProject, Context context, LinearLayout messageScreen){
         fillChatScreen(chatOrProject, context, messageScreen);
-        if(messageScreen.getChildAt(messageScreen.getChildCount()-1).hasFocusable()) {
-            messageScreen.getChildAt(messageScreen.getChildCount()-1).requestFocus();
+        if(messageScreen.getChildAt(messageScreen.getChildCount()-1) != null) {
+            if (messageScreen.getChildAt(messageScreen.getChildCount() - 1).hasFocusable()) {
+                messageScreen.getChildAt(messageScreen.getChildCount() - 1).requestFocus();
+            }
         }
     }
 
@@ -77,16 +78,26 @@ public class UserChatScreen implements Serializable {
     }
 
     private void sendSimpleMessage(Context context, String id, String status, String message){
-        SendMessage sendMessage = new SendMessage(ParameterManager.getSession(context),id,"TEXT", message, "", "", status);
+        Object sendMessage;
+        if(status.equals("ADD_PROJECT_MESSAGE")){
+            sendMessage = new SendProjectMessage(ParameterManager.getSession(context), id, "TEXT", message, "", "", status);
+        } else {
+            sendMessage = new SendChatMessage(ParameterManager.getSession(context), id, "TEXT", message, "", "", status);
+        }
         sendJson(sendMessage);
     }
 
     private void sendTemplateMessage(Context context, String id, String status, String message, String emotion, String subject){
-        SendMessage sendMessage = new SendMessage(ParameterManager.getSession(context), id ,"EMOTION", message, subject, emotion, status);
+        Object sendMessage;
+        if(status.equals("ADD_PROJECT_MESSAGE")){
+            sendMessage = new SendProjectMessage(ParameterManager.getSession(context), id ,"EMOTION", message, subject, emotion, status);
+        } else {
+            sendMessage = new SendChatMessage(ParameterManager.getSession(context), id ,"EMOTION", message, subject, emotion, status);
+        }
         sendJson(sendMessage);
     }
 
-    private void sendJson(SendMessage message){
+    private void sendJson(Object message){
         Gson gson = new Gson();
         String jsonChatMessage = gson.toJson(message);
 

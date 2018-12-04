@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +44,6 @@ public class AddPeopleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_people);
 
         personReceiver = new ProjectPersonReceiver();
-        personReceiver.setActivity(this);
         IntentFilter intentFilter = new IntentFilter(AddPeopleActivity.ProjectPersonReceiver.ACTION);
         registerReceiver(personReceiver, intentFilter);
 
@@ -54,7 +54,8 @@ public class AddPeopleActivity extends AppCompatActivity {
         // Attach the adapter to the recyclerview to populate items
         rvSelected.setAdapter(adapter_selected);
         // Set layout manager to position the items
-        rvSelected.setLayoutManager(new GridLayoutManager(this, 4));
+        //rvSelected.setLayoutManager(new GridLayoutManager(this, 4));
+        rvSelected.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         this.handleCreateProjectButton();
     }
@@ -73,7 +74,6 @@ public class AddPeopleActivity extends AppCompatActivity {
     }
 
     public class ProjectPersonReceiver extends BroadcastReceiver {
-        AddPeopleActivity activity = null;
         public static final String ACTION = "de.sharknoon.slash.RECEIVE_PERSON_PROJECT";
 
         @Override
@@ -81,10 +81,6 @@ public class AddPeopleActivity extends AppCompatActivity {
             Person person = (Person) intent.getSerializableExtra("Person");
             selected.add(person);
             adapter_selected.notifyItemInserted(adapter_selected.getItemCount());
-        }
-
-        public void setActivity(AddPeopleActivity activity) {
-            this.activity = activity;
         }
     }
 

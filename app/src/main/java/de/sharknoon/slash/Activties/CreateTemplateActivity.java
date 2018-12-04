@@ -16,7 +16,6 @@ public class CreateTemplateActivity extends AppCompatActivity {
     private String id;
     private String status;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +45,19 @@ public class CreateTemplateActivity extends AppCompatActivity {
                 ArrayAdapter Adap = (ArrayAdapter) dropdown.getAdapter();
                 int pos = Adap.getPosition(chosenWord);
 
-                if(screen != null){
-                    screen.sendMessage(1,v.getContext(), id, status, messageContent.getText().toString(), getEmotion(pos), messageSubject.getText().toString());
+                boolean input_ok = true;
+                if(messageSubject.getText().toString().isEmpty()) {
+                    messageSubject.setError(getString(R.string.subject_required));
+                    input_ok = false;
                 }
-
-                finish();
+                if(messageContent.getText().toString().isEmpty()) {
+                    messageContent.setError(getString(R.string.message_required));
+                    input_ok = false;
+                }
+                if(screen != null && input_ok){
+                    screen.sendMessage(1,v.getContext(), id, status, messageContent.getText().toString(), getEmotion(pos), messageSubject.getText().toString());
+                    finish();
+                }
             }
         });
     }

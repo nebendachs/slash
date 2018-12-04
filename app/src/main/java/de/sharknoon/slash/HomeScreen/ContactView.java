@@ -49,7 +49,7 @@ public class ContactView {
                         // Go to HomeScreen ChatView and pass the contact Id
                         Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("CHATORPROJECT", project);
+                        bundle.putSerializable("CHATORPROJECT", chatOrProject);
                         bundle.putString("NAME", projectName);
                         intent.putExtras(bundle);
                         homeScreenActivity.startActivity(intent);
