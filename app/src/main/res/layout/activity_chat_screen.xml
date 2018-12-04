@@ -42,7 +42,8 @@
             android:id="@+id/chatscreen_menu_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
