@@ -1,22 +1,30 @@
 package de.sharknoon.slash.Activties;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.util.Log;
 
-import de.sharknoon.slash.ChatMessages.UserCreateClientOrProjekt;
+import de.sharknoon.slash.Fragments.CreateProject;
+import de.sharknoon.slash.Fragments.PeopleSelector;
+import de.sharknoon.slash.HomeScreen.UserCreateClientOrProjekt;
+import de.sharknoon.slash.People.PeopleAdapter;
+import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.UISupport.ViewPagerAdapter;
 
 public class CreateClientProjektActivity extends AppCompatActivity {
 
     private UserCreateClientOrProjekt ccp;
-    private int state = 0;                      //0 = chat, 1 = project
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ChatPersonReceiver personReceiver = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,60 +33,44 @@ public class CreateClientProjektActivity extends AppCompatActivity {
 
         ccp = new UserCreateClientOrProjekt();
 
-        this.searchForUser();
+        personReceiver = new ChatPersonReceiver();
+        personReceiver.setActivity(this);
+        IntentFilter intentFilter = new IntentFilter(ChatPersonReceiver.ACTION);
+        registerReceiver(personReceiver, intentFilter);
 
-        Button chatButton = findViewById(R.id.createChatProjectButtonChat);
-        Button projectButton = findViewById(R.id.createChatProjectButtonProject);
+        viewPager = findViewById(R.id.view_pager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(PeopleSelector.newInstance(PeopleSelector.CHAT), "Chat");
+        adapter.addFragment(CreateProject.newInstance(), "Project");
+        viewPager.setAdapter(adapter);
 
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                changeScreen(v.getContext());
-            }
-        });
-
-        projectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                changeScreen(v.getContext());
-            }
-        });
-
-        this.changeScreen(this);
+        tabLayout = findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_person);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_people);
     }
 
-    private void searchForUser() {
+    public class ChatPersonReceiver extends BroadcastReceiver {
+        CreateClientProjektActivity activity = null;
+        public static final String ACTION = "de.sharknoon.slash.RECEIVE_PERSON_CHAT";
 
-        // Get text view element for registration and handover event listener
-        EditText searchWindow = findViewById(R.id.createChatEditWindow);
-        Button searchButton = findViewById(R.id.createChatFindButton);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Search for User
-                ccp.searchSinglePerson(v.getContext(), searchWindow.getText().toString());
-            }
-        });
-    }
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Person person = (Person) intent.getSerializableExtra("Person");
 
-    public void changeScreen(Context context){
-        RelativeLayout chatLayout = findViewById(R.id.createChatScreen);
-        RelativeLayout projectLayout = findViewById(R.id.createProjectScreen);
-        Button chatButton = findViewById(R.id.createChatProjectButtonChat);
-        Button projectButton = findViewById(R.id.createChatProjectButtonProject);
+            //todo Neuen Chat mit der Person öffnen bzw. in bestehenden Chat springen
 
-        if(state == 0){
-            chatButton.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-            projectButton.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-            chatLayout.setVisibility(View.VISIBLE);
-            projectLayout.setVisibility(View.GONE);
-            state = 1;
-        } else if(state == 1){
-            chatButton.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-            projectButton.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-            chatLayout.setVisibility(View.GONE);
-            projectLayout.setVisibility(View.VISIBLE);
-            state = 0;
+            activity.finish();
         }
+
+        public void setActivity(CreateClientProjektActivity activity) {
+            this.activity = activity;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(personReceiver);
     }
 }

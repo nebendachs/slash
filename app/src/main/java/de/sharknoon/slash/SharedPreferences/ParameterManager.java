@@ -33,4 +33,14 @@ public class ParameterManager {
         editor.putString("device", input);
         editor.apply();
     }
+
+    public static String getUserId(Context context) {
+        return getPreferences(context).getString("user", null);
+    }
+
+    public static void setUserId(Context context, String input) {
+        SharedPreferences.Editor editor = getPreferences(context).edit();
+        editor.putString("user", input);
+        editor.apply();
+    }
 }

@@ -1,146 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="left"
+        android:background="@color/colorPrimary"
+        app:tabIconTint="@android:color/white"
+        app:tabTextColor="@android:color/white"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/createChatProjectButtonChat"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:text="Chat" />
-
-            <Button
-                android:id="@+id/createChatProjectButtonProject"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:text="Projekt" />
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
-                android:id="@+id/createChatScreen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/layout_orange_border"
-                        android:padding="5dp"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/createChatEditWindow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:hint="@string/createChatUsername"
-                            android:inputType="textPersonName"
-                            android:padding="5dp"
-                            android:background="@drawable/edit_text_no_border"/>
-
-                        <Button
-                            android:id="@+id/createChatFindButton"
-                            android:layout_width="50dp"
-                            android:maxWidth="50dp"
-                            android:layout_height="50dp"
-                            android:text="S" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/createChatErrorMessageTextView"
-                        style="@style/LoginRegisterScreenErrorMessageTextView"
-                        android:ellipsize="none"
-                        android:maxEms="20"
-                        android:maxLines="2"
-                        android:scrollHorizontally="false" />
-
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:id="@+id/createChatListScreen"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical" >
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
-                                    android:background="@color/colorPrimary"/>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="ICH BIN EIN USER"/>
-
-                            </LinearLayout>
-                        </LinearLayout>
-                    </ScrollView>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/createChatFillScreen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/createProjectScreen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:visibility="visible">
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
 
 </android.support.constraint.ConstraintLayout>

@@ -5,11 +5,13 @@ public class LoginResponse {
     private String status;
     private String message;
     private String sessionid;
+    private String userID;
 
-    public LoginResponse(String status, String message, String sessionid) {
+    public LoginResponse(String status, String message, String sessionid, String userID) {
         this.status = status;
         this.message = message;
         this.sessionid = sessionid;
+        this.userID = userID;
     }
 
     public String getStatus() {
@@ -22,5 +24,9 @@ public class LoginResponse {
 
     public String getSessionid() {
         return sessionid;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 }

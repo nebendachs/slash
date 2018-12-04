@@ -22,8 +22,8 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        UserHomeScreen screen = new UserHomeScreen(this);
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -56,6 +56,12 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
                         return false;
                     }
                 });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //todo: Refresh projects and chats
     }
 
     @Override

@@ -39,6 +39,7 @@ public class LoginResponseHandler {
 
                         // Save session id in shared parameters and go to HomeScreen Activity
                         ParameterManager.setSession(context, loginResponse.getSessionid());
+                        ParameterManager.setUserId(context, loginResponse.getUserID());
                         Activity loginActivity = (Activity) context;
                         Intent intent = new Intent(context, HomeScreenActivity.class);
                         loginActivity.startActivity(intent);
