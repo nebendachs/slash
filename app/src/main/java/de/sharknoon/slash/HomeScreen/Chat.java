@@ -68,6 +68,8 @@ public class Chat implements Serializable{
 
         @Override
         public int compareTo(Message m) {
+            if(creationDate.length() < 19){creationDate += ":00";}
+            if(m.creationDate.length() < 19){m.creationDate += ":00";}
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.GERMANY);
             try {
                 return format.parse(creationDate).compareTo(format.parse(m.creationDate));
