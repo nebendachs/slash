@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -25,8 +26,8 @@ public class LoginResponseHandler {
         Gson gson = new Gson();
         LoginResponse loginResponse = gson.fromJson(serverResponse, LoginResponse.class);
 
-        TextView emailErrorTextView = ((Activity) context).findViewById(R.id.homeScreenWrongEmailTextView);
-        TextView passwordErrorTextView = ((Activity) context).findViewById(R.id.homeScreenWrongPasswordTextView);
+        EditText editTextEmail = ((Activity) context).findViewById(R.id.homeScreenEmailInput);
+        EditText editTextPassword = ((Activity) context).findViewById(R.id.homeScreenPasswordInput);
 
         switch (loginResponse.getStatus()) {
 
@@ -55,7 +56,7 @@ public class LoginResponseHandler {
                     @Override
                     public void run() {
                         LoginActivity.disableLoadingScreen(true, context);
-                        emailErrorTextView.setText(R.string.homeScreenUserDoesNotExist);
+                        editTextEmail.setError(context.getResources().getString(R.string.homeScreenUserDoesNotExist));
                     }
                 });
                 break;
@@ -66,7 +67,8 @@ public class LoginResponseHandler {
                     @Override
                     public void run() {
                         LoginActivity.disableLoadingScreen(true, context);
-                        passwordErrorTextView.setText(R.string.homeScreenWrongPassword);                    }
+                        editTextPassword.setError(context.getResources().getString(R.string.homeScreenWrongPassword));
+                    }
                 });
                 break;
             case SERVER_RESPONSE_USER_ALREADY_LOGGED_IN:
@@ -76,7 +78,7 @@ public class LoginResponseHandler {
                     @Override
                     public void run() {
                         LoginActivity.disableLoadingScreen(true, context);
-                        emailErrorTextView.setText(R.string.homeScreenUserAlreadyLoggedIn);
+                        editTextEmail.setError(context.getResources().getString(R.string.homeScreenUserAlreadyLoggedIn));
                     }
                 });
                 break;

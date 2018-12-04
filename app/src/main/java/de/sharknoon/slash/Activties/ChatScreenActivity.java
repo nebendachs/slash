@@ -120,7 +120,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     }
 
     public void moveAddonScreenUpDown(){
-        RelativeLayout layout = findViewById(R.id.chatscreen_menu_bottom);
+        LinearLayout layout = findViewById(R.id.chatscreen_menu_bottom);
 
         if(layout.getVisibility() == View.GONE){
             //Show the panel
@@ -147,5 +147,10 @@ public class ChatScreenActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        LinearLayout layout = findViewById(R.id.chatscreen_menu_bottom);
+        layout.setVisibility(View.GONE);
+    }
 }

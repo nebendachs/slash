@@ -29,6 +29,8 @@ public class HomeScreenResponseHandler {
     private static final String CHAT_OK_STATUS = "OK_CHAT";
     private static final String PROJECT_OK_STATUS = "OK_PROJECT";
     private static final String CONNECTED = "CONNECTED";
+    private static final String OK_LOGOUT = "OK_LOGOUT";
+    private static final String MESSAGE_TOO_LONG = "CHAT_MESSAGE_CONTENT_TOO_LONG";
 
     public static void handleResponse(String serverResponse, Context context) {
 
@@ -137,6 +139,8 @@ public class HomeScreenResponseHandler {
                 break;
 
             case CONNECTED:
+            case OK_LOGOUT:
+            case MESSAGE_TOO_LONG:
                 break;
 
                 default: //Every other case is an error, send error toast notification

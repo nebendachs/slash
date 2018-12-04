@@ -92,7 +92,7 @@
             android:label="@string/title_activity_add_people" />
         <activity
             android:name=".Activties.CreateTemplateActivity"
-            android:label="MessageTemplates" />
+            android:label="Message Templates" />
     </application>
 
 </manifest>

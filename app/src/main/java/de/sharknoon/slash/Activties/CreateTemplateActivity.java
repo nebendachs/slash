@@ -2,6 +2,8 @@ package de.sharknoon.slash.Activties;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +27,7 @@ public class CreateTemplateActivity extends AppCompatActivity {
         String[] items = new String[]{"Erfolg", "Zustimmung", "Information", "Frage", "Benötige Hilfe", "Dringend", "Kritik", "Unverständnis"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+        dropdown.setSelection(0);
 
         if(getIntent().getExtras() != null) {
             screen = (UserChatScreen) getIntent().getExtras().getSerializable("USERCHATSCREEN");
@@ -32,8 +35,11 @@ public class CreateTemplateActivity extends AppCompatActivity {
             status = getIntent().getExtras().getString("STATUS");
         }
 
-        Button send = findViewById(R.id.templates_send);
+        this.handleSendButton();
+    }
 
+    private void handleSendButton() {
+        Button send = findViewById(R.id.templates_send);
         send.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

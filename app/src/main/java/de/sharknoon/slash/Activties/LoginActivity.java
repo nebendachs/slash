@@ -85,12 +85,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Reset error message text viewer
-                TextView emailErrorTextView = findViewById(R.id.homeScreenWrongEmailTextView);
-                emailErrorTextView.setText("");
-                TextView passwordErrorTextView = findViewById(R.id.homeScreenWrongPasswordTextView);
-                passwordErrorTextView.setText("");
-
                 // Get inserted E-Mail
                 EditText emailInput = findViewById(R.id.homeScreenEmailInput);
                 String insertedEmail = String.valueOf(emailInput.getText());
@@ -99,18 +93,19 @@ public class LoginActivity extends AppCompatActivity {
                 EditText passwordInput = findViewById(R.id.homeScreenPasswordInput);
                 String insertedPassword = String.valueOf(passwordInput.getText());
 
-
                 boolean input_ok = true;
 
-                //False EMail
+                // False EMail
                 if (insertedEmail.isEmpty()) {
-                    emailErrorTextView.setText(R.string.homeScreenIncorrectEmailMessage);
+                    //emailErrorTextView.setText(R.string.homeScreenIncorrectEmailMessage);
+                    emailInput.setError(getString(R.string.homeScreenIncorrectEmailMessage));
                     input_ok = false;
                 }
 
                 // Empty password
                 if (insertedPassword.isEmpty() || insertedPassword.length() < 8) {
-                    passwordErrorTextView.setText(R.string.homeScreenIncorrectPasswordMessage);
+                    //passwordErrorTextView.setText(R.string.homeScreenIncorrectPasswordMessage);
+                    passwordInput.setError(getString(R.string.homeScreenIncorrectPasswordMessage));
                     input_ok = false;
                 }
 
