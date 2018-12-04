@@ -72,4 +72,14 @@ public class ChatOrProject implements  Serializable{
             return "NO_STATUS";
         }
     }
+
+    public String getName(){
+        if(chat!=null){
+            return chat.getPartnerUsername();
+        } else if (project!=null){
+            return project.getName();
+        } else {
+            return "NO_STATUS";
+        }
+    }
 }

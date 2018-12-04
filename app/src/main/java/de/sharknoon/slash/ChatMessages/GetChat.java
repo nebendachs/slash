@@ -1,21 +1,21 @@
 package de.sharknoon.slash.ChatMessages;
 
 public class GetChat {
-    private String sessionId;
+    private String sessionid;
     private final String status = "GET_CHAT";
-    private String partnerUserId;
+    private String partnerUserID;
 
-        public GetChat(String sessionId, String partnerUserId){
-            this.sessionId = sessionId;
-            this.partnerUserId = partnerUserId;
+        public GetChat(String sessionid, String partnerUserID){
+            this.sessionid = sessionid;
+            this.partnerUserID = partnerUserID;
         }
 
     public String getPartnerUserId() {
-        return partnerUserId;
+        return partnerUserID;
     }
 
     public String getSessionId() {
-        return sessionId;
+        return sessionid;
     }
 
     public String getStatus() {

@@ -3,6 +3,7 @@ package de.sharknoon.slash.HomeScreen;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -11,10 +12,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import de.sharknoon.slash.Activties.ChatScreenActivity;
-import de.sharknoon.slash.Activties.HomeScreenActivity;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.R;
+import static de.sharknoon.slash.Activties.ChatScreenActivity.active;
+
 
 public class HomeScreenResponseHandler {
 
@@ -83,7 +85,16 @@ public class HomeScreenResponseHandler {
 
                     @Override
                     public void run() {
-                        ChatScreenActivity.setChat(chatOrProject, context);
+                        if(!active) {
+                            Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("CHATORPROJECT", chatOrProject);
+                            bundle.putString("NAME", chatOrProject.getName());
+                            intent.putExtras(bundle);
+                            homeScreenActivity.startActivity(intent);
+                        } else {
+                            ChatScreenActivity.setChat(chatOrProject, context);
+                        }
                     }
                 });
                 break;
@@ -99,7 +110,16 @@ public class HomeScreenResponseHandler {
 
                     @Override
                     public void run() {
-                        ChatScreenActivity.setChat(chatOrProject, context);
+                        if(!active){
+                            Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("CHATORPROJECT", chatOrProject);
+                            bundle.putString("NAME", chatOrProject.getName());
+                            intent.putExtras(bundle);
+                            homeScreenActivity.startActivity(intent);
+                        } else {
+                            ChatScreenActivity.setChat(chatOrProject, context);
+                        }
                     }
                 });
                 break;
