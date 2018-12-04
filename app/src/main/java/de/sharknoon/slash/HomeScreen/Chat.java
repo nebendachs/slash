@@ -1,6 +1,15 @@
 package de.sharknoon.slash.HomeScreen;
 
-public class Chat {
+import android.util.Log;
+
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+
+public class Chat implements Serializable{
 
     private String id;
     private String personA;
@@ -8,9 +17,9 @@ public class Chat {
     private String personAUsername;
     private String partnerUsername;
     private String creationDate;
-    private String[] messages;
+    private List<Message> messages;
 
-    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String creationDate, String[] messages){
+    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String creationDate, List<Message> messages){
         this.id = id;
         this.personA = personA;
         this.personAUsername = personAUsername;
@@ -40,11 +49,35 @@ public class Chat {
         return partnerUsername;
     }
 
-    public String[] getMessages(){
+    public List<Message> getMessages(){
         return messages;
     }
 
     public String getCreationDate() {
         return creationDate;
+    }
+
+    public class Message implements Serializable, Comparable<Message> {
+
+        public String sender;
+        public String creationDate;
+        public String type;
+        public String content;
+        public String subject;
+        public String emotion;
+
+        @Override
+        public int compareTo(Message m) {
+            if(creationDate.length() < 19){creationDate += ":00";}
+            if(m.creationDate.length() < 19){m.creationDate += ":00";}
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.GERMANY);
+            try {
+                return format.parse(creationDate).compareTo(format.parse(m.creationDate));
+            } catch (ParseException e){
+                Log.i("Chat", "Parse Exception while parsing time");
+                return 0;
+            }
+
+        }
     }
 }

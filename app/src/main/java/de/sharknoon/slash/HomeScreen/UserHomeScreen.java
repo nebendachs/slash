@@ -3,7 +3,6 @@ package de.sharknoon.slash.HomeScreen;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -17,16 +16,18 @@ import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class UserHomeScreen {
 
-    private final String STATUS_GET_HOME = "GET_HOME";
     public static HomeScreenClient homeScreenClient;
-    private String sessionId;
+    private Context context;
 
     public UserHomeScreen(Context context) {
+        this.context = context;
+        //this.askForProjectsChats();
+    }
 
+    public void askForProjectsChats(){
         try {
             Gson gson = new Gson();
-            sessionId = ParameterManager.getSession(context);
-            HomeScreenMessage homeScreenMessage = new HomeScreenMessage(sessionId, STATUS_GET_HOME);
+            HomeScreenMessage homeScreenMessage = new HomeScreenMessage(ParameterManager.getSession(context), "GET_HOME");
             String jsonHomeScreenMessage = gson.toJson(homeScreenMessage);
             Log.d("JSON", jsonHomeScreenMessage);
 

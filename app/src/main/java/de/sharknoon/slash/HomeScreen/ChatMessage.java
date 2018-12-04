@@ -1,7 +1,5 @@
 package de.sharknoon.slash.HomeScreen;
 
-import java.util.Date;
-
 public class ChatMessage {
 
     private String sessionid;

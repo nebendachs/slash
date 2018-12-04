@@ -2,12 +2,10 @@ package de.sharknoon.slash.Fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +13,7 @@ import android.widget.Button;
 
 import com.google.gson.Gson;
 
-import de.sharknoon.slash.Activties.LoginActivity;
-import de.sharknoon.slash.HomeScreen.HomeScreenClient;
-import de.sharknoon.slash.Login.LoginMessage;
 import de.sharknoon.slash.Login.LogoutMessage;
-import de.sharknoon.slash.Login.UserLogin;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
@@ -82,8 +76,9 @@ public class Profile extends Fragment {
                                 if(homeScreenClient != null){
                                     homeScreenClient.getWebSocketClient().send(jsonLogoutMessage);
                                 }
-                                //Remove session id from device
+                                //Remove session id and user id from device
                                 ParameterManager.setSession(view.getContext(), null);
+                                ParameterManager.setUserId(view.getContext(), null);
                                 //Close activity, which reveals login window
                                 getActivity().finish();
                             }
