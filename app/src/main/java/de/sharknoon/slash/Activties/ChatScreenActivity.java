@@ -6,14 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import de.sharknoon.slash.HomeScreen.ChatMessage;
+import java.util.List;
+
+import de.sharknoon.slash.ChatMessages.ChatMessage;
+import de.sharknoon.slash.HomeScreen.Chat;
 import de.sharknoon.slash.HomeScreen.ContactView;
 import de.sharknoon.slash.HomeScreen.HomeScreenClient;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
@@ -29,34 +35,47 @@ public class ChatScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_screen);
 
-        this.context = this;
+        Button btn = findViewById(R.id.chatscreen_button_addon);
 
-        // Get the session id from Intent
-        /*
-        Bundle bundle = getIntent().getExtras();
-        String[] messages = bundle.getStringArray("messages");
-        fillChatScreen(messages);
-        */
+        btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                moveAddonScreenUpDown();
+            }
+        });
 
         this.handleSendButton();
     }
 
+    public void moveAddonScreenUpDown(){
+        RelativeLayout layout = findViewById(R.id.chatscreen_menu_bottom);
+
+        if(layout.getVisibility() == View.VISIBLE){
+            //Show the panel
+            Animation bottomUp = AnimationUtils.loadAnimation(this, R.anim.new_chat_message_up);
+            layout.startAnimation(bottomUp);
+            layout.setVisibility(View.VISIBLE);
+        } else {
+            //Hide panel
+            Animation bottomDown = AnimationUtils.loadAnimation(this, R.anim.new_chat_message_down);
+            layout.startAnimation(bottomDown);
+            layout.setVisibility(View.GONE);
+        }
+    }
+
     //Fill the Layout with all messages got from server
-    public static void fillChatScreen(String[] messages){
+    public static void fillChatScreen(List<Chat.Message> messages){
         ((Activity) context).runOnUiThread(() -> {
         if(messages != null) {
-            if (messages.length > 0) {
+            if (messages.size() > 0) {
                 LinearLayout messageScreen = ((Activity) context).findViewById(R.id.chatscreen_message_screen);
 
                 messageScreen.removeAllViews();
 
-                for (String s : messages) {
-                    Log.i("FillScreen", s);
-                    TextView view = createTextView(s, context);
-
+                for (Chat.Message s : messages) {
+                    TextView view = createTextView(s.content, context);
 
                         messageScreen.addView(view);
-
                 }
             }
         } else {
@@ -85,36 +104,17 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     //Listener for "onClick" on button to send messages
     private void handleSendButton(){
+        /*
         Button sendButton = findViewById(R.id.chatscreen_send_message);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText textMessage = findViewById(R.id.chatscreen_text_message);
-                String message = textMessage.getText().toString();
-
-                //If Empty Message
-                if(message.isEmpty()){
-                    return;
-                }
-
-                // Get the parameters and send a message
-                Bundle bundle = getIntent().getExtras();
-                String chatID = bundle.getString("chatID");
-                String contactID = bundle.getString(ContactView.CONTACT_ID_PARAMETER);
-                String sessionId = ParameterManager.getSession(v.getContext());
-
-                //ToDo Set Type
-                String type = "OK";
-
-                //ToDo Set Header
-                String header = "BUILD THE SET HEADER FUNCTION!";
+                //TODO: Add message class
 
                 HomeScreenClient client = UserHomeScreen.homeScreenClient;
-
                 Gson gson = new Gson();
-                ChatMessage chat = new ChatMessage(sessionId,chatID, type, message, header);
-                String jsonChatMessage = gson.toJson(chat);
+                String jsonChatMessage = gson.toJson(null);
                 Log.d("JSON", jsonChatMessage);
 
                 if(client != null){
@@ -123,5 +123,6 @@ public class ChatScreenActivity extends AppCompatActivity {
 
             }
         });
+        */
     }
 }

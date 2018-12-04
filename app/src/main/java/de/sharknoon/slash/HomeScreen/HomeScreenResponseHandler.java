@@ -42,14 +42,20 @@ public class HomeScreenResponseHandler {
 
         Activity homeScreenActivity = (Activity) context;
 
+        Gson gson = new Gson();
+
         switch (status) {
 
             case GET_HOME_OK_STATUS:
 
-                Gson gson = new Gson();
                 HomeScreenResponse homeScreenResponse = gson.fromJson(serverResponse, HomeScreenResponse.class);
-                // Handle projects
+
                 LinearLayout parentLayoutProjects = homeScreenActivity.findViewById(R.id.homeScreenProjectsContainer);
+                FlexboxLayout parentLayoutContacts = homeScreenActivity.findViewById(R.id.homeScreenContactsContainer);
+
+                parentLayoutContacts.removeAllViewsInLayout();
+                parentLayoutProjects.removeAllViewsInLayout();
+
                 Project projects[] = homeScreenResponse.getProjects();
 
                 if (projects.length != 0) {
@@ -59,8 +65,6 @@ public class HomeScreenResponseHandler {
                     }
                 }
 
-                // Handle contacts
-                FlexboxLayout parentLayoutContacts = homeScreenActivity.findViewById(R.id.homeScreenContactsContainer);
                 Chat chats[] = homeScreenResponse.getChats();
 
                 if (chats.length != 0) {
@@ -73,16 +77,14 @@ public class HomeScreenResponseHandler {
                 break;
 
             case GET_USER_OK_STATUS:
+                SearchedUsers response = gson.fromJson(serverResponse, SearchedUsers.class);
 
                 ((Activity) context).runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
 
-                        // Open a new ChatScreenActivity
-                        Activity loginActivity = (Activity) context;
-                        Intent intent = new Intent(context, ChatScreenActivity.class);
-                        loginActivity.startActivity(intent);
+                        //Show a list
                     }
                 });
 

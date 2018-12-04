@@ -45,6 +45,8 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        UserHomeScreen screen = new UserHomeScreen(getActivity());
+
         this.handleCreateChatButton(view);
 
         return view;

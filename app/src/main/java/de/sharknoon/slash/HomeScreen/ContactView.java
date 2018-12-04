@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.List;
 
 import de.sharknoon.slash.Activties.ChatScreenActivity;
 import de.sharknoon.slash.R;
@@ -55,7 +57,7 @@ public class ContactView {
     }
 
     public ContactView(Activity homeScreenActivity, FlexboxLayout parentLayout,
-                       String imageUrl, String contactName, String contactId, String[] messages, String chatId) {
+                       String imageUrl, String contactName, String contactId, List<Chat.Message> messages, String chatId) {
 
         homeScreenActivity.runOnUiThread(new Runnable() {
 
@@ -78,7 +80,7 @@ public class ContactView {
                         Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("chatID", chatId);
-                        bundle.putStringArray("messages", messages);
+                        bundle.putSerializable("messages", (Serializable) messages);
                         bundle.putString(CONTACT_ID_PARAMETER, contactId);
                         intent.putExtras(bundle);
                         homeScreenActivity.startActivity(intent);
