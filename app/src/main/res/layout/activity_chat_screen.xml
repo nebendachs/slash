@@ -55,6 +55,14 @@
             android:gravity="center"
             android:text="@string/activity_chat_screen_meme_generator"/>
 
+        <Button
+            android:id="@+id/chatscreen_button_gallery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/activity_chat_screen_image"/>
+
     </LinearLayout>
 
     <LinearLayout

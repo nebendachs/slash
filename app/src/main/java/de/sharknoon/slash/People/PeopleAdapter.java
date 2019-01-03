@@ -116,7 +116,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         name.setText(person.getUsername());
         //todo Profilbild setzen
         ImageView picture = viewHolder.profilePicture;
-        picture.setImageResource(R.drawable.ic_person);
+        picture.setImageBitmap(person.getPicture());
     }
 
     // Returns the total count of items in the list

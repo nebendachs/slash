@@ -31,8 +31,10 @@
 
     <string name="chatScreen">Chat</string>
     <string name="createChatUsername">Username</string>
-    <string name="activity_chat_screen_template">Templates</string>
-    <string name="activity_chat_screen_meme_generator">Meme-Generator</string>
+    <string name="activity_chat_screen_template">Template</string>
+    <string name="activity_chat_screen_meme_generator">Meme</string>
+    <string name="activity_chat_screen_image">Image</string>
+    <string name="activity_chat_screen_select_image">Select Image</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_project">New Project</string>

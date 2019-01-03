@@ -83,9 +83,11 @@
             android:label="@string/home" />
         <activity
             android:name=".Activties.ChatScreenActivity"
+            android:parentActivityName=".Activties.HomeScreenActivity"
             android:label="@string/chatScreen" />
         <activity
             android:name=".Activties.CreateClientProjektActivity"
+            android:parentActivityName=".Activties.HomeScreenActivity"
             android:label="New" />
         <activity
             android:name=".Activties.AddPeopleActivity"
