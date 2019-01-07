@@ -2,6 +2,7 @@ package de.sharknoon.slash.Activties;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -101,8 +102,11 @@ public class ChatScreenActivity extends AppCompatActivity {
         createMeme.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
                 hideKeyboard();
+                Intent goToMemeGenerator = new Intent(getApplicationContext(), MemeTemplateSelectionActivity.class);
+                startActivity(goToMemeGenerator);
+                //  screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
+
             }
         });
 
