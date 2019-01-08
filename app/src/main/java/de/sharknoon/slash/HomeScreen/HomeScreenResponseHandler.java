@@ -15,6 +15,8 @@ import de.sharknoon.slash.Activties.ChatScreenActivity;
 import de.sharknoon.slash.Activties.HomeScreenActivity;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
+import de.sharknoon.slash.Image.OkImageResponse;
+import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.R;
 import static de.sharknoon.slash.Activties.ChatScreenActivity.active;
 
@@ -29,6 +31,7 @@ public class HomeScreenResponseHandler {
     private static final String CHAT_OK_STATUS = "OK_CHAT";
     private static final String PROJECT_OK_STATUS = "OK_PROJECT";
     private static final String CONNECTED = "CONNECTED";
+    private static final String OK_IMAGE = "OK_IMAGE";
 
     public static void handleResponse(String serverResponse, Context context) {
 
@@ -137,6 +140,12 @@ public class HomeScreenResponseHandler {
                 break;
 
             case CONNECTED:
+                break;
+
+            case OK_IMAGE:
+                OkImageResponse response = gson.fromJson(serverResponse, OkImageResponse.class);
+                
+                UploadImageMessage.uploadImageWithClient(response.getImageID(), context);
                 break;
 
                 default: //Every other case is an error, send error toast notification

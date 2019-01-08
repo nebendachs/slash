@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import de.sharknoon.slash.Image.ImageUploadClient;
+import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.MemeGenerator.MemeGeneration;
 import de.sharknoon.slash.R;
 
@@ -147,6 +152,11 @@ public class MemeGenerationActivity extends AppCompatActivity {
             String belowMessage = editTextBottomMessage.getText().toString().toUpperCase();
             Bitmap meme = MemeGeneration.createMeme(finalMemeTemplateIndex, upperMessage, belowMessage, MemeGenerationActivity.this);
             memeGeneratorImageView.setImageBitmap(meme);
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            meme.compress(Bitmap.CompressFormat.PNG, 100, output);
+            byte[] memeInBytes = output.toByteArray();
+            UploadImageMessage.setImageData(memeInBytes);
+
         });
     }
 
