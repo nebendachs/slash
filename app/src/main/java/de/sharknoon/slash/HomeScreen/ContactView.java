@@ -20,6 +20,7 @@ import java.util.List;
 import de.sharknoon.slash.Activties.ChatScreenActivity;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 import de.sharknoon.slash.Utilities;
 
 public class ContactView {
@@ -47,6 +48,7 @@ public class ContactView {
                     @Override
                     public void onClick(View v) {
                         // Go to HomeScreen ChatView and pass the contact Id
+                        ParameterManager.setCurrentOpenChatOrProject(chatOrProject);
                         Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("CHATORPROJECT", chatOrProject);
@@ -80,6 +82,7 @@ public class ContactView {
                     @Override
                     public void onClick(View v) {
                         // Go to HomeScreen ChatView and pass the contact Id
+                        ParameterManager.setCurrentOpenChatOrProject(chatOrProject);
                         Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("CHATORPROJECT", chatOrProject);

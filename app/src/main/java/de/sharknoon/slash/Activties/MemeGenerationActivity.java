@@ -13,13 +13,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import com.google.gson.Gson;
 
-import de.sharknoon.slash.Image.ImageUploadClient;
+import java.io.ByteArrayOutputStream;
+
+import de.sharknoon.slash.ChatMessages.ChatOrProject;
+import de.sharknoon.slash.ChatMessages.SendChatMessage;
+import de.sharknoon.slash.ChatMessages.SendProjectMessage;
+import de.sharknoon.slash.HomeScreen.UserHomeScreen;
+import de.sharknoon.slash.Image.ImageChatMessage;
 import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.MemeGenerator.MemeGeneration;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class MemeGenerationActivity extends AppCompatActivity {
 
@@ -32,6 +38,7 @@ public class MemeGenerationActivity extends AppCompatActivity {
         // Get template index from Intent
         Intent intent = getIntent();
         int templateIndex = intent.getIntExtra("drawable", 0);
+        String chatId = intent.getStringExtra("chatId");
         ImageView memeGeneratorImageView = findViewById(R.id.memeGeneratorImageView);
 
         int memeTemplateIndex = 0;
@@ -156,6 +163,24 @@ public class MemeGenerationActivity extends AppCompatActivity {
             meme.compress(Bitmap.CompressFormat.PNG, 100, output);
             byte[] memeInBytes = output.toByteArray();
             UploadImageMessage.setImageData(memeInBytes);
+
+            ChatOrProject currentChatOrProject = ParameterManager.getCurrentOpenChatOrProject();
+
+            Gson gson = new Gson();
+            String message;
+            if(currentChatOrProject.getProject() != null){
+
+                SendProjectMessage projectMessage = new SendProjectMessage(ParameterManager.getSession(this),
+                        currentChatOrProject.getProject().getId(), "IMAGE", "", "", "", "ADD_PROJECT_MESSAGE");
+                message = gson.toJson(projectMessage);
+
+            } else {
+                SendChatMessage chatMessage = new SendChatMessage(ParameterManager.getSession(this),
+                        currentChatOrProject.getChat().getId(), "IMAGE", "", "", "", "ADD_CHAT_MESSAGE");
+                message = gson.toJson(chatMessage);
+            }
+
+            UserHomeScreen.homeScreenClient.getWebSocketClient().send(message);
 
         });
     }

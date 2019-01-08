@@ -2,15 +2,14 @@ package de.sharknoon.slash.Image;
 
 public class ImageChatMessage {
 
-    String status = "ADD_CHAT_MESSAGE";
+    final String status = "ADD_CHAT_MESSAGE";
     String sessionid;
     String chatID;
-    String messageType;
+    String messageType = "IMAGE";
 
-    public ImageChatMessage(String sessionid, String chatID, String messageType) {
+    public ImageChatMessage(String sessionid, String chatID) {
         this.sessionid = sessionid;
         this.chatID = chatID;
-        this.messageType = messageType;
     }
 
     public String getStatus() {

@@ -145,7 +145,7 @@ public class HomeScreenResponseHandler {
             case OK_IMAGE:
                 OkImageResponse response = gson.fromJson(serverResponse, OkImageResponse.class);
                 
-                UploadImageMessage.uploadImageWithClient(response.getImageID(), context);
+                UploadImageMessage.setImageID(response.getImageID(), context);
                 break;
 
                 default: //Every other case is an error, send error toast notification
