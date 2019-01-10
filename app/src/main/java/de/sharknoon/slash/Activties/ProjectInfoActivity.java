@@ -21,6 +21,7 @@ import de.sharknoon.slash.R;
 public class ProjectInfoActivity extends AppCompatActivity {
     private Project project;
     private ImageView projectImage;
+    private ImageView projectMood;
     private TextView projectName;
     private TextView projectDesc;
     private PeopleAdapter adapter;
@@ -31,7 +32,8 @@ public class ProjectInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_info);
 
-        projectImage = findViewById(R.id.info_project_image);
+        projectImage = findViewById(R.id.element_picture);
+        projectMood = findViewById(R.id.element_mood);
         projectName = findViewById(R.id.info_project_name);
         projectDesc = findViewById(R.id.info_project_description);
 
@@ -42,18 +44,25 @@ public class ProjectInfoActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(project.getName());
 
         //todo: set project image
+        projectImage.setImageResource(R.drawable.logo);
+
+        switch(project.getSentiment().getPolarity()) {
+            case Person.NEUTRAL:
+                projectMood.setImageResource(R.drawable.ic_mood_sun);
+                break;
+            //todo: add other moods
+        }
+
         projectName.setText(project.getName());
         projectDesc.setText(project.getDescription());
 
         members = new ArrayList<>();
-        for(int i=0; i<project.getUsernames().size(); i++) {
-            Project.Username user = project.getUsernames().get(i);
-            Person person = new Person(user.getId(), user.getUsername());
-            if(person.getId().equals(project.getProjectOwner()))
-                person.setRole(Person.SCRUM_MASTER);
+        members.addAll(project.getUsernames());
+        for(int i=0; i<members.size(); i++) {
+            if(members.get(i).getId().equals(project.getProjectOwner()))
+                members.get(i).setRole(Person.SCRUM_MASTER);
             else
-                person.setRole(Person.MEMBER);
-            members.add(person);
+                members.get(i).setRole(Person.MEMBER);
         }
         members.sort(new Comparator<Person>() {
             @Override

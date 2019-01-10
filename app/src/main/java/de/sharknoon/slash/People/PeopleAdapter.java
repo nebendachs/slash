@@ -3,6 +3,7 @@ package de.sharknoon.slash.People;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         public TextView nameTextView;
         public TextView roleTextView;
         public ImageView profilePicture;
+        public ImageView personMood;
         private Context context;
 
         // We also create a constructor that accepts the entire item row
@@ -37,7 +39,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             // to access the context from any ViewHolder instance.
             super(itemView);
             this.context = context;
-            profilePicture = itemView.findViewById(R.id.person_picture);
+            profilePicture = itemView.findViewById(R.id.element_picture);
+            personMood = itemView.findViewById(R.id.element_mood);
             nameTextView = itemView.findViewById(R.id.person_name);
             roleTextView = itemView.findViewById(R.id.person_role);
             itemView.setOnClickListener(this);
@@ -121,9 +124,18 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             role.setText(person.getRole());
         else if(role != null)
             role.setVisibility(View.GONE);
+
         //todo Profilbild setzen
         ImageView picture = viewHolder.profilePicture;
         picture.setImageResource(R.drawable.ic_person);
+
+        ImageView mood = viewHolder.personMood;
+        switch(person.getSentiment().getPolarity()) {
+            case Person.NEUTRAL:
+                mood.setImageResource(R.drawable.ic_mood_sun);
+                break;
+            //todo: Complete moods
+        }
     }
 
     // Returns the total count of items in the list
