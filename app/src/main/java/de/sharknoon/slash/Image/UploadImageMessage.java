@@ -3,8 +3,11 @@ package de.sharknoon.slash.Image;
 import android.util.Log;
 
 import org.java_websocket.client.WebSocketClient;
+
 import java.util.function.Consumer;
+
 import de.sharknoon.slash.Login.LoginResponseHandler;
+
 import android.content.Context;
 
 
@@ -15,7 +18,6 @@ public class UploadImageMessage {
 
 
     public static void setImageData(byte[] imageData) {
-
         UploadImageMessage.imageData = imageData;
     }
 
@@ -28,11 +30,12 @@ public class UploadImageMessage {
     public static void uploadImageWithClient(String imageUrl, Context context) {
         Consumer<WebSocketClient> onOpen = webSocketClient -> {
             Log.d("Websocket", "Opened");
+            Log.d("ImageSize", String.valueOf(imageData.length));
+            webSocketClient.send(imageData);
         };
 
         Consumer<String> onMessage = message -> {
             Log.d("Websocket", message);
-            LoginResponseHandler.handlerResponse(message, context);
         };
 
         Consumer<String> onClose = reason -> {
@@ -42,7 +45,6 @@ public class UploadImageMessage {
         Consumer<Exception> onError = ex -> {
             Log.d("Websocket", String.valueOf(ex));
         };
-        ImageUploadClient iuc = new ImageUploadClient(imageUrl, context, onOpen, onMessage, onClose, onError);
-        iuc.getWebSocketClient().send(imageData);
+        new ImageUploadClient(imageUrl, context, onOpen, onMessage, onClose, onError);
     }
 }

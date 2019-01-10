@@ -1,5 +1,6 @@
 package de.sharknoon.slash.Activties;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
@@ -21,7 +22,6 @@ import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.ChatMessages.SendChatMessage;
 import de.sharknoon.slash.ChatMessages.SendProjectMessage;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
-import de.sharknoon.slash.Image.ImageChatMessage;
 import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.MemeGenerator.MemeGeneration;
 import de.sharknoon.slash.R;
@@ -158,7 +158,6 @@ public class MemeGenerationActivity extends AppCompatActivity {
             String upperMessage = editTextUpperMessage.getText().toString().toUpperCase();
             String belowMessage = editTextBottomMessage.getText().toString().toUpperCase();
             Bitmap meme = MemeGeneration.createMeme(finalMemeTemplateIndex, upperMessage, belowMessage, MemeGenerationActivity.this);
-            memeGeneratorImageView.setImageBitmap(meme);
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             meme.compress(Bitmap.CompressFormat.PNG, 100, output);
             byte[] memeInBytes = output.toByteArray();
@@ -182,7 +181,10 @@ public class MemeGenerationActivity extends AppCompatActivity {
 
             UserHomeScreen.homeScreenClient.getWebSocketClient().send(message);
 
-        });
+            Intent backToHomeScreenIntent = new Intent(this,LoginActivity.class);
+            backToHomeScreenIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(backToHomeScreenIntent);
+         });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

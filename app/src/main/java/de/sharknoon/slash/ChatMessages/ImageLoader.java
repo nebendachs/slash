@@ -3,6 +3,11 @@ package de.sharknoon.slash.ChatMessages;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -11,9 +16,14 @@ import com.google.gson.Gson;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
 import java.security.KeyStore;
 
 import javax.net.ssl.KeyManagerFactory;
@@ -54,10 +64,14 @@ public class ImageLoader {
 
                 @Override
                 public void onMessage(ByteBuffer imageByteBuffer) {
-                    byte[] imageBytes= new byte[imageByteBuffer.remaining()];
-                    imageByteBuffer.get(imageBytes);
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                    imageView.setImageBitmap(bitmap);
+
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        byte[] imageBytes= new byte[imageByteBuffer.remaining()];
+                        imageByteBuffer.get(imageBytes);
+
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                        imageView.setImageBitmap(bitmap);
+                    });
                 }
 
                 @Override
@@ -71,8 +85,11 @@ public class ImageLoader {
                 }
             };
 
+
             SSLSocketFactory sslSocketFactory = this.getSSLClient();
             webSocketClient.setSocket(sslSocketFactory.createSocket());
+            webSocketClient.getSocket().setReceiveBufferSize(Integer.MAX_VALUE);
+            webSocketClient.getSocket().setSendBufferSize(Integer.MAX_VALUE);
             webSocketClient.connect();
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -98,7 +115,4 @@ public class ImageLoader {
         sslContext.init(keyManagerFactory.getKeyManagers(), tmf.getTrustManagers(), null);
         return sslContext.getSocketFactory();
     }
-
-
-
 }
