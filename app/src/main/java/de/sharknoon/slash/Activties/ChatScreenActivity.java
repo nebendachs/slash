@@ -1,10 +1,13 @@
 package de.sharknoon.slash.Activties;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -14,17 +17,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.ChatMessages.UserChatScreen;
 import de.sharknoon.slash.R;
 
 public class ChatScreenActivity extends AppCompatActivity {
+    public static final String PROJECT = "project";
 
     private static UserChatScreen screen;
     private static LinearLayout messageScreen;
     public static boolean active = false;
+    ChatOrProject chatOrProject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,6 @@ public class ChatScreenActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         String name = "NO_NAME";
-        ChatOrProject chatOrProject = null;
 
         if(getIntent().getExtras() != null) {
                 name = getIntent().getExtras().getString("NAME");
@@ -61,6 +64,31 @@ public class ChatScreenActivity extends AppCompatActivity {
         }
 
         this.handleButtons(chatOrProject);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.project_menu, menu);
+        //Only show info button if it's a project
+        if(chatOrProject == null || chatOrProject.getProject() == null)
+            menu.findItem(R.id.action_info).setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_info:
+                Intent intent = new Intent(this, ProjectInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(PROJECT, chatOrProject.getProject());
+                intent.putExtras(bundle);
+                startActivity(intent);
+                return true;
+        }
+        return false;
     }
 
     @Override
