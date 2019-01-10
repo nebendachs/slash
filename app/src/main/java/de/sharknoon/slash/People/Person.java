@@ -4,34 +4,31 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Person implements Serializable {
-    private String username;
+    public static final String MEMBER = "Team Member";
+    public static final String SCRUM_MASTER = "Scrum Master";
+
     private String id;
+    private String username;
+    private String role;
 
-    public Person(String username) {
+    public Person(String id, String username) {
+        this.id = id;
         this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getUsername() {
+        return username;
     }
 
-    private static int lastPersonId = 0;
+    public String getRole() {
+        return role;
+    }
 
-    public static ArrayList<Person> createPeopleList(int numPeople) {
-        ArrayList<Person> people = new ArrayList<Person>();
-
-        for (int i = 1; i <= numPeople; i++) {
-            people.add(new Person("Person " + ++lastPersonId));
-        }
-
-        return people;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

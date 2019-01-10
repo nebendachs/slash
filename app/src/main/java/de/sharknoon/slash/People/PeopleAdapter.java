@@ -26,6 +26,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
+        public TextView roleTextView;
         public ImageView profilePicture;
         private Context context;
 
@@ -38,6 +39,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             this.context = context;
             profilePicture = itemView.findViewById(R.id.person_picture);
             nameTextView = itemView.findViewById(R.id.person_name);
+            roleTextView = itemView.findViewById(R.id.person_role);
             itemView.setOnClickListener(this);
         }
 
@@ -114,6 +116,11 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         // Set item views based on your views and data model
         TextView name = viewHolder.nameTextView;
         name.setText(person.getUsername());
+        TextView role = viewHolder.roleTextView;
+        if(person.getRole() != null)
+            role.setText(person.getRole());
+        else if(role != null)
+            role.setVisibility(View.GONE);
         //todo Profilbild setzen
         ImageView picture = viewHolder.profilePicture;
         picture.setImageResource(R.drawable.ic_person);
