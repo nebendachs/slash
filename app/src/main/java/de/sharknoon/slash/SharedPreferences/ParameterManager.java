@@ -1,10 +1,15 @@
 package de.sharknoon.slash.SharedPreferences;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import de.sharknoon.slash.ChatMessages.ChatOrProject;
+
 public class ParameterManager {
     private SharedPreferences sharedPreferences;
+    private static ChatOrProject currentOpenChatOrProject;
+    private static Activity HomeScreenActivtiy;
 
     public ParameterManager() {
         // Blank
@@ -42,5 +47,21 @@ public class ParameterManager {
         SharedPreferences.Editor editor = getPreferences(context).edit();
         editor.putString("user", input);
         editor.apply();
+    }
+
+    public static void setCurrentOpenChatOrProject(ChatOrProject currentOpenChatOrProject){
+        ParameterManager.currentOpenChatOrProject = currentOpenChatOrProject;
+    }
+
+    public static ChatOrProject getCurrentOpenChatOrProject(){
+        return currentOpenChatOrProject;
+    }
+
+    public static Activity getHomeScreenActivtiy() {
+        return HomeScreenActivtiy;
+    }
+
+    public static void setHomeScreenActivtiy(Activity homeScreenActivtiy) {
+        HomeScreenActivtiy = homeScreenActivtiy;
     }
 }

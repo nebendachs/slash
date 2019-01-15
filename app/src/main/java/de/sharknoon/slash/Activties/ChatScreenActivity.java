@@ -129,8 +129,11 @@ public class ChatScreenActivity extends AppCompatActivity {
         createMeme.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
                 hideKeyboard();
+                Intent goToMemeGenerator = new Intent(getApplicationContext(), MemeTemplateSelectionActivity.class);
+                startActivity(goToMemeGenerator);
+                //  screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
+
             }
         });
 
