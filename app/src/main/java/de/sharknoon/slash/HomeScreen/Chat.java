@@ -65,6 +65,7 @@ public class Chat implements Serializable{
         public String content;
         public String subject;
         public String emotion;
+        public String image;
 
         @Override
         public int compareTo(Message m) {

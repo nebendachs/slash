@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import de.sharknoon.slash.Fragments.Profile;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
 import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class HomeScreenActivity extends AppCompatActivity implements Home.OnFragmentInteractionListener, Profile.OnFragmentInteractionListener{
     private UserHomeScreen screen;
@@ -33,6 +35,7 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        ParameterManager.setHomeScreenActivtiy(this);
 
         screen = new UserHomeScreen(this);
 

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activties.MemeTemplateSelectionActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="225dp">
+
+        <com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/memeGeneratorTemplateContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap">
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate1"/>
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate2"/>
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate3"/>
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate4"/>
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate5"/>
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate6"/>
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate7"/>
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate8"/>
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate9"/>
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate10"/>
+
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate11"/>
+            <ImageView
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:src="@drawable/memetemplate12"/>
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

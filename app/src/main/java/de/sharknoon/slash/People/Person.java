@@ -1,15 +1,23 @@
 package de.sharknoon.slash.People;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Person implements Serializable {
-    public static final String MEMBER = "Team Member";
+    public static final String MEMBER = "Developer";
     public static final String SCRUM_MASTER = "Scrum Master";
+
+    public static final String POSITIVE = "POSITIVE";
+    public static final String NEUTRAL = "NEUTRAL";
+    public static final String NEGATIVE = "NEGATIVE";
 
     private String id;
     private String username;
     private String role;
+    private Sentiment sentiment;
 
     public Person(String id, String username) {
         this.id = id;
@@ -30,5 +38,29 @@ public class Person implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Sentiment getSentiment() {
+        return sentiment;
+    }
+
+    @NonNull
+    public String toString() {
+        if(username != null)
+            return username;
+        return "Unknown User";
+    }
+
+    public class Sentiment implements Serializable {
+        private String polarity;
+        private String subjectivity;
+
+        public String getPolarity() {
+            return polarity;
+        }
+
+        public String getSubjectivity() {
+            return subjectivity;
+        }
     }
 }

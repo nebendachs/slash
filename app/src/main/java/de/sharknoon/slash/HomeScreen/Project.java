@@ -3,6 +3,8 @@ package de.sharknoon.slash.HomeScreen;
 import java.io.Serializable;
 import java.util.List;
 
+import de.sharknoon.slash.People.Person;
+
 public class Project implements Serializable {
 
     private String id;
@@ -10,8 +12,9 @@ public class Project implements Serializable {
     private String description;
     private String image;
     private String creationDate;
-    private List<Username> usernames;
+    private List<Person> usernames;
     private String projectOwner;
+    private Person.Sentiment sentiment;
     private List<Chat.Message> messages;
 
     public String getId() {
@@ -34,7 +37,7 @@ public class Project implements Serializable {
         return creationDate;
     }
 
-    public List<Username> getUsernames() {
+    public List<Person> getUsernames() {
         return usernames;
     }
 
@@ -42,25 +45,11 @@ public class Project implements Serializable {
         return projectOwner;
     }
 
-    public List<Chat.Message> getMessages() {
-        return messages;
+    public Person.Sentiment getSentiment() {
+        return sentiment;
     }
 
-    public class Username implements Serializable{
-        private String id;
-        private String username;
-
-        public Username(String id, String username){
-            this.id = id;
-            this.username = username;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getUsername() {
-            return username;
-        }
+    public List<Chat.Message> getMessages() {
+        return messages;
     }
 }

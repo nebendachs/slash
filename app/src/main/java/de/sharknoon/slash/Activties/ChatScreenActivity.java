@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.ChatMessages.UserChatScreen;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class ChatScreenActivity extends AppCompatActivity {
     public static final String PROJECT = "project";
@@ -42,9 +43,14 @@ public class ChatScreenActivity extends AppCompatActivity {
         String name = "NO_NAME";
 
         if(getIntent().getExtras() != null) {
-                name = getIntent().getExtras().getString("NAME");
-                chatOrProject = (ChatOrProject)getIntent().getExtras().getSerializable("CHATORPROJECT");
+            name = getIntent().getExtras().getString("NAME");
+            chatOrProject = (ChatOrProject)getIntent().getExtras().getSerializable("CHATORPROJECT");
         }
+        if(chatOrProject == null) {
+            chatOrProject = ParameterManager.getCurrentOpenChatOrProject();
+            name = chatOrProject.getName();
+        } else
+            ParameterManager.setCurrentOpenChatOrProject(chatOrProject);
 
         if(getActionBar() != null) {
             getActionBar().setTitle(name);
@@ -129,8 +135,11 @@ public class ChatScreenActivity extends AppCompatActivity {
         createMeme.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
                 hideKeyboard();
+                Intent goToMemeGenerator = new Intent(getApplicationContext(), MemeTemplateSelectionActivity.class);
+                startActivity(goToMemeGenerator);
+                //  screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
+
             }
         });
 
