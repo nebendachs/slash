@@ -15,6 +15,8 @@ import de.sharknoon.slash.Activties.ChatScreenActivity;
 import de.sharknoon.slash.Activties.HomeScreenActivity;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
+import de.sharknoon.slash.Image.OkImageResponse;
+import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.R;
 import static de.sharknoon.slash.Activties.ChatScreenActivity.active;
 
@@ -31,6 +33,7 @@ public class HomeScreenResponseHandler {
     private static final String CONNECTED = "CONNECTED";
     private static final String OK_LOGOUT = "OK_LOGOUT";
     private static final String MESSAGE_TOO_LONG = "CHAT_MESSAGE_CONTENT_TOO_LONG";
+    private static final String OK_IMAGE = "OK_IMAGE";
 
     public static void handleResponse(String serverResponse, Context context) {
 
@@ -143,11 +146,17 @@ public class HomeScreenResponseHandler {
             case MESSAGE_TOO_LONG:
                 break;
 
-            default: //Every other case is an error, send error toast notification
-                Intent intent = new Intent(HomeScreenActivity.ErrorToastReceiver.ACTION);
-                intent.putExtra(HomeScreenActivity.ErrorToastReceiver.ACTION, serverResponse);
-                context.sendBroadcast(intent);
+            case OK_IMAGE:
+                OkImageResponse response = gson.fromJson(serverResponse, OkImageResponse.class);
+
+                UploadImageMessage.setImageID(response.getImageID(), context);
                 break;
+
+                default: //Every other case is an error, send error toast notification
+                    Intent intent = new Intent(HomeScreenActivity.ErrorToastReceiver.ACTION);
+                    intent.putExtra(HomeScreenActivity.ErrorToastReceiver.ACTION, serverResponse);
+                    context.sendBroadcast(intent);
+                    break;
         }
     }
 }

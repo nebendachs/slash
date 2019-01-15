@@ -83,18 +83,27 @@
             android:label="@string/home" />
         <activity
             android:name=".Activties.ChatScreenActivity"
-            android:parentActivityName=".Activties.HomeScreenActivity"
-            android:label="@string/chatScreen" />
+            android:label="@string/chatScreen"
+            android:parentActivityName=".Activties.HomeScreenActivity"/>
         <activity
             android:name=".Activties.CreateClientProjektActivity"
-            android:parentActivityName=".Activties.HomeScreenActivity"
-            android:label="New" />
+            android:label="New"
+            android:parentActivityName=".Activties.HomeScreenActivity"/>
         <activity
             android:name=".Activties.AddPeopleActivity"
             android:label="@string/title_activity_add_people" />
         <activity
             android:name=".Activties.CreateTemplateActivity"
             android:label="Message Templates" />
+        <activity
+            android:name=".Activties.ProjectInfoActivity"
+            android:parentActivityName=".Activties.ChatScreenActivity"/>
+        <activity
+            android:name=".Activties.MemeTemplateSelectionActivity"
+            android:label="Meme Templates" />
+        <activity
+            android:name=".Activties.MemeGenerationActivity"
+            android:label="Meme Generator" />
     </application>
 
 </manifest>

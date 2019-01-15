@@ -1,66 +1,71 @@
 package de.sharknoon.slash.People;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import de.sharknoon.slash.R;
+import java.util.List;
 
 public class Person implements Serializable {
-    private String username;
+    public static final String MEMBER = "Developer";
+    public static final String SCRUM_MASTER = "Scrum Master";
+
+    public static final String POSITIVE = "POSITIVE";
+    public static final String NEUTRAL = "NEUTRAL";
+    public static final String NEGATIVE = "NEGATIVE";
+
     private String id;
-    private Bitmap picture;
-    private int mood;
+    private String username;
+    private String role;
+    private String image;
+    private Sentiment sentiment;
 
-    public Person(String username, String id, Bitmap picture, int mood) {
-        this.username = username;
+    public Person(String id, String username) {
         this.id = id;
-        this.picture = picture;
-        this.mood = mood;
-    }
-
-    public String getUsername() {
-        return username;
+        this.username = username;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getUsername() {
+        return username;
     }
 
-    public Bitmap getPicture() {
-        return picture;
+    public String getRole() {
+        return role;
     }
 
-    public void setPicture(Bitmap picture) {
-        this.picture = picture;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public int getMood() {
-        return mood;
+    public String getImage() {
+        return image;
     }
 
-    public void setMood(int mood) {
-        this.mood = mood;
+    public Sentiment getSentiment() {
+        return sentiment;
     }
 
-    /*private static int lastPersonId = 0;
+    @NonNull
+    public String toString() {
+        if(username != null)
+            return username;
+        return "Unknown User";
+    }
 
-    public static ArrayList<Person> createPeopleList(int numPeople, Context context) {
-        ArrayList<Person> people = new ArrayList<Person>();
+    public class Sentiment implements Serializable {
+        private String polarity;
+        private String subjectivity;
 
-        for (int i = 1; i <= numPeople; i++) {
-            people.add(new Person("Person " + ++lastPersonId, ""+lastPersonId, ((BitmapDrawable)ContextCompat.getDrawable(context, R.drawable.ic_person_fill)).getBitmap(), 5));
+        public String getPolarity() {
+            return polarity;
         }
 
-        return people;
-    }*/
+        public String getSubjectivity() {
+            return subjectivity;
+        }
+    }
 }

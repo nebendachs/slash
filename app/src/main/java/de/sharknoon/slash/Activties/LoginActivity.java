@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 import de.sharknoon.slash.Login.UserLogin;
 import de.sharknoon.slash.R;
@@ -113,16 +114,19 @@ public class LoginActivity extends AppCompatActivity {
                 if (input_ok) {
                     LoginActivity.disableLoadingScreen(false, v.getContext());
 
-                    String deviceID = CompletableFuture.supplyAsync(() -> {
-                        try {
-                            if(ParameterManager.getDeviceId(v.getContext()) == null) {
-                                String token = Pushy.register(getApplicationContext());
-                                ParameterManager.setDeviceId(v.getContext(), token);
+                    String deviceID = CompletableFuture.supplyAsync(new Supplier<String>() {
+                        @Override
+                        public String get() {
+                            try {
+                                if (ParameterManager.getDeviceId(v.getContext()) == null) {
+                                    String token = Pushy.register(getApplicationContext());
+                                    ParameterManager.setDeviceId(v.getContext(), token);
+                                }
+                                return ParameterManager.getDeviceId(v.getContext());
+                            } catch (PushyException e) {
+                                Log.i("PushyException", String.valueOf(e));
+                                return "";
                             }
-                            return ParameterManager.getDeviceId(v.getContext());
-                        } catch (PushyException e) {
-                            Log.i("PushyException", String.valueOf(e));
-                            return "";
                         }
                     }).join();
 

@@ -3,23 +3,19 @@ package de.sharknoon.slash.HomeScreen;
 import java.io.Serializable;
 import java.util.List;
 
+import de.sharknoon.slash.People.Person;
+
 public class Project implements Serializable {
 
     private String id;
     private String name;
+    private String description;
     private String image;
     private String creationDate;
-    private List<Username> usernames;
+    private List<Person> usernames;
+    private String projectOwner;
+    private Person.Sentiment sentiment;
     private List<Chat.Message> messages;
-
-    public Project(String id, String name, String image, String creationDate, List<Username> usernames, List<Chat.Message> messages){
-        this.id = id;
-        this.name = name;
-        this.image = image;
-        this.creationDate = creationDate;
-        this.messages = messages;
-        this.usernames = usernames;
-    }
 
     public String getId() {
         return id;
@@ -27,6 +23,10 @@ public class Project implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getImage() {
@@ -37,27 +37,19 @@ public class Project implements Serializable {
         return creationDate;
     }
 
-    public List<Chat.Message> getMessages() { return messages; }
-
-    public List<Username> getUsernames() {
+    public List<Person> getUsernames() {
         return usernames;
     }
 
-    public class Username implements Serializable{
-        private String id;
-        private String username;
+    public String getProjectOwner() {
+        return projectOwner;
+    }
 
-        public Username(String id, String username){
-            this.id = id;
-            this.username = username;
-        }
+    public Person.Sentiment getSentiment() {
+        return sentiment;
+    }
 
-        public String getId() {
-            return id;
-        }
-
-        public String getUsername() {
-            return username;
-        }
+    public List<Chat.Message> getMessages() {
+        return messages;
     }
 }

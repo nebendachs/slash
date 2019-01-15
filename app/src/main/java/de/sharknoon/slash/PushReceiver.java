@@ -61,9 +61,11 @@ public class PushReceiver extends BroadcastReceiver {
             case "TEXT":
                 message = content;
                 break;
-            default:
-                //TODO Image
+            case "IMAGE":
+                message = "Image";
                 break;
+            default:
+                message = "New message";
         }
 
         String color = "#000000";

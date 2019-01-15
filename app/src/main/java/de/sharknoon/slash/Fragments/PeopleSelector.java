@@ -32,6 +32,7 @@ public class PeopleSelector extends Fragment {
     public static final String CHAT = "Chat";
     public static final String PROJECT = "Project";
     public static final String SELECTED = "Selected";
+    public static final String PROJECT_INFO = "ProjectInfo";
 
     private static final String ARG_PARAM1 = "purpose";
     private static final String ARG_PARAM2 = "removees";

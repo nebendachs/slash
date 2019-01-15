@@ -54,4 +54,12 @@
     <string name="subject">Subject</string>
     <string name="message">Message</string>
     <string name="category">Category</string>
+    <string name="cont_desc_project_image">Project Image</string>
+    <string name="lorem_ipsum">Lorem ipsum</string>
+    <string name="no_description">No description found</string>
+    <string name="project_details">Project Details</string>
+    <string name="project_members">Project Members</string>
+    <string name="memeGeneratorUpperMessage">Upper Message</string>
+    <string name="memeGeneratorBottomMessage">Bottom Message</string>
+    <string name="memeGeneratorButton">Generate Meme</string>
 </resources>

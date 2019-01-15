@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import de.sharknoon.slash.HomeScreen.Chat;
 import de.sharknoon.slash.HomeScreen.Project;
+import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
@@ -42,7 +43,7 @@ public class MessageBuilder {
             project_b = true;
 
             Project project = chatOrProject.getProject();
-            for (Project.Username user:project.getUsernames()){
+            for (Person user:project.getUsernames()){
                 Sender sender = new Sender(user.getUsername(), user.getId());
                 this.senders.add(sender);
             }

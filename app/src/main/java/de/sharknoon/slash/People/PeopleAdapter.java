@@ -13,6 +13,7 @@ import java.util.List;
 
 import de.sharknoon.slash.Activties.AddPeopleActivity;
 import de.sharknoon.slash.Activties.CreateClientProjektActivity;
+import de.sharknoon.slash.ChatMessages.ImageLoader;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.R;
 
@@ -26,7 +27,9 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
+        public TextView roleTextView;
         public ImageView profilePicture;
+        public ImageView personMood;
         private Context context;
 
         // We also create a constructor that accepts the entire item row
@@ -36,8 +39,10 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             // to access the context from any ViewHolder instance.
             super(itemView);
             this.context = context;
-            profilePicture = itemView.findViewById(R.id.person_picture);
+            profilePicture = itemView.findViewById(R.id.element_picture);
+            personMood = itemView.findViewById(R.id.element_mood);
             nameTextView = itemView.findViewById(R.id.person_name);
+            roleTextView = itemView.findViewById(R.id.person_role);
             itemView.setOnClickListener(this);
         }
 
@@ -114,9 +119,33 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         // Set item views based on your views and data model
         TextView name = viewHolder.nameTextView;
         name.setText(person.getUsername());
-        //todo Profilbild setzen
+        TextView role = viewHolder.roleTextView;
+        if(person.getRole() != null)
+            role.setText(person.getRole());
+        else if(role != null)
+            role.setVisibility(View.GONE);
+
+        //Profilbild setzen
         ImageView picture = viewHolder.profilePicture;
-        picture.setImageBitmap(person.getPicture());
+        if(person.getImage() != null)
+            new ImageLoader(person.getImage(), viewHolder.context, picture);
+        else
+            picture.setImageResource(R.mipmap.ic_launcher);
+
+        ImageView mood = viewHolder.personMood;
+        if(person.getSentiment() != null) {
+            switch (person.getSentiment().getPolarity()) {
+                case Person.POSITIVE:
+                    mood.setImageResource(R.drawable.ic_sun_outline);
+                    break;
+                case Person.NEUTRAL:
+                    mood.setImageResource(R.drawable.ic_overcast_outline);
+                    break;
+                case Person.NEGATIVE:
+                    mood.setImageResource(R.drawable.ic_rain_outline);
+                    break;
+            }
+        }
     }
 
     // Returns the total count of items in the list
