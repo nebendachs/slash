@@ -1,39 +1,49 @@
 package de.sharknoon.slash.Fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import de.sharknoon.slash.ChatMessages.ImageLoader;
+import de.sharknoon.slash.Image.ImageSender;
 import de.sharknoon.slash.Login.LogoutMessage;
+import de.sharknoon.slash.People.GetUserMessage;
+import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
+import static android.app.Activity.RESULT_OK;
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Profile.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Profile#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Profile extends Fragment {
+    private UserReceiver userReceiver = null;
+    private LinearLayout userLayout;
+    private CircleImageView userImage;
+    private ImageView userMood;
+    private TextView userName;
 
-    private OnFragmentInteractionListener mListener;
-
-    public Profile() {
-        // Required empty public constructor
-    }
+    private int PICK_IMAGE_REQUEST = 1;
 
     public static Profile newInstance() {
         Profile fragment = new Profile();
@@ -52,13 +62,54 @@ public class Profile extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        //todo: add profile picture
+        userReceiver = new UserReceiver();
+        IntentFilter inf = new IntentFilter(UserReceiver.ACTION);
+        getActivity().registerReceiver(userReceiver, inf);
 
-        //todo: update profile picture
+        userLayout = view.findViewById(R.id.profile_layout);
+        userLayout.setVisibility(View.GONE);
+        userImage = view.findViewById(R.id.element_picture);
+        userMood = view.findViewById(R.id.element_mood);
+        userName = view.findViewById(R.id.profile_name);
+
+        Gson gson = new Gson();
+        GetUserMessage getUserMessage = new GetUserMessage(ParameterManager.getSession(getContext()), ParameterManager.getUserId(getContext()));
+        String jsonChatMessage = gson.toJson(getUserMessage);
+
+        if(homeScreenClient != null && homeScreenClient.getWebSocketClient().isOpen())
+            homeScreenClient.getWebSocketClient().send(jsonChatMessage);
+        else
+            Toast.makeText(getActivity(), getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
+
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, getString(R.string.activity_chat_screen_select_image)), PICK_IMAGE_REQUEST);
+            }
+        });
 
         this.handleLogoutButton(view);
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
+                userImage.setImageBitmap(bitmap);
+                new ImageSender(bitmap, getContext(), ImageSender.USER);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void handleLogoutButton(View view) {
@@ -98,34 +149,34 @@ public class Profile extends Fragment {
         });
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+    public class UserReceiver extends BroadcastReceiver {
+        public static final String ACTION = "de.sharknoon.slash.RECEIVE_USER_RESULT";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Person user = (Person) intent.getSerializableExtra(ACTION);
+            userName.setText(user.getUsername());
+            userLayout.setVisibility(View.VISIBLE);
+            new ImageLoader(user.getImage(), getContext(), userImage);
+            if(user.getSentiment() != null) {
+                switch(user.getSentiment().getPolarity()) {
+                    case Person.POSITIVE:
+                        userMood.setImageResource(R.drawable.ic_sun_outline);
+                        break;
+                    case Person.NEUTRAL:
+                        userMood.setImageResource(R.drawable.ic_overcast_outline);
+                        break;
+                    case Person.NEGATIVE:
+                        userMood.setImageResource(R.drawable.ic_rain_outline);
+                        break;
+                }
+            }
         }
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(userReceiver);
     }
 }

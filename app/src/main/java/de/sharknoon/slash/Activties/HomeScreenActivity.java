@@ -24,7 +24,7 @@ import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
-public class HomeScreenActivity extends AppCompatActivity implements Home.OnFragmentInteractionListener, Profile.OnFragmentInteractionListener{
+public class HomeScreenActivity extends AppCompatActivity implements Home.OnFragmentInteractionListener {
     private UserHomeScreen screen;
     private FragmentManager fragmentManager;
     private Fragment home;

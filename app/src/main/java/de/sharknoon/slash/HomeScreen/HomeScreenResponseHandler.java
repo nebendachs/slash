@@ -15,8 +15,10 @@ import de.sharknoon.slash.Activties.ChatScreenActivity;
 import de.sharknoon.slash.Activties.HomeScreenActivity;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
+import de.sharknoon.slash.Fragments.Profile;
 import de.sharknoon.slash.Image.OkImageResponse;
 import de.sharknoon.slash.Image.UploadImageMessage;
+import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import static de.sharknoon.slash.Activties.ChatScreenActivity.active;
 
@@ -24,16 +26,19 @@ import static de.sharknoon.slash.Activties.ChatScreenActivity.active;
 public class HomeScreenResponseHandler {
 
     private static final String GET_HOME_OK_STATUS = "OK_HOME";
-    private static final String JSON_FIELD_STATUS = "status";
     private static final String OK_USERS = "OK_USERS";
-    private static final String JSON_FIELD_CHAT = "chat";
-    private static final String JSON_FIELD_PROJECT = "project";
     private static final String CHAT_OK_STATUS = "OK_CHAT";
     private static final String PROJECT_OK_STATUS = "OK_PROJECT";
     private static final String CONNECTED = "CONNECTED";
     private static final String OK_LOGOUT = "OK_LOGOUT";
     private static final String MESSAGE_TOO_LONG = "CHAT_MESSAGE_CONTENT_TOO_LONG";
     private static final String OK_IMAGE = "OK_IMAGE";
+    private static final String OK_USER = "OK_USER";
+
+    private static final String JSON_FIELD_STATUS = "status";
+    private static final String JSON_FIELD_CHAT = "chat";
+    private static final String JSON_FIELD_PROJECT = "project";
+    private static final String JSON_FIELD_USER = "user";
 
     public static void handleResponse(String serverResponse, Context context) {
 
@@ -139,6 +144,17 @@ public class HomeScreenResponseHandler {
                 Intent setPersonSearchResultIntent = new Intent(PeopleSelector.PeopleSearchResultReceiver.ACTION);
                 setPersonSearchResultIntent.putExtra(PeopleSelector.PeopleSearchResultReceiver.ACTION, personSearchResult);
                 context.sendBroadcast(setPersonSearchResultIntent);
+                break;
+
+            case OK_USER:
+                JsonParser userParser = new JsonParser();
+                JsonObject userObject = userParser.parse(serverResponse).getAsJsonObject();
+                JsonObject userMessage = userObject.getAsJsonObject(JSON_FIELD_USER);
+                Person person = gson.fromJson(userMessage, Person.class);
+
+                Intent userIntent = new Intent(Profile.UserReceiver.ACTION);
+                userIntent.putExtra(Profile.UserReceiver.ACTION, person);
+                context.sendBroadcast(userIntent);
                 break;
 
             case CONNECTED:

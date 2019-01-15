@@ -10,18 +10,17 @@ import java.io.ByteArrayOutputStream;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.ChatMessages.SendChatMessage;
 import de.sharknoon.slash.ChatMessages.SendProjectMessage;
-import de.sharknoon.slash.HomeScreen.Project;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
-import de.sharknoon.slash.Project.UpdateProjectImageMessage;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class ImageSender {
     public static final int CHATORPROJECT = 0;
     public static final int PROJECT = 1;
+    public static final int USER = 2;
 
     public ImageSender(Bitmap image, Context context, int intent) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        if(intent == PROJECT) {
+        if(intent == PROJECT || intent == USER) {
             // crop to 80x80 square
             if(image.getWidth() > image.getHeight())
                 image = Bitmap.createBitmap(image, image.getWidth() / 2 - image.getHeight() / 2, 0, image.getHeight(), image.getHeight());
@@ -51,9 +50,17 @@ public class ImageSender {
                 }
                 break;
             case PROJECT:
-                UpdateProjectImageMessage imageMessage = new UpdateProjectImageMessage(ParameterManager.getSession(context),
-                        currentChatOrProject.getProject().getId(), false);
-                message = gson.toJson(imageMessage);
+                UpdateImageMessage projectImageMessage = new UpdateImageMessage(
+                        ParameterManager.getSession(context),
+                        currentChatOrProject.getProject().getId(),
+                        false);
+                message = gson.toJson(projectImageMessage);
+                break;
+            case USER:
+                UpdateImageMessage chatImageMessage = new UpdateImageMessage(
+                        ParameterManager.getSession(context),
+                        false);
+                message = gson.toJson(chatImageMessage);
                 break;
         }
 
