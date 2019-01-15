@@ -21,10 +21,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
+import de.sharknoon.slash.ChatMessages.SendChatMessage;
+import de.sharknoon.slash.ChatMessages.SendProjectMessage;
 import de.sharknoon.slash.ChatMessages.UserChatScreen;
+import de.sharknoon.slash.HomeScreen.UserHomeScreen;
+import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
@@ -187,7 +194,26 @@ public class ChatScreenActivity extends AppCompatActivity {
             Uri uri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                //todo: Send image to server
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+                byte[] memeInBytes = output.toByteArray();
+                UploadImageMessage.setImageData(memeInBytes);
+
+                ChatOrProject currentChatOrProject = ParameterManager.getCurrentOpenChatOrProject();
+
+                Gson gson = new Gson();
+                String message;
+                if(currentChatOrProject.getProject() != null){
+                    SendProjectMessage projectMessage = new SendProjectMessage(ParameterManager.getSession(this),
+                            currentChatOrProject.getProject().getId(), "IMAGE", "", "", "", "ADD_PROJECT_MESSAGE");
+                    message = gson.toJson(projectMessage);
+                } else {
+                    SendChatMessage chatMessage = new SendChatMessage(ParameterManager.getSession(this),
+                            currentChatOrProject.getChat().getId(), "IMAGE", "", "", "", "ADD_CHAT_MESSAGE");
+                    message = gson.toJson(chatMessage);
+                }
+
+                UserHomeScreen.homeScreenClient.getWebSocketClient().send(message);
             } catch (IOException e) {
                 e.printStackTrace();
             }

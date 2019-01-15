@@ -79,9 +79,6 @@ public class UserChatScreen implements Serializable {
             case 1:
                 sendTemplateMessage(context, id, status, message, emotion, subject);
                 break;
-            case 2:
-                sendImageMessage(context, id, status, message);
-                break;
         }
     }
 
@@ -113,9 +110,4 @@ public class UserChatScreen implements Serializable {
             homeScreenClient.getWebSocketClient().send(jsonChatMessage);
         }
     }
-
-    private void sendImageMessage(Context context, String id, String status, String message){
-        //TODO: Aufruf für Bilder
-    }
-
 }

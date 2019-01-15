@@ -55,8 +55,6 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
 
         this.handleBottomNavigation();
         this.handlePullRefresh();
-
-
     }
 
     private void handleBottomNavigation() {
@@ -69,6 +67,7 @@ public class HomeScreenActivity extends AppCompatActivity implements Home.OnFrag
                     case R.id.navigation_home:
                         fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.fragment, home).commit();
+                        screen.askForProjectsChats();
                         return true;
                     case R.id.navigation_profile:
                         fragmentTransaction = fragmentManager.beginTransaction();
