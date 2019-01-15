@@ -97,6 +97,8 @@ public class ProjectInfoActivity extends AppCompatActivity {
                 return o1.getUsername().compareToIgnoreCase(o2.getUsername());
             }
         });
+        //todo: Start chat on click
+        //todo: Change scrum master on click
 
         RecyclerView recyclerView = findViewById(R.id.info_project_members);
         adapter = new PeopleAdapter(members, PeopleSelector.PROJECT_INFO);

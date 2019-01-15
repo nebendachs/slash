@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import de.sharknoon.slash.People.Person;
+
 public class Chat implements Serializable{
 
     private String id;
@@ -18,9 +20,10 @@ public class Chat implements Serializable{
     private String partnerUsername;
     private String partnerImage;
     private String creationDate;
+    private Person.Sentiment sentiment;
     private List<Message> messages;
 
-    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String partnerImage, String creationDate, List<Message> messages){
+    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String partnerImage, String creationDate, Person.Sentiment sentiment, List<Message> messages){
         this.id = id;
         this.personA = personA;
         this.personAUsername = personAUsername;
@@ -28,6 +31,7 @@ public class Chat implements Serializable{
         this.partnerUsername = partnerUsername;
         this.partnerImage = partnerImage;
         this.creationDate = creationDate;
+        this.sentiment = sentiment;
         this.messages = messages;
     }
 
@@ -61,6 +65,10 @@ public class Chat implements Serializable{
 
     public String getCreationDate() {
         return creationDate;
+    }
+
+    public Person.Sentiment getSentiment() {
+        return sentiment;
     }
 
     public class Message implements Serializable, Comparable<Message> {
