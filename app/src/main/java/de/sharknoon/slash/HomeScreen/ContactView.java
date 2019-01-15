@@ -2,11 +2,14 @@ package de.sharknoon.slash.HomeScreen;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ import java.util.List;
 import de.sharknoon.slash.Activties.ChatScreenActivity;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.ChatMessages.ImageLoader;
+import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 import de.sharknoon.slash.Utilities;
@@ -36,13 +40,19 @@ public class ContactView {
 
             @Override
             public void run() {
+                FrameLayout frameLayout = new FrameLayout(homeScreenActivity);
 
                 // Create TextView with image
-                TextView contactTextView = ContactView.this.createContactTextView(projectName, homeScreenActivity, project.getImage());
-                LinearLayout.LayoutParams contactTextViewParams = new LinearLayout.LayoutParams(getTextViewWidth(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX), LinearLayout.LayoutParams.WRAP_CONTENT);
-                contactTextViewParams.setMarginStart(20);
-                contactTextView.setLayoutParams(contactTextViewParams);
-                parentLayout.addView(contactTextView);
+                TextView contactTextView = createContactTextView(projectName, homeScreenActivity, project.getImage());
+                frameLayout.addView(contactTextView);
+
+                // Create ImageView with mood image
+                if(project.getSentiment() != null) {
+                    ImageView mood = createMoodImageView(project.getSentiment().getPolarity(), homeScreenActivity);
+                    frameLayout.addView(mood);
+                }
+
+                parentLayout.addView(frameLayout);
                 ChatOrProject chatOrProject = new ChatOrProject(null, project);
 
                 contactTextView.setOnClickListener(new View.OnClickListener() {
@@ -62,21 +72,26 @@ public class ContactView {
         });
     }
 
-    public ContactView(Activity homeScreenActivity, FlexboxLayout parentLayout,String contactName, Chat chat) {
+    public ContactView(Activity homeScreenActivity, FlexboxLayout parentLayout, String contactName, Chat chat) {
 
         homeScreenActivity.runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
+                FrameLayout frameLayout = new FrameLayout(homeScreenActivity);
 
                 // Create TextView with image
-                TextView contactTextView = ContactView.this.createContactTextView(contactName, homeScreenActivity, chat.getPartnerImage());
+                TextView contactTextView = createContactTextView(contactName, homeScreenActivity, chat.getPartnerImage());
+                frameLayout.addView(contactTextView);
 
-                LinearLayout.LayoutParams contactTextViewParams = new LinearLayout.LayoutParams(getTextViewWidth(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX), LinearLayout.LayoutParams.WRAP_CONTENT);
-                contactTextViewParams.setMarginStart(20);
-                contactTextViewParams.setMargins(0, 50, 0, 0);
-                contactTextView.setLayoutParams(contactTextViewParams);
-                parentLayout.addView(contactTextView);
+                // Create ImageView with mood image
+                //todo: Get sentiment for chats
+                /*if(chat.getSentiment() != null) {
+                    ImageView mood = createMoodImageView(chat.getSentiment().getPolarity(), homeScreenActivity);
+                    frameLayout.addView(mood);
+                }*/
+
+                parentLayout.addView(frameLayout);
                 ChatOrProject chatOrProject = new ChatOrProject(chat, null);
 
                 contactTextView.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +111,26 @@ public class ContactView {
         });
     }
 
+    private ImageView createMoodImageView(String polarity, Activity homeScreenActivity) {
+        ImageView mood = new ImageView(homeScreenActivity);
+        switch(polarity) {
+            case Person.POSITIVE:
+                mood.setImageResource(R.drawable.ic_sun_outline);
+                break;
+            case Person.NEUTRAL:
+                mood.setImageResource(R.drawable.ic_overcast_outline);
+                break;
+            case Person.NEGATIVE:
+                mood.setImageResource(R.drawable.ic_rain_outline);
+                break;
+            }
+        int dimensions = (int)(Math.ceil(getTextViewWidth(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX)*0.6));
+        FrameLayout.LayoutParams imageViewParams = new FrameLayout.LayoutParams(dimensions, dimensions);
+        imageViewParams.setMarginStart(15);
+        mood.setLayoutParams(imageViewParams);
+        return mood;
+    }
+
     private TextView createContactTextView(String text, Activity homeScreenActivity, String imageUrl) {
         // Create TextView with image
         TextView contactTextView = new TextView(homeScreenActivity);
@@ -103,6 +138,9 @@ public class ContactView {
         contactTextView.setEllipsize(TextUtils.TruncateAt.END);
         new ImageLoader(imageUrl, homeScreenActivity, contactTextView);
         contactTextView.setGravity(Gravity.CENTER);
+        FrameLayout.LayoutParams contactTextViewParams = new FrameLayout.LayoutParams(getTextViewWidth(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX), LinearLayout.LayoutParams.WRAP_CONTENT);
+        contactTextViewParams.setMargins(45, 30, 0, 0);
+        contactTextView.setLayoutParams(contactTextViewParams);
         return contactTextView;
     }
 

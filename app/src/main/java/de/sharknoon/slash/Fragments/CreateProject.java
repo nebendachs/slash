@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -113,7 +114,10 @@ public class CreateProject extends Fragment {
                 AddProjectMessage projectMessage = new AddProjectMessage(ParameterManager.getSession(view.getContext()), name, desc, selectedList, ((Person)scrumMasterSpinner.getSelectedItem()).getId());
                 String jsonProjectMessage = gson.toJson(projectMessage);
                 Log.d("JSON", jsonProjectMessage);
-                homeScreenClient.getWebSocketClient().send(jsonProjectMessage);
+                if(homeScreenClient.getWebSocketClient().isOpen())
+                    homeScreenClient.getWebSocketClient().send(jsonProjectMessage);
+                else
+                    Toast.makeText(getActivity(), getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
 
                 getActivity().finish();
             }

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -122,7 +123,10 @@ public class PeopleSelector extends Fragment {
                 FindUser findUser = new FindUser(ParameterManager.getSession(view1.getContext()), search.getText().toString());
                 String jsonSearchMessage = gson.toJson(findUser);
                 Log.d("JSON", jsonSearchMessage);
-                homeScreenClient.getWebSocketClient().send(jsonSearchMessage);
+                if(homeScreenClient.getWebSocketClient().isOpen())
+                    homeScreenClient.getWebSocketClient().send(jsonSearchMessage);
+                else
+                    Toast.makeText(getActivity(), getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
             }
         });
     }

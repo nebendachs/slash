@@ -29,6 +29,7 @@ public class MemeTemplateSelectionActivity extends AppCompatActivity {
                 moveToMemeGenerator(templateIndex);
             });
         }
+        //todo: add custom images
     }
 
     public boolean onOptionsItemSelected(MenuItem item){

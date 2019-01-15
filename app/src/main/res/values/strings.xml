@@ -62,4 +62,5 @@
     <string name="memeGeneratorUpperMessage">Upper Message</string>
     <string name="memeGeneratorBottomMessage">Bottom Message</string>
     <string name="memeGeneratorButton">Generate Meme</string>
+    <string name="error_socket_not_connected">Web Socket not connected. Please check your internet connection.</string>
 </resources>

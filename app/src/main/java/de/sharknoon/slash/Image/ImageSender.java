@@ -27,6 +27,8 @@ public class ImageSender {
         Gson gson = new Gson();
         String message = new String();
 
+        //todo: compress and scale image
+
         ChatOrProject currentChatOrProject = ParameterManager.getCurrentOpenChatOrProject();
         switch(intent) {
             case CHATORPROJECT:

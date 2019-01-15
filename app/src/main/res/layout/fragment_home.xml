@@ -22,7 +22,7 @@
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="40dp">
 
             <LinearLayout
                 android:id="@+id/homeScreenProjectsContainer"
@@ -50,6 +50,7 @@
                 android:id="@+id/homeScreenContactsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 app:alignContent="stretch"
                 app:alignItems="stretch"
                 app:flexWrap="wrap">

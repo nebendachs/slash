@@ -52,6 +52,10 @@ public class Profile extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        //todo: add profile picture
+
+        //todo: update profile picture
+
         this.handleLogoutButton(view);
 
         return view;
