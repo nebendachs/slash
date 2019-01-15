@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import de.sharknoon.slash.ChatMessages.ImageLoader;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.HomeScreen.Project;
@@ -26,7 +27,7 @@ import de.sharknoon.slash.R;
 
 public class ProjectInfoActivity extends AppCompatActivity {
     private Project project;
-    private ImageView projectImage;
+    private CircleImageView projectImage;
     private ImageView projectMood;
     private TextView projectName;
     private TextView projectDesc;
@@ -114,6 +115,7 @@ public class ProjectInfoActivity extends AppCompatActivity {
             Uri uri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                projectImage.setImageBitmap(bitmap);
                 new ImageSender(bitmap, this, ImageSender.PROJECT);
             } catch (IOException e) {
                 e.printStackTrace();
