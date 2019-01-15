@@ -31,6 +31,7 @@ import de.sharknoon.slash.ChatMessages.SendChatMessage;
 import de.sharknoon.slash.ChatMessages.SendProjectMessage;
 import de.sharknoon.slash.ChatMessages.UserChatScreen;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
+import de.sharknoon.slash.Image.ImageSender;
 import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
@@ -54,7 +55,6 @@ public class ChatScreenActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         String name = "NO_NAME";
-        ChatOrProject chatOrProject = null;
 
         if(getIntent().getExtras() != null) {
             name = getIntent().getExtras().getString("NAME");
@@ -194,26 +194,7 @@ public class ChatScreenActivity extends AppCompatActivity {
             Uri uri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                ByteArrayOutputStream output = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
-                byte[] memeInBytes = output.toByteArray();
-                UploadImageMessage.setImageData(memeInBytes);
-
-                ChatOrProject currentChatOrProject = ParameterManager.getCurrentOpenChatOrProject();
-
-                Gson gson = new Gson();
-                String message;
-                if(currentChatOrProject.getProject() != null){
-                    SendProjectMessage projectMessage = new SendProjectMessage(ParameterManager.getSession(this),
-                            currentChatOrProject.getProject().getId(), "IMAGE", "", "", "", "ADD_PROJECT_MESSAGE");
-                    message = gson.toJson(projectMessage);
-                } else {
-                    SendChatMessage chatMessage = new SendChatMessage(ParameterManager.getSession(this),
-                            currentChatOrProject.getChat().getId(), "IMAGE", "", "", "", "ADD_CHAT_MESSAGE");
-                    message = gson.toJson(chatMessage);
-                }
-
-                UserHomeScreen.homeScreenClient.getWebSocketClient().send(message);
+                new ImageSender(bitmap, this, ImageSender.CHATORPROJECT);
             } catch (IOException e) {
                 e.printStackTrace();
             }

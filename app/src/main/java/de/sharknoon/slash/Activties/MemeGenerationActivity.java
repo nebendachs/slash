@@ -22,6 +22,7 @@ import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.ChatMessages.SendChatMessage;
 import de.sharknoon.slash.ChatMessages.SendProjectMessage;
 import de.sharknoon.slash.HomeScreen.UserHomeScreen;
+import de.sharknoon.slash.Image.ImageSender;
 import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.MemeGenerator.MemeGeneration;
 import de.sharknoon.slash.R;
@@ -158,28 +159,8 @@ public class MemeGenerationActivity extends AppCompatActivity {
             String upperMessage = editTextUpperMessage.getText().toString().toUpperCase();
             String belowMessage = editTextBottomMessage.getText().toString().toUpperCase();
             Bitmap meme = MemeGeneration.createMeme(finalMemeTemplateIndex, upperMessage, belowMessage, MemeGenerationActivity.this);
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            meme.compress(Bitmap.CompressFormat.PNG, 100, output);
-            byte[] memeInBytes = output.toByteArray();
-            UploadImageMessage.setImageData(memeInBytes);
 
-            ChatOrProject currentChatOrProject = ParameterManager.getCurrentOpenChatOrProject();
-
-            Gson gson = new Gson();
-            String message;
-            if(currentChatOrProject.getProject() != null){
-
-                SendProjectMessage projectMessage = new SendProjectMessage(ParameterManager.getSession(this),
-                        currentChatOrProject.getProject().getId(), "IMAGE", "", "", "", "ADD_PROJECT_MESSAGE");
-                message = gson.toJson(projectMessage);
-
-            } else {
-                SendChatMessage chatMessage = new SendChatMessage(ParameterManager.getSession(this),
-                        currentChatOrProject.getChat().getId(), "IMAGE", "", "", "", "ADD_CHAT_MESSAGE");
-                message = gson.toJson(chatMessage);
-            }
-
-            UserHomeScreen.homeScreenClient.getWebSocketClient().send(message);
+            new ImageSender(meme, this, ImageSender.CHATORPROJECT);
 
             Intent backToHomeScreenIntent = new Intent(this,LoginActivity.class);
             backToHomeScreenIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
