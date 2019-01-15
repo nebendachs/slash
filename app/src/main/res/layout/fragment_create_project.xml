@@ -38,6 +38,17 @@
         android:text="@string/add_people"
         android:layout_marginTop="10dp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scrum Master"
+        style="@style/slashObject"/>
+
+    <Spinner
+        android:id="@+id/scrumMasterSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/continueButton"
         android:layout_width="match_parent"

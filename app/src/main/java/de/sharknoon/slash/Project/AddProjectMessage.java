@@ -8,12 +8,14 @@ public class AddProjectMessage {
     private String projectName;
     private String projectDescription;
     private List<String> projectMembers;
+    private String projectOwner;
 
-    public AddProjectMessage(String sessionid, String projectName, String projectDescription, List<String> projectMembers) {
+    public AddProjectMessage(String sessionid, String projectName, String projectDescription, List<String> projectMembers, String projectOwner) {
         this.sessionid = sessionid;
         this.projectName = projectName;
         this.projectDescription = projectDescription;
         this.projectMembers = projectMembers;
+        this.projectOwner = projectOwner;
     }
 
     public String getSessionid() {
@@ -50,5 +52,13 @@ public class AddProjectMessage {
 
     public void setProjectMembers(List<String> projectMembers) {
         this.projectMembers = projectMembers;
+    }
+
+    public String getProjectOwner() {
+        return projectOwner;
+    }
+
+    public void setProjectOwner(String projectOwner) {
+        this.projectOwner = projectOwner;
     }
 }

@@ -129,16 +129,18 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         picture.setImageResource(R.drawable.ic_person);
 
         ImageView mood = viewHolder.personMood;
-        switch(person.getSentiment().getPolarity()) {
-            case Person.POSITIVE:
-                mood.setImageResource(R.drawable.ic_sun_outline);
-                break;
-            case Person.NEUTRAL:
-                mood.setImageResource(R.drawable.ic_overcast_outline);
-                break;
-            case Person.NEGATIVE:
-                mood.setImageResource(R.drawable.ic_rain_outline);
-                break;
+        if(person.getSentiment() != null) {
+            switch (person.getSentiment().getPolarity()) {
+                case Person.POSITIVE:
+                    mood.setImageResource(R.drawable.ic_sun_outline);
+                    break;
+                case Person.NEUTRAL:
+                    mood.setImageResource(R.drawable.ic_overcast_outline);
+                    break;
+                case Person.NEGATIVE:
+                    mood.setImageResource(R.drawable.ic_rain_outline);
+                    break;
+            }
         }
     }
 

@@ -49,7 +49,8 @@ public class ChatScreenActivity extends AppCompatActivity {
         if(chatOrProject == null) {
             chatOrProject = ParameterManager.getCurrentOpenChatOrProject();
             name = chatOrProject.getName();
-        }
+        } else
+            ParameterManager.setCurrentOpenChatOrProject(chatOrProject);
 
         if(getActionBar() != null) {
             getActionBar().setTitle(name);

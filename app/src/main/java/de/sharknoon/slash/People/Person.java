@@ -1,5 +1,7 @@
 package de.sharknoon.slash.People;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,13 @@ public class Person implements Serializable {
 
     public Sentiment getSentiment() {
         return sentiment;
+    }
+
+    @NonNull
+    public String toString() {
+        if(username != null)
+            return username;
+        return "Unknown User";
     }
 
     public class Sentiment implements Serializable {
