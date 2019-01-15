@@ -19,13 +19,14 @@ import java.util.List;
 
 import de.sharknoon.slash.Activties.ChatScreenActivity;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
+import de.sharknoon.slash.ChatMessages.ImageLoader;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 import de.sharknoon.slash.Utilities;
 
 public class ContactView {
 
-    private final int TEXT_VIEW_WIDTH_IN_PX = 75;
+    public static final int TEXT_VIEW_WIDTH_IN_PX = 75;
     public static final String CONTACT_ID_PARAMETER = "contactId";
     public static final String PROJECT_ID_PARAMETER = "projectId";
 
@@ -37,7 +38,7 @@ public class ContactView {
             public void run() {
 
                 // Create TextView with image
-                TextView contactTextView = ContactView.this.createContactTextView(projectName, homeScreenActivity, projectName);
+                TextView contactTextView = ContactView.this.createContactTextView(projectName, homeScreenActivity, project.getImage());
                 LinearLayout.LayoutParams contactTextViewParams = new LinearLayout.LayoutParams(getTextViewWidth(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX), LinearLayout.LayoutParams.WRAP_CONTENT);
                 contactTextViewParams.setMarginStart(20);
                 contactTextView.setLayoutParams(contactTextViewParams);
@@ -69,7 +70,7 @@ public class ContactView {
             public void run() {
 
                 // Create TextView with image
-                TextView contactTextView = ContactView.this.createContactTextView(contactName, homeScreenActivity, contactName);
+                TextView contactTextView = ContactView.this.createContactTextView(contactName, homeScreenActivity, chat.getPartnerImage());
 
                 LinearLayout.LayoutParams contactTextViewParams = new LinearLayout.LayoutParams(getTextViewWidth(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX), LinearLayout.LayoutParams.WRAP_CONTENT);
                 contactTextViewParams.setMarginStart(20);
@@ -136,8 +137,7 @@ public class ContactView {
         TextView contactTextView = new TextView(homeScreenActivity);
         contactTextView.setText(text);
         contactTextView.setEllipsize(TextUtils.TruncateAt.END);
-        int imageId = this.loadImageAsync(imageUrl);
-        contactTextView.setCompoundDrawablesWithIntrinsicBounds(0, imageId, 0, 0);
+        new ImageLoader(imageUrl, homeScreenActivity, contactTextView);
         contactTextView.setGravity(Gravity.CENTER);
         return contactTextView;
     }

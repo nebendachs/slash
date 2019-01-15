@@ -3,13 +3,19 @@ package de.sharknoon.slash.ChatMessages;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -31,15 +37,17 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
+import de.sharknoon.slash.HomeScreen.ContactView;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
+import de.sharknoon.slash.Utilities;
 
 public class ImageLoader {
 
     private Context context;
     private String imageDownloadUrl = "wss://sharknoon.de/slash/file/";
 
-    public ImageLoader(String imageId, Context context, ImageView imageView){
+    public ImageLoader(String imageId, Context context, View targetView){
         try {
 
             this.context = context;
@@ -70,7 +78,13 @@ public class ImageLoader {
                         imageByteBuffer.get(imageBytes);
 
                         Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                        imageView.setImageBitmap(bitmap);
+
+                        if(targetView instanceof ImageView)
+                            ((ImageView)targetView).setImageBitmap(bitmap);
+                        else if(targetView instanceof TextView) {
+                            Drawable d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, targetView.getWidth(), targetView.getWidth(), false));
+                            ((TextView) targetView).setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
+                        }
                     });
                 }
 
