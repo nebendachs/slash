@@ -96,42 +96,6 @@ public class ContactView {
         });
     }
 
-    private int loadImageAsync(String imageUrl) {
-
-        int imageInt;
-
-        if(imageUrl == null || imageUrl.isEmpty()){
-            return imageInt = R.mipmap.ic_launcher;
-        }
-
-        switch (imageUrl) {
-
-            case "Scala":
-                imageInt = R.mipmap.ic_scala_round;
-                break;
-            case "AUME":
-                imageInt =  R.mipmap.ic_launcher;
-                break;
-            case "Mobile Computing":
-                imageInt = R.mipmap.ic_mobile_computing_round;
-                break;
-
-            case "sharknoon":
-                imageInt = R.mipmap.ic_sharknoon_round;
-                break;
-
-            case "danielHipp":
-                imageInt = R.mipmap.ic_daniel_hipp_round;
-                break;
-
-             default:
-                imageInt = R.mipmap.ic_launcher;
-                break;
-        }
-
-        return imageInt;
-    }
-
     private TextView createContactTextView(String text, Activity homeScreenActivity, String imageUrl) {
         // Create TextView with image
         TextView contactTextView = new TextView(homeScreenActivity);

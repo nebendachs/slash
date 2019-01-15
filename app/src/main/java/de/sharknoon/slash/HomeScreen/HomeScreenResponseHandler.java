@@ -152,11 +152,11 @@ public class HomeScreenResponseHandler {
                 UploadImageMessage.setImageID(response.getImageID(), context);
                 break;
 
-            default: //Every other case is an error, send error toast notification
-                Intent intent = new Intent(HomeScreenActivity.ErrorToastReceiver.ACTION);
-                intent.putExtra(HomeScreenActivity.ErrorToastReceiver.ACTION, serverResponse);
-                context.sendBroadcast(intent);
-                break;
+                default: //Every other case is an error, send error toast notification
+                    Intent intent = new Intent(HomeScreenActivity.ErrorToastReceiver.ACTION);
+                    intent.putExtra(HomeScreenActivity.ErrorToastReceiver.ACTION, serverResponse);
+                    context.sendBroadcast(intent);
+                    break;
         }
     }
 }

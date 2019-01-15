@@ -2,7 +2,10 @@ package de.sharknoon.slash.Activties;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -18,8 +21,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
+import de.sharknoon.slash.ChatMessages.SendChatMessage;
+import de.sharknoon.slash.ChatMessages.SendProjectMessage;
 import de.sharknoon.slash.ChatMessages.UserChatScreen;
+import de.sharknoon.slash.HomeScreen.UserHomeScreen;
+import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
@@ -29,6 +41,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     private static UserChatScreen screen;
     private static LinearLayout messageScreen;
     public static boolean active = false;
+    private int PICK_IMAGE_REQUEST = 1;
     ChatOrProject chatOrProject;
 
     @Override
@@ -41,6 +54,7 @@ public class ChatScreenActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         String name = "NO_NAME";
+        ChatOrProject chatOrProject = null;
 
         if(getIntent().getExtras() != null) {
             name = getIntent().getExtras().getString("NAME");
@@ -135,11 +149,26 @@ public class ChatScreenActivity extends AppCompatActivity {
         createMeme.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                //screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
                 hideKeyboard();
                 Intent goToMemeGenerator = new Intent(getApplicationContext(), MemeTemplateSelectionActivity.class);
                 startActivity(goToMemeGenerator);
                 //  screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
 
+            }
+        });
+
+        Button sendImage = findViewById(R.id.chatscreen_button_gallery);
+        sendImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent();
+                // Show only images, no videos or anything else
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                // Always show the chooser (if there are multiple options available)
+                startActivityForResult(Intent.createChooser(intent, getString(R.string.activity_chat_screen_select_image)), PICK_IMAGE_REQUEST);
+                hideKeyboard();
             }
         });
 
@@ -154,6 +183,41 @@ public class ChatScreenActivity extends AppCompatActivity {
                 hideKeyboard();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Handle selected image
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+                byte[] memeInBytes = output.toByteArray();
+                UploadImageMessage.setImageData(memeInBytes);
+
+                ChatOrProject currentChatOrProject = ParameterManager.getCurrentOpenChatOrProject();
+
+                Gson gson = new Gson();
+                String message;
+                if(currentChatOrProject.getProject() != null){
+                    SendProjectMessage projectMessage = new SendProjectMessage(ParameterManager.getSession(this),
+                            currentChatOrProject.getProject().getId(), "IMAGE", "", "", "", "ADD_PROJECT_MESSAGE");
+                    message = gson.toJson(projectMessage);
+                } else {
+                    SendChatMessage chatMessage = new SendChatMessage(ParameterManager.getSession(this),
+                            currentChatOrProject.getChat().getId(), "IMAGE", "", "", "", "ADD_CHAT_MESSAGE");
+                    message = gson.toJson(chatMessage);
+                }
+
+                UserHomeScreen.homeScreenClient.getWebSocketClient().send(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void moveAddonScreenUpDown(){

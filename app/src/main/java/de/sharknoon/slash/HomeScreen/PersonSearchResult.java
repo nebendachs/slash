@@ -9,7 +9,6 @@ public class PersonSearchResult implements Serializable {
 
     private List<Person> users;
 
-
     public List<Person> getUsers() {
         return users;
     }
