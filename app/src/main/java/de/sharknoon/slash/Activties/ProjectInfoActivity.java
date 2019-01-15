@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import de.sharknoon.slash.ChatMessages.ImageLoader;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.HomeScreen.Project;
 import de.sharknoon.slash.People.PeopleAdapter;
@@ -42,8 +43,11 @@ public class ProjectInfoActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(project.getName());
 
-        //todo: set project image
-        projectImage.setImageResource(R.drawable.logo);
+        //set project image
+        if(project.getImage() != null)
+            new ImageLoader(project.getImage(), this, projectImage);
+        else
+            projectImage.setImageResource(R.mipmap.ic_launcher);
 
         switch(project.getSentiment().getPolarity()) {
             case Person.POSITIVE:

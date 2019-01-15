@@ -13,6 +13,7 @@ import java.util.List;
 
 import de.sharknoon.slash.Activties.AddPeopleActivity;
 import de.sharknoon.slash.Activties.CreateClientProjektActivity;
+import de.sharknoon.slash.ChatMessages.ImageLoader;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.R;
 
@@ -124,9 +125,12 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         else if(role != null)
             role.setVisibility(View.GONE);
 
-        //todo Profilbild setzen
+        //Profilbild setzen
         ImageView picture = viewHolder.profilePicture;
-        picture.setImageResource(R.drawable.ic_person);
+        if(person.getImage() != null)
+            new ImageLoader(person.getImage(), viewHolder.context, picture);
+        else
+            picture.setImageResource(R.mipmap.ic_launcher);
 
         ImageView mood = viewHolder.personMood;
         if(person.getSentiment() != null) {

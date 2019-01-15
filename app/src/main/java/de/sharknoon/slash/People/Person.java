@@ -17,6 +17,7 @@ public class Person implements Serializable {
     private String id;
     private String username;
     private String role;
+    private String image;
     private Sentiment sentiment;
 
     public Person(String id, String username) {
@@ -38,6 +39,10 @@ public class Person implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public Sentiment getSentiment() {

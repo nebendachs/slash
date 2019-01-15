@@ -16,15 +16,17 @@ public class Chat implements Serializable{
     private String personB;
     private String personAUsername;
     private String partnerUsername;
+    private String partnerImage;
     private String creationDate;
     private List<Message> messages;
 
-    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String creationDate, List<Message> messages){
+    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String partnerImage, String creationDate, List<Message> messages){
         this.id = id;
         this.personA = personA;
         this.personAUsername = personAUsername;
         this.personB = personB;
         this.partnerUsername = partnerUsername;
+        this.partnerImage = partnerImage;
         this.creationDate = creationDate;
         this.messages = messages;
     }
@@ -47,6 +49,10 @@ public class Chat implements Serializable{
 
     public String getPartnerUsername() {
         return partnerUsername;
+    }
+
+    public String getPartnerImage() {
+        return partnerImage;
     }
 
     public List<Message> getMessages(){
