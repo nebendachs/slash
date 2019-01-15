@@ -18,6 +18,6 @@
         android:id="@+id/element_mood"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        tools:srcCompat="@drawable/ic_mood_sun" />
+        tools:srcCompat="@drawable/ic_sun_outline" />
 
 </FrameLayout>

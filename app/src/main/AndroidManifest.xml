@@ -96,7 +96,8 @@
             android:name=".Activties.CreateTemplateActivity"
             android:label="Message Templates" />
         <activity
-            android:name=".Activties.ProjectInfoActivity"/>/>
+            android:name=".Activties.ProjectInfoActivity"
+            android:parentActivityName=".Activties.ChatScreenActivity"/>
         <activity
             android:name=".Activties.MemeTemplateSelectionActivity"
             android:label="Meme Templates" />

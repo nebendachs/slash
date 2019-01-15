@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Person implements Serializable {
-    public static final String MEMBER = "Team Member";
+    public static final String MEMBER = "Developer";
     public static final String SCRUM_MASTER = "Scrum Master";
 
+    public static final String POSITIVE = "POSITIVE";
     public static final String NEUTRAL = "NEUTRAL";
+    public static final String NEGATIVE = "NEGATIVE";
 
     private String id;
     private String username;

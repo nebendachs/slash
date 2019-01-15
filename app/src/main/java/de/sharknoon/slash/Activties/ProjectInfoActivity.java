@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Locale;
 
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.HomeScreen.Project;
@@ -47,10 +46,15 @@ public class ProjectInfoActivity extends AppCompatActivity {
         projectImage.setImageResource(R.drawable.logo);
 
         switch(project.getSentiment().getPolarity()) {
-            case Person.NEUTRAL:
-                projectMood.setImageResource(R.drawable.ic_mood_sun);
+            case Person.POSITIVE:
+                projectMood.setImageResource(R.drawable.ic_sun_outline);
                 break;
-            //todo: add other moods
+            case Person.NEUTRAL:
+                projectMood.setImageResource(R.drawable.ic_overcast_outline);
+                break;
+            case Person.NEGATIVE:
+                projectMood.setImageResource(R.drawable.ic_rain_outline);
+                break;
         }
 
         projectName.setText(project.getName());

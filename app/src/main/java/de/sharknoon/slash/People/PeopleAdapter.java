@@ -3,7 +3,6 @@ package de.sharknoon.slash.People;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,10 +130,15 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
 
         ImageView mood = viewHolder.personMood;
         switch(person.getSentiment().getPolarity()) {
-            case Person.NEUTRAL:
-                mood.setImageResource(R.drawable.ic_mood_sun);
+            case Person.POSITIVE:
+                mood.setImageResource(R.drawable.ic_sun_outline);
                 break;
-            //todo: Complete moods
+            case Person.NEUTRAL:
+                mood.setImageResource(R.drawable.ic_overcast_outline);
+                break;
+            case Person.NEGATIVE:
+                mood.setImageResource(R.drawable.ic_rain_outline);
+                break;
         }
     }
 
