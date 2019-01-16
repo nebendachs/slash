@@ -27,9 +27,9 @@ public class ImageSender {
             else if(image.getWidth() < image.getHeight())
                 image = Bitmap.createBitmap(image, 0, image.getHeight() / 2 - image.getWidth() / 2, image.getWidth(), image.getWidth());
             image = Bitmap.createScaledBitmap(image, 100, 100, false);
-            image.compress(Bitmap.CompressFormat.PNG, 100, output);
+            image.compress(Bitmap.CompressFormat.JPEG, 100, output);
         } else
-            image.compress(Bitmap.CompressFormat.PNG, 50, output);
+            image.compress(Bitmap.CompressFormat.JPEG, 50, output);
 
         byte[] imageInBytes = output.toByteArray();
         UploadImageMessage.setImageData(imageInBytes);
