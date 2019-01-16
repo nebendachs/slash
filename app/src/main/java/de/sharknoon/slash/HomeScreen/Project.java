@@ -45,6 +45,10 @@ public class Project implements Serializable {
         return projectOwner;
     }
 
+    public void setProjectOwner(String projectOwner) {
+        this.projectOwner = projectOwner;
+    }
+
     public Person.Sentiment getSentiment() {
         return sentiment;
     }

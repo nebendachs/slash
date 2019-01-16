@@ -34,6 +34,7 @@ public class HomeScreenResponseHandler {
     private static final String MESSAGE_TOO_LONG = "CHAT_MESSAGE_CONTENT_TOO_LONG";
     private static final String OK_IMAGE = "OK_IMAGE";
     private static final String OK_USER = "OK_USER";
+    private static final String OK = "OK";
 
     private static final String JSON_FIELD_STATUS = "status";
     private static final String JSON_FIELD_CHAT = "chat";
@@ -160,6 +161,7 @@ public class HomeScreenResponseHandler {
             case CONNECTED:
             case OK_LOGOUT:
             case MESSAGE_TOO_LONG:
+            case OK:
                 break;
 
             case OK_IMAGE:

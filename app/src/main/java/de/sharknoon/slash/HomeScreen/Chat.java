@@ -20,10 +20,10 @@ public class Chat implements Serializable{
     private String partnerUsername;
     private String partnerImage;
     private String creationDate;
-    private Person.Sentiment sentiment;
+    private Person.Sentiment partnerSentiment;
     private List<Message> messages;
 
-    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String partnerImage, String creationDate, Person.Sentiment sentiment, List<Message> messages){
+    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String partnerImage, String creationDate, Person.Sentiment partnerSentiment, List<Message> messages){
         this.id = id;
         this.personA = personA;
         this.personAUsername = personAUsername;
@@ -31,7 +31,7 @@ public class Chat implements Serializable{
         this.partnerUsername = partnerUsername;
         this.partnerImage = partnerImage;
         this.creationDate = creationDate;
-        this.sentiment = sentiment;
+        this.partnerSentiment = partnerSentiment;
         this.messages = messages;
     }
 
@@ -68,7 +68,7 @@ public class Chat implements Serializable{
     }
 
     public Person.Sentiment getSentiment() {
-        return sentiment;
+        return partnerSentiment;
     }
 
     public class Message implements Serializable, Comparable<Message> {
