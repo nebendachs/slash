@@ -27,6 +27,7 @@ import java.io.IOException;
 import de.hdodenhof.circleimageview.CircleImageView;
 import de.sharknoon.slash.ChatMessages.ImageLoader;
 import de.sharknoon.slash.Image.ImageSender;
+import de.sharknoon.slash.Image.SentimentLoader;
 import de.sharknoon.slash.Login.LogoutMessage;
 import de.sharknoon.slash.People.GetUserMessage;
 import de.sharknoon.slash.People.Person;
@@ -158,19 +159,7 @@ public class Profile extends Fragment {
             userName.setText(user.getUsername());
             userLayout.setVisibility(View.VISIBLE);
             new ImageLoader(user.getImage(), getContext(), userImage);
-            if(user.getSentiment() != null) {
-                switch(user.getSentiment().getPolarity()) {
-                    case Person.POSITIVE:
-                        userMood.setImageResource(R.drawable.ic_sun_outline);
-                        break;
-                    case Person.NEUTRAL:
-                        userMood.setImageResource(R.drawable.ic_overcast_outline);
-                        break;
-                    case Person.NEGATIVE:
-                        userMood.setImageResource(R.drawable.ic_rain_outline);
-                        break;
-                }
-            }
+            new SentimentLoader(user.getSentiment(), userMood);
         }
     }
 

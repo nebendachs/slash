@@ -25,6 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import de.sharknoon.slash.Activties.ChatScreenActivity;
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 import de.sharknoon.slash.ChatMessages.ImageLoader;
+import de.sharknoon.slash.Image.SentimentLoader;
 import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
@@ -50,7 +51,7 @@ public class ContactView {
 
                 // Create ImageView with mood image
                 if(project.getSentiment() != null) {
-                    ImageView mood = createMoodImageView(project.getSentiment().getPolarity(), homeScreenActivity);
+                    ImageView mood = createMoodImageView(project.getSentiment(), homeScreenActivity);
                     frameLayout.addView(mood);
                 }
 
@@ -89,7 +90,7 @@ public class ContactView {
                 // Create ImageView with mood image
                 //todo: Get sentiment for chats
                 if(chat.getSentiment() != null) {
-                    ImageView mood = createMoodImageView(chat.getSentiment().getPolarity(), homeScreenActivity);
+                    ImageView mood = createMoodImageView(chat.getSentiment(), homeScreenActivity);
                     frameLayout.addView(mood);
                 }
 
@@ -113,19 +114,9 @@ public class ContactView {
         });
     }
 
-    private ImageView createMoodImageView(String polarity, Activity homeScreenActivity) {
+    private ImageView createMoodImageView(Person.Sentiment sentiment, Activity homeScreenActivity) {
         ImageView mood = new ImageView(homeScreenActivity);
-        switch(polarity) {
-            case Person.POSITIVE:
-                mood.setImageResource(R.drawable.ic_sun_outline);
-                break;
-            case Person.NEUTRAL:
-                mood.setImageResource(R.drawable.ic_overcast_outline);
-                break;
-            case Person.NEGATIVE:
-                mood.setImageResource(R.drawable.ic_rain_outline);
-                break;
-            }
+        new SentimentLoader(sentiment, mood);
         int dimensions = (int)(Math.ceil(getTextViewWidth(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX)*0.6));
         FrameLayout.LayoutParams imageViewParams = new FrameLayout.LayoutParams(dimensions, dimensions);
         imageViewParams.setMarginStart(15);
@@ -146,6 +137,8 @@ public class ContactView {
 
         TextView contactTextView = new TextView(homeScreenActivity);
         contactTextView.setText(text);
+        contactTextView.setWidth(dimensions);
+        contactTextView.setMaxLines(2);
         contactTextView.setGravity(Gravity.CENTER);
         layout.addView(contactTextView);
 
