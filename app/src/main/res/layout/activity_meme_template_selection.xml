@@ -63,9 +63,18 @@
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
                 android:src="@drawable/memetemplate11"/>
+
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
                 android:src="@drawable/memetemplate12"/>
+
+            <TextView
+                android:id="@+id/custom_image"
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:text="Custom\nImage"
+                android:gravity="center"
+                android:background="@drawable/rectangle"
+                android:textSize="20sp"/>
 
         </com.google.android.flexbox.FlexboxLayout>
 

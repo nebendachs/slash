@@ -1,8 +1,8 @@
 package de.sharknoon.slash.Activties;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,19 +14,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import java.io.ByteArrayInputStream;
 
-import java.io.ByteArrayOutputStream;
-
-import de.sharknoon.slash.ChatMessages.ChatOrProject;
-import de.sharknoon.slash.ChatMessages.SendChatMessage;
-import de.sharknoon.slash.ChatMessages.SendProjectMessage;
-import de.sharknoon.slash.HomeScreen.UserHomeScreen;
 import de.sharknoon.slash.Image.ImageSender;
-import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.MemeGenerator.MemeGeneration;
 import de.sharknoon.slash.R;
-import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class MemeGenerationActivity extends AppCompatActivity {
 
@@ -38,65 +30,11 @@ public class MemeGenerationActivity extends AppCompatActivity {
 
         // Get template index from Intent
         Intent intent = getIntent();
-        int templateIndex = intent.getIntExtra("drawable", 0);
+        Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(intent.getByteArrayExtra("bitmap")));
         String chatId = intent.getStringExtra("chatId");
         ImageView memeGeneratorImageView = findViewById(R.id.memeGeneratorImageView);
 
-        int memeTemplateIndex = 0;
-
-        // Show template dependent on the index
-        switch (templateIndex) {
-
-            case 1:
-                memeTemplateIndex = R.drawable.memetemplate1;
-                break;
-
-            case 2:
-                memeTemplateIndex = R.drawable.memetemplate2;
-                break;
-
-            case 3:
-                memeTemplateIndex = R.drawable.memetemplate3;
-                break;
-
-            case 4:
-                memeTemplateIndex = R.drawable.memetemplate4;
-                break;
-
-            case 5:
-                memeTemplateIndex = R.drawable.memetemplate5;
-                break;
-
-            case 6:
-                memeTemplateIndex = R.drawable.memetemplate6;
-                break;
-
-            case 7:
-                memeTemplateIndex = R.drawable.memetemplate7;
-                break;
-
-            case 8:
-                memeTemplateIndex = R.drawable.memetemplate8;
-                break;
-
-            case 9:
-                memeTemplateIndex = R.drawable.memetemplate9;
-                break;
-
-            case 10:
-                memeTemplateIndex = R.drawable.memetemplate10;
-                break;
-
-            case 11:
-                memeTemplateIndex = R.drawable.memetemplate11;
-                break;
-
-            case 12:
-                memeTemplateIndex = R.drawable.memetemplate12;
-                break;
-        }
-
-        memeGeneratorImageView.setImageResource(memeTemplateIndex);
+        memeGeneratorImageView.setImageBitmap(bitmap);
 
         // Get text view and edit text from activity layout
         TextView textViewBottomMessage = findViewById(R.id.memeGeneratorTextViewBottomMessage);
@@ -152,13 +90,12 @@ public class MemeGenerationActivity extends AppCompatActivity {
 
         // Trigger Meme Generation by execute button
         Button generateMemeButton = findViewById(R.id.memeGeneratorButton);
-        int finalMemeTemplateIndex = memeTemplateIndex;
 
         // Generate Meme
         generateMemeButton.setOnClickListener(v -> {
             String upperMessage = editTextUpperMessage.getText().toString().toUpperCase();
             String belowMessage = editTextBottomMessage.getText().toString().toUpperCase();
-            Bitmap meme = MemeGeneration.createMeme(finalMemeTemplateIndex, upperMessage, belowMessage, MemeGenerationActivity.this);
+            Bitmap meme = MemeGeneration.createMeme(bitmap, upperMessage, belowMessage, MemeGenerationActivity.this);
 
             new ImageSender(meme, this, ImageSender.CHATORPROJECT);
 
