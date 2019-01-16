@@ -57,7 +57,7 @@ public class ProjectInfoActivity extends AppCompatActivity {
         if(project.getImage() != null)
             new ImageLoader(project.getImage(), this, projectImage);
         else
-            projectImage.setImageResource(R.mipmap.ic_launcher);
+            projectImage.setImageResource(R.drawable.logo);
         projectImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

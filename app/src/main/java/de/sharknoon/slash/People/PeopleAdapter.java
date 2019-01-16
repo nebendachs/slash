@@ -128,10 +128,10 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
 
         //Profilbild setzen
         ImageView picture = viewHolder.profilePicture;
-        if(person.getImage() != null)
+        //if(person.getImage() != null)
             new ImageLoader(person.getImage(), viewHolder.context, picture);
-        else
-            picture.setImageResource(R.mipmap.ic_launcher);
+        //else
+        //    picture.setImageResource(R.mipmap.ic_launcher);
 
         ImageView mood = viewHolder.personMood;
         new SentimentLoader(person.getSentiment(), mood);

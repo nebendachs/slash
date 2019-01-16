@@ -34,8 +34,8 @@ import de.sharknoon.slash.Utilities;
 public class ContactView {
 
     public static final int TEXT_VIEW_WIDTH_IN_PX = 75;
-    public static final String CONTACT_ID_PARAMETER = "contactId";
-    public static final String PROJECT_ID_PARAMETER = "projectId";
+    public static final int CONTACT = 0;
+    public static final int PROJECT = 1;
 
     public ContactView(Activity homeScreenActivity, LinearLayout parentLayout, String projectName, Project project) {
 
@@ -46,7 +46,7 @@ public class ContactView {
                 FrameLayout frameLayout = new FrameLayout(homeScreenActivity);
 
                 // Create TextView with image
-                LinearLayout contactTextView = createContactTextView(projectName, homeScreenActivity, project.getImage());
+                LinearLayout contactTextView = createContactTextView(projectName, homeScreenActivity, project.getImage(), PROJECT);
                 frameLayout.addView(contactTextView);
 
                 // Create ImageView with mood image
@@ -84,7 +84,7 @@ public class ContactView {
                 FrameLayout frameLayout = new FrameLayout(homeScreenActivity);
 
                 // Create TextView with image
-                LinearLayout contactTextView = createContactTextView(contactName, homeScreenActivity, chat.getPartnerImage());
+                LinearLayout contactTextView = createContactTextView(contactName, homeScreenActivity, chat.getPartnerImage(), CONTACT);
                 frameLayout.addView(contactTextView);
 
                 // Create ImageView with mood image
@@ -124,11 +124,15 @@ public class ContactView {
         return mood;
     }
 
-    private LinearLayout createContactTextView(String text, Activity homeScreenActivity, String imageUrl) {
+    private LinearLayout createContactTextView(String text, Activity homeScreenActivity, String imageUrl, int contactorproject) {
         LinearLayout layout = new LinearLayout(homeScreenActivity);
         layout.setOrientation(LinearLayout.VERTICAL);
 
         CircleImageView image = new CircleImageView(homeScreenActivity);
+        if(contactorproject == PROJECT)
+            image.setImageResource(R.drawable.logo);
+        else
+            image.setImageResource(R.drawable.ic_default_profile);
         new ImageLoader(imageUrl, homeScreenActivity, image);
         int dimensions = getTextViewWidth(homeScreenActivity, TEXT_VIEW_WIDTH_IN_PX);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(dimensions, dimensions);
