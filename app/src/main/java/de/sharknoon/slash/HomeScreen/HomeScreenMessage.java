@@ -1,12 +1,11 @@
 package de.sharknoon.slash.HomeScreen;
 
-public class HomeScreenMessage {
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
+class HomeScreenMessage {
+    private final String sessionid;
+    private String status = "GET_HOME";
 
-    private String sessionid;
-    private String status;
-
-    HomeScreenMessage(String sessionid, String status){
-        this.status = status;
+    HomeScreenMessage(String sessionid){
         this.sessionid = sessionid;
     }
 }

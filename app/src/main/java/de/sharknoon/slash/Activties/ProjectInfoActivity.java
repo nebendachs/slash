@@ -8,13 +8,11 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import de.sharknoon.slash.ChatMessages.ImageLoader;
@@ -27,15 +25,9 @@ import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 
 public class ProjectInfoActivity extends AppCompatActivity {
-    private Project project;
     private CircleImageView projectImage;
-    private ImageView projectMood;
-    private TextView projectName;
-    private TextView projectDesc;
-    private PeopleAdapter adapter;
-    private ArrayList<Person> members;
 
-    private int PICK_IMAGE_REQUEST = 1;
+    private final int PICK_IMAGE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +35,13 @@ public class ProjectInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_project_info);
 
         projectImage = findViewById(R.id.element_picture);
-        projectMood = findViewById(R.id.element_mood);
-        projectName = findViewById(R.id.info_project_name);
-        projectDesc = findViewById(R.id.info_project_description);
+        ImageView projectMood = findViewById(R.id.element_mood);
+        TextView projectName = findViewById(R.id.info_project_name);
+        TextView projectDesc = findViewById(R.id.info_project_description);
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
-        project = (Project)bundle.getSerializable(ChatScreenActivity.PROJECT);
+        Project project = (Project) bundle.getSerializable(ChatScreenActivity.PROJECT);
 
         getSupportActionBar().setTitle(project.getName());
 
@@ -58,16 +50,13 @@ public class ProjectInfoActivity extends AppCompatActivity {
             new ImageLoader(project.getImage(), this, projectImage);
         else
             projectImage.setImageResource(R.drawable.logo);
-        projectImage.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent();
-                // Show only images, no videos or anything else
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                // Always show the chooser (if there are multiple options available)
-                startActivityForResult(Intent.createChooser(intent, getString(R.string.activity_chat_screen_select_image)), PICK_IMAGE_REQUEST);
-            }
+        projectImage.setOnClickListener(v -> {
+            Intent intent1 = new Intent();
+            // Show only images, no videos or anything else
+            intent1.setType("image/*");
+            intent1.setAction(Intent.ACTION_GET_CONTENT);
+            // Always show the chooser (if there are multiple options available)
+            startActivityForResult(Intent.createChooser(intent1, getString(R.string.activity_chat_screen_select_image)), PICK_IMAGE_REQUEST);
         });
 
         new SentimentLoader(project.getSentiment(), projectMood);
@@ -75,23 +64,17 @@ public class ProjectInfoActivity extends AppCompatActivity {
         projectName.setText(project.getName());
         projectDesc.setText(project.getDescription());
 
-        members = new ArrayList<>();
-        members.addAll(project.getUsernames());
-        for(int i=0; i<members.size(); i++) {
+        ArrayList<Person> members = new ArrayList<>(project.getUsernames());
+        for(int i = 0; i< members.size(); i++) {
             if(members.get(i).getId().equals(project.getProjectOwner()))
                 members.get(i).setRole(Person.SCRUM_MASTER);
             else
                 members.get(i).setRole(Person.MEMBER);
         }
-        members.sort(new Comparator<Person>() {
-            @Override
-            public int compare(Person o1, Person o2) {
-                return o1.getUsername().compareToIgnoreCase(o2.getUsername());
-            }
-        });
+        members.sort((o1, o2) -> o1.getUsername().compareToIgnoreCase(o2.getUsername()));
 
         RecyclerView recyclerView = findViewById(R.id.info_project_members);
-        adapter = new PeopleAdapter(members, PeopleSelector.PROJECT_INFO);
+        PeopleAdapter adapter = new PeopleAdapter(members, PeopleSelector.PROJECT_INFO);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

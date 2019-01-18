@@ -1,17 +1,10 @@
 package de.sharknoon.slash.People;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,7 +18,6 @@ import java.util.List;
 
 import de.sharknoon.slash.Activties.AddPeopleActivity;
 import de.sharknoon.slash.Activties.CreateClientProjektActivity;
-import de.sharknoon.slash.Activties.ProjectInfoActivity;
 import de.sharknoon.slash.ChatMessages.GetChat;
 import de.sharknoon.slash.ChatMessages.ImageLoader;
 import de.sharknoon.slash.Fragments.PeopleSelector;
@@ -37,23 +29,23 @@ import de.sharknoon.slash.SharedPreferences.ParameterManager;
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
 public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder> {
-    private List<Person> people;
-    private String purpose;
+    private final List<Person> people;
+    private final String purpose;
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView nameTextView;
-        public TextView roleTextView;
-        public ImageView profilePicture;
-        public ImageView personMood;
-        private Context context;
+        final TextView nameTextView;
+        final TextView roleTextView;
+        final ImageView profilePicture;
+        final ImageView personMood;
+        private final Context context;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(Context context, View itemView) {
+        ViewHolder(Context context, View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
@@ -123,47 +115,44 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
                         if(ParameterManager.getCurrentOpenChatOrProject().getProject().getProjectOwner().equals(person.getId()))
                             popup.getMenu().findItem(R.id.make_scrum_master).setEnabled(false);
 
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.message_user:
-                                        Gson gson1 = new Gson();
-                                        GetChat getChat = new GetChat(ParameterManager.getSession(context), person.getId());
-                                        String jsonChatMessage = gson1.toJson(getChat);
-                                        Log.i("XXXXXX",jsonChatMessage);
+                        popup.setOnMenuItemClickListener(item -> {
+                            switch (item.getItemId()) {
+                                case R.id.message_user:
+                                    Gson gson1 = new Gson();
+                                    GetChat getChat = new GetChat(ParameterManager.getSession(context), person.getId());
+                                    String jsonChatMessage = gson1.toJson(getChat);
+                                    Log.i("XXXXXX",jsonChatMessage);
 
-                                        if(homeScreenClient != null)
-                                            homeScreenClient.getWebSocketClient().send(jsonChatMessage);
-                                        else
-                                            Toast.makeText(context, context.getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
-                                        return true;
-                                    case R.id.make_scrum_master:
-                                        Gson gson2 = new Gson();
-                                        UpdateScrumMasterMessage updateScrumMasterMessage = new UpdateScrumMasterMessage(
-                                                ParameterManager.getSession(context),
-                                                ParameterManager.getCurrentOpenChatOrProject().getProject().getId(),
-                                                person.getId());
-                                        String jsonScrumMasterMessage = gson2.toJson(updateScrumMasterMessage);
-                                        Log.i("XXXXXX",jsonScrumMasterMessage);
+                                    if(homeScreenClient != null)
+                                        homeScreenClient.getWebSocketClient().send(jsonChatMessage);
+                                    else
+                                        Toast.makeText(context, context.getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
+                                    return true;
+                                case R.id.make_scrum_master:
+                                    Gson gson2 = new Gson();
+                                    UpdateScrumMasterMessage updateScrumMasterMessage = new UpdateScrumMasterMessage(
+                                            ParameterManager.getSession(context),
+                                            ParameterManager.getCurrentOpenChatOrProject().getProject().getId(),
+                                            person.getId());
+                                    String jsonScrumMasterMessage = gson2.toJson(updateScrumMasterMessage);
+                                    Log.i("XXXXXX",jsonScrumMasterMessage);
 
-                                        if(homeScreenClient != null) {
-                                            homeScreenClient.getWebSocketClient().send(jsonScrumMasterMessage);
-                                            for(int i=0; i<people.size(); i++) {
-                                                if(people.get(i).getRole().equals(Person.SCRUM_MASTER)) {
-                                                    people.get(i).setRole(Person.MEMBER);
-                                                    notifyItemChanged(i);
-                                                }
+                                    if(homeScreenClient != null) {
+                                        homeScreenClient.getWebSocketClient().send(jsonScrumMasterMessage);
+                                        for(int i=0; i<people.size(); i++) {
+                                            if(people.get(i).getRole().equals(Person.SCRUM_MASTER)) {
+                                                people.get(i).setRole(Person.MEMBER);
+                                                notifyItemChanged(i);
                                             }
-                                            person.setRole(Person.SCRUM_MASTER);
-                                            notifyItemChanged(people.indexOf(person));
-                                            ParameterManager.getCurrentOpenChatOrProject().getProject().setProjectOwner(person.getId());
-                                        } else
-                                            Toast.makeText(context, context.getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
-                                        return true;
-                                }
-                                return false;
+                                        }
+                                        person.setRole(Person.SCRUM_MASTER);
+                                        notifyItemChanged(people.indexOf(person));
+                                        ParameterManager.getCurrentOpenChatOrProject().getProject().setProjectOwner(person.getId());
+                                    } else
+                                        Toast.makeText(context, context.getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
+                                    return true;
                             }
+                            return false;
                         });
                         popup.show();
                         break;
@@ -192,8 +181,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             contactView = inflater.inflate(R.layout.layout_recycle_view_element, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(context, contactView);
-        return viewHolder;
+        return new ViewHolder(context, contactView);
     }
 
     // Involves populating data into the item through holder

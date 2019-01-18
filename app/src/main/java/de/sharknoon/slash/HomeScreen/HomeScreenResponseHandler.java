@@ -23,7 +23,7 @@ import de.sharknoon.slash.R;
 import static de.sharknoon.slash.Activties.ChatScreenActivity.active;
 
 
-public class HomeScreenResponseHandler {
+class HomeScreenResponseHandler {
 
     private static final String GET_HOME_OK_STATUS = "OK_HOME";
     private static final String OK_USERS = "OK_USERS";
@@ -94,20 +94,16 @@ public class HomeScreenResponseHandler {
                 Chat chat = gson.fromJson(chatMessage, Chat.class);
                 chatOrProject.setChat(chat);
 
-                ((Activity) context).runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        if(!active) {
-                            Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("CHATORPROJECT", chatOrProject);
-                            bundle.putString("NAME", chatOrProject.getName());
-                            intent.putExtras(bundle);
-                            homeScreenActivity.startActivity(intent);
-                        } else {
-                            ChatScreenActivity.setChat(chatOrProject, context);
-                        }
+                ((Activity) context).runOnUiThread(() -> {
+                    if(!active) {
+                        Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("CHATORPROJECT", chatOrProject);
+                        bundle.putString("NAME", chatOrProject.getName());
+                        intent.putExtras(bundle);
+                        homeScreenActivity.startActivity(intent);
+                    } else {
+                        ChatScreenActivity.setChat(chatOrProject, context);
                     }
                 });
                 break;
@@ -119,20 +115,16 @@ public class HomeScreenResponseHandler {
                 Project project = gson.fromJson(projectMessage, Project.class);
                 chatOrProject.setProject(project);
 
-                ((Activity) context).runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        if(!active){
-                            Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("CHATORPROJECT", chatOrProject);
-                            bundle.putString("NAME", chatOrProject.getName());
-                            intent.putExtras(bundle);
-                            homeScreenActivity.startActivity(intent);
-                        } else {
-                            ChatScreenActivity.setChat(chatOrProject, context);
-                        }
+                ((Activity) context).runOnUiThread(() -> {
+                    if(!active){
+                        Intent intent = new Intent(homeScreenActivity, ChatScreenActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("CHATORPROJECT", chatOrProject);
+                        bundle.putString("NAME", chatOrProject.getName());
+                        intent.putExtras(bundle);
+                        homeScreenActivity.startActivity(intent);
+                    } else {
+                        ChatScreenActivity.setChat(chatOrProject, context);
                     }
                 });
                 break;

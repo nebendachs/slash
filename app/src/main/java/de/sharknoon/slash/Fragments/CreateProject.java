@@ -31,22 +31,17 @@ import de.sharknoon.slash.SharedPreferences.ParameterManager;
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
 public class CreateProject extends Fragment {
-    Button add_button;
-    String button_text;
-    ProjectPeopleReveiver peopleReceiver = null;
-    ArrayList<Person> people;
-    Spinner scrumMasterSpinner;
+    private Button add_button;
+    private String button_text;
+    private ProjectPeopleReveiver peopleReceiver = null;
+    private ArrayList<Person> people;
+    private Spinner scrumMasterSpinner;
 
     public static CreateProject newInstance() {
         CreateProject fragment = new CreateProject();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -80,16 +75,13 @@ public class CreateProject extends Fragment {
     private void handleAddPeopleButton(View view) {
         add_button = view.findViewById(R.id.AddPeopleButton);
         button_text = add_button.getText().toString();
-        add_button.setText(button_text + " (0)");
-        add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goToAddPeopleActivity = new Intent(view.getContext(), AddPeopleActivity.class);
-                //Bundle bundle = new Bundle();
-                //bundle.putSerializable("People", people);
-                goToAddPeopleActivity.putExtra("People", people);
-                startActivity(goToAddPeopleActivity);
-            }
+        add_button.setText(String.format("%s (0)", button_text));
+        add_button.setOnClickListener(view1 -> {
+            Intent goToAddPeopleActivity = new Intent(view1.getContext(), AddPeopleActivity.class);
+            //Bundle bundle = new Bundle();
+            //bundle.putSerializable("People", people);
+            goToAddPeopleActivity.putExtra("People", people);
+            startActivity(goToAddPeopleActivity);
         });
     }
 

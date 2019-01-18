@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
 
 import de.sharknoon.slash.Login.UserLogin;
 import de.sharknoon.slash.R;
@@ -67,14 +66,11 @@ public class LoginActivity extends AppCompatActivity {
 
         // Get text view element for registration and handover event listener
         TextView registerLink = findViewById(R.id.homeScreenRegisterLink);
-        registerLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        registerLink.setOnClickListener(v -> {
 
-                // Move on to registration page
-                Intent goToRegisterActivity = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(goToRegisterActivity);
-            }
+            // Move on to registration page
+            Intent goToRegisterActivity = new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(goToRegisterActivity);
         });
     }
 
@@ -82,58 +78,52 @@ public class LoginActivity extends AppCompatActivity {
 
         // Get login button element and handover event listener
         Button loginButton = findViewById(R.id.homeScreenLoginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        loginButton.setOnClickListener(v -> {
 
-                // Get inserted E-Mail
-                EditText emailInput = findViewById(R.id.homeScreenEmailInput);
-                String insertedEmail = String.valueOf(emailInput.getText());
+            // Get inserted E-Mail
+            EditText emailInput = findViewById(R.id.homeScreenEmailInput);
+            String insertedEmail = String.valueOf(emailInput.getText());
 
-                // Get inserted Password
-                EditText passwordInput = findViewById(R.id.homeScreenPasswordInput);
-                String insertedPassword = String.valueOf(passwordInput.getText());
+            // Get inserted Password
+            EditText passwordInput = findViewById(R.id.homeScreenPasswordInput);
+            String insertedPassword = String.valueOf(passwordInput.getText());
 
-                boolean input_ok = true;
+            boolean input_ok = true;
 
-                // False EMail
-                if (insertedEmail.isEmpty()) {
-                    //emailErrorTextView.setText(R.string.homeScreenIncorrectEmailMessage);
-                    emailInput.setError(getString(R.string.homeScreenIncorrectEmailMessage));
-                    input_ok = false;
-                }
+            // False EMail
+            if (insertedEmail.isEmpty()) {
+                //emailErrorTextView.setText(R.string.homeScreenIncorrectEmailMessage);
+                emailInput.setError(getString(R.string.homeScreenIncorrectEmailMessage));
+                input_ok = false;
+            }
 
-                // Empty password
-                if (insertedPassword.isEmpty() || insertedPassword.length() < 8) {
-                    //passwordErrorTextView.setText(R.string.homeScreenIncorrectPasswordMessage);
-                    passwordInput.setError(getString(R.string.homeScreenIncorrectPasswordMessage));
-                    input_ok = false;
-                }
+            // Empty password
+            if (insertedPassword.isEmpty() || insertedPassword.length() < 8) {
+                //passwordErrorTextView.setText(R.string.homeScreenIncorrectPasswordMessage);
+                passwordInput.setError(getString(R.string.homeScreenIncorrectPasswordMessage));
+                input_ok = false;
+            }
 
-                // Try to login User
-                if (input_ok) {
-                    LoginActivity.disableLoadingScreen(false, v.getContext());
+            // Try to login User
+            if (input_ok) {
+                LoginActivity.disableLoadingScreen(false, v.getContext());
 
-                    String deviceID = CompletableFuture.supplyAsync(new Supplier<String>() {
-                        @Override
-                        public String get() {
-                            try {
-                                if (ParameterManager.getDeviceId(v.getContext()) == null) {
-                                    String token = Pushy.register(getApplicationContext());
-                                    ParameterManager.setDeviceId(v.getContext(), token);
-                                }
-                                return ParameterManager.getDeviceId(v.getContext());
-                            } catch (PushyException e) {
-                                Log.i("PushyException", String.valueOf(e));
-                                return "";
-                            }
+                String deviceID = CompletableFuture.supplyAsync(() -> {
+                    try {
+                        if (ParameterManager.getDeviceId(v.getContext()) == null) {
+                            String token = Pushy.register(getApplicationContext());
+                            ParameterManager.setDeviceId(v.getContext(), token);
                         }
-                    }).join();
+                        return ParameterManager.getDeviceId(v.getContext());
+                    } catch (PushyException e) {
+                        Log.i("PushyException", String.valueOf(e));
+                        return "";
+                    }
+                }).join();
 
-                    Log.i("Pushy", deviceID);
+                Log.i("Pushy", deviceID);
 
-                    new UserLogin(insertedEmail, insertedPassword, deviceID);
-                }
+                new UserLogin(insertedEmail, insertedPassword, deviceID);
             }
         });
     }

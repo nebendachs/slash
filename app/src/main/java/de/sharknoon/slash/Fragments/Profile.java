@@ -2,7 +2,6 @@ package de.sharknoon.slash.Fragments;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -44,18 +43,13 @@ public class Profile extends Fragment {
     private ImageView userMood;
     private TextView userName;
 
-    private int PICK_IMAGE_REQUEST = 1;
+    private final int PICK_IMAGE_REQUEST = 1;
 
     public static Profile newInstance() {
         Profile fragment = new Profile();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -82,14 +76,11 @@ public class Profile extends Fragment {
         else
             Toast.makeText(getActivity(), getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
 
-        userImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, getString(R.string.activity_chat_screen_select_image)), PICK_IMAGE_REQUEST);
-            }
+        userImage.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.activity_chat_screen_select_image)), PICK_IMAGE_REQUEST);
         });
 
         this.handleLogoutButton(view);
@@ -115,38 +106,29 @@ public class Profile extends Fragment {
 
     private void handleLogoutButton(View view) {
         Button logoutButton = view.findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Show confirmation dialog
-                AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
-                alertDialog.setTitle("Logout");
-                alertDialog.setMessage("Are you sure you want to log out?");
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Log out",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Logout from server
-                                Gson gson = new Gson();
-                                LogoutMessage logoutMessage = new LogoutMessage(ParameterManager.getSession(view.getContext()));
-                                String jsonLogoutMessage = gson.toJson(logoutMessage);
-                                if(homeScreenClient != null){
-                                    homeScreenClient.getWebSocketClient().send(jsonLogoutMessage);
-                                }
-                                //Remove session id and user id from device
-                                ParameterManager.setSession(view.getContext(), null);
-                                ParameterManager.setUserId(view.getContext(), null);
-                                //Close activity, which reveals login window
-                                getActivity().finish();
-                            }
-                        });
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
-            }
+        logoutButton.setOnClickListener(view1 -> {
+            //Show confirmation dialog
+            AlertDialog alertDialog = new AlertDialog.Builder(view1.getContext()).create();
+            alertDialog.setTitle("Logout");
+            alertDialog.setMessage("Are you sure you want to log out?");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Log out",
+                    (dialog, which) -> {
+                        // Logout from server
+                        Gson gson = new Gson();
+                        LogoutMessage logoutMessage = new LogoutMessage(ParameterManager.getSession(view1.getContext()));
+                        String jsonLogoutMessage = gson.toJson(logoutMessage);
+                        if (homeScreenClient != null) {
+                            homeScreenClient.getWebSocketClient().send(jsonLogoutMessage);
+                        }
+                        //Remove session id and user id from device
+                        ParameterManager.setSession(view1.getContext(), null);
+                        ParameterManager.setUserId(view1.getContext(), null);
+                        //Close activity, which reveals login window
+                        getActivity().finish();
+                    });
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel",
+                    (dialog, which) -> dialog.dismiss());
+            alertDialog.show();
         });
     }
 

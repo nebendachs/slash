@@ -21,18 +21,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
-import de.sharknoon.slash.ChatMessages.SendChatMessage;
-import de.sharknoon.slash.ChatMessages.SendProjectMessage;
 import de.sharknoon.slash.ChatMessages.UserChatScreen;
-import de.sharknoon.slash.HomeScreen.UserHomeScreen;
 import de.sharknoon.slash.Image.ImageSender;
-import de.sharknoon.slash.Image.UploadImageMessage;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
@@ -42,8 +35,8 @@ public class ChatScreenActivity extends AppCompatActivity {
     private static UserChatScreen screen;
     private static LinearLayout messageScreen;
     public static boolean active = false;
-    private int PICK_IMAGE_REQUEST = 1;
-    ChatOrProject chatOrProject;
+    private final int PICK_IMAGE_REQUEST = 1;
+    private ChatOrProject chatOrProject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,61 +120,42 @@ public class ChatScreenActivity extends AppCompatActivity {
         screen.setChat(chatOrProject, context, messageScreen);
     }
 
-    public void handleButtons(ChatOrProject chatOrProject){
+    private void handleButtons(ChatOrProject chatOrProject){
         ImageButton btn = findViewById(R.id.chatscreen_button_addon);
-        btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                moveAddonScreenUpDown();
-            }
-        });
+        btn.setOnClickListener(v -> moveAddonScreenUpDown());
 
 
         Button createTemplate = findViewById(R.id.chatscreen_button_template);
-        createTemplate.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                screen.startMessageBuilder(v.getContext(), chatOrProject.getStatus(), chatOrProject.getId());
-            }
-        });
+        createTemplate.setOnClickListener(v -> screen.startMessageBuilder(v.getContext(), chatOrProject.isProject(), chatOrProject.getId()));
 
         Button createMeme = findViewById(R.id.chatscreen_button_meme);
-        createMeme.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
-                hideKeyboard();
-                Intent goToMemeGenerator = new Intent(getApplicationContext(), MemeTemplateSelectionActivity.class);
-                startActivity(goToMemeGenerator);
-                //  screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
+        createMeme.setOnClickListener(v -> {
+            //screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
+            hideKeyboard();
+            Intent goToMemeGenerator = new Intent(getApplicationContext(), MemeTemplateSelectionActivity.class);
+            startActivity(goToMemeGenerator);
+            //  screen.sendMessage(0, v.getContext(), chatOrProject.getId(),  chatOrProject.getStatus(), "","", "");
 
-            }
         });
 
         Button sendImage = findViewById(R.id.chatscreen_button_gallery);
-        sendImage.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent();
-                // Show only images, no videos or anything else
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                // Always show the chooser (if there are multiple options available)
-                startActivityForResult(Intent.createChooser(intent, getString(R.string.activity_chat_screen_select_image)), PICK_IMAGE_REQUEST);
-                hideKeyboard();
-            }
+        sendImage.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            // Show only images, no videos or anything else
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            // Always show the chooser (if there are multiple options available)
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.activity_chat_screen_select_image)), PICK_IMAGE_REQUEST);
+            hideKeyboard();
         });
 
         ImageButton sendButton = findViewById(R.id.chatscreen_button_send);
         EditText editText = findViewById(R.id.chatscreen_message_field);
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                screen.sendMessage(0, v.getContext(), chatOrProject.getId(), chatOrProject.getStatus(), editText.getText().toString(), "", "");
-                editText.setText("");
-                hideKeyboard();
-            }
+        sendButton.setOnClickListener(v -> {
+            screen.sendMessage(0, chatOrProject.isProject(), v.getContext(), chatOrProject.getId(), editText.getText().toString(), "", "");
+            editText.setText("");
+            hideKeyboard();
         });
     }
 
@@ -201,7 +175,7 @@ public class ChatScreenActivity extends AppCompatActivity {
         }
     }
 
-    public void moveAddonScreenUpDown(){
+    private void moveAddonScreenUpDown(){
         LinearLayout layout = findViewById(R.id.chatscreen_menu_bottom);
 
         if(layout.getVisibility() == View.GONE){

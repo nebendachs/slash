@@ -1,13 +1,7 @@
 package de.sharknoon.slash.Login;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -15,9 +9,6 @@ import org.java_websocket.client.WebSocketClient;
 
 import java.security.MessageDigest;
 import java.util.function.Consumer;
-
-import de.sharknoon.slash.R;
-import me.pushy.sdk.Pushy;
 
 public class UserLogin {
     private static LoginClient loginClient = null;
@@ -40,22 +31,16 @@ public class UserLogin {
     }
 
     public static void createLoginClient(Context context){
-        Consumer<WebSocketClient> onOpen = webSocketClient -> {
-            Log.d("Websocket", "Opened");
-        };
+        Consumer<WebSocketClient> onOpen = webSocketClient -> Log.d("Websocket", "Opened");
 
         Consumer<String> onMessage = message -> {
             Log.d("Websocket", message);
             LoginResponseHandler.handlerResponse(message, context);
         };
 
-        Consumer<String> onClose = reason -> {
-            Log.d("Websocket", "Closed");
-        };
+        Consumer<String> onClose = reason -> Log.d("Websocket", "Closed");
 
-        Consumer<Exception> onError = ex -> {
-            Log.d("Websocket", String.valueOf(ex));
-        };
+        Consumer<Exception> onError = ex -> Log.d("Websocket", String.valueOf(ex));
 
         String REGISTRATION_URI = "wss://sharknoon.de/slash/login";
         UserLogin.loginClient = new LoginClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);

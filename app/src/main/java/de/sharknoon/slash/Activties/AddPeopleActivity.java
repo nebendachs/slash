@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -62,14 +60,11 @@ public class AddPeopleActivity extends AppCompatActivity {
 
     private void handleCreateProjectButton() {
         Button button = findViewById(R.id.add_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CreateProject.ProjectPeopleReveiver.ACTION);
-                intent.putExtra(CreateProject.ProjectPeopleReveiver.ACTION, selected);
-                sendBroadcast(intent);
-                finish();
-            }
+        button.setOnClickListener(view -> {
+            Intent intent = new Intent(CreateProject.ProjectPeopleReveiver.ACTION);
+            intent.putExtra(CreateProject.ProjectPeopleReveiver.ACTION, selected);
+            sendBroadcast(intent);
+            finish();
         });
     }
 

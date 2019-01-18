@@ -31,7 +31,6 @@ public class MemeGenerationActivity extends AppCompatActivity {
         // Get template index from Intent
         Intent intent = getIntent();
         Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(intent.getByteArrayExtra("bitmap")));
-        String chatId = intent.getStringExtra("chatId");
         ImageView memeGeneratorImageView = findViewById(R.id.memeGeneratorImageView);
 
         memeGeneratorImageView.setImageBitmap(bitmap);

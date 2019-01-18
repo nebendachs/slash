@@ -5,8 +5,8 @@ import java.util.List;
 
 import de.sharknoon.slash.People.Person;
 
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
 public class Project implements Serializable {
-
     private String id;
     private String name;
     private String description;
@@ -31,10 +31,6 @@ public class Project implements Serializable {
 
     public String getImage() {
         return image;
-    }
-
-    public String getCreationDate() {
-        return creationDate;
     }
 
     public List<Person> getUsernames() {

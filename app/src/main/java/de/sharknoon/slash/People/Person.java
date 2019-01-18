@@ -3,9 +3,8 @@ package de.sharknoon.slash.People;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
 public class Person implements Serializable {
     public static final String MEMBER = "Developer";
     public static final String SCRUM_MASTER = "Scrum Master";
@@ -14,8 +13,8 @@ public class Person implements Serializable {
     public static final String NEUTRAL = "NEUTRAL";
     public static final String NEGATIVE = "NEGATIVE";
 
-    private String id;
-    private String username;
+    private final String id;
+    private final String username;
     private String role;
     private String image;
     private Sentiment sentiment;
@@ -64,8 +63,5 @@ public class Person implements Serializable {
             return polarity;
         }
 
-        public String getSubjectivity() {
-            return subjectivity;
-        }
     }
 }

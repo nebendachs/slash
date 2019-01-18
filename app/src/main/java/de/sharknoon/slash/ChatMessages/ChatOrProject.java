@@ -53,24 +53,8 @@ public class ChatOrProject implements  Serializable{
         }
     }
 
-    int getChatOrProject(){
-        if(chat!=null){
-            return 0;
-        } else if (project!=null){
-            return 1;
-        } else {
-            return -1;
-        }
-    }
-
-    public String getStatus(){
-        if(chat!=null){
-            return "ADD_CHAT_MESSAGE";
-        } else if (project!=null){
-            return "ADD_PROJECT_MESSAGE";
-        } else {
-            return "NO_STATUS";
-        }
+    public boolean isProject() {
+        return project != null;
     }
 
     public String getName(){

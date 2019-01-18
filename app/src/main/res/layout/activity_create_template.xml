@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="@string/category"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <Spinner
             android:id="@+id/template_category"
@@ -49,7 +49,8 @@
             android:id="@+id/templates_header"
             style="@style/LoginRegisterScreenInputElement"
             android:hint="@string/subject"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:importantForAutofill="no" />
 
     </LinearLayout>
 
@@ -59,7 +60,8 @@
         android:ems="10"
         android:hint="@string/message"
         android:inputType="textMultiLine"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/templates_send"

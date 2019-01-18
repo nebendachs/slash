@@ -9,9 +9,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import de.sharknoon.slash.R;
-import de.sharknoon.slash.Slash;
 
-public class RegistrationResponseHandler {
+class RegistrationResponseHandler {
 
     private static final String SERVER_RESPONSE_STATUS_OK = "OK";
     private static final String SERVER_RESPONSE_STATUS_WRONG_USERNAME = "WRONG_USERNAME";
@@ -57,15 +56,8 @@ public class RegistrationResponseHandler {
     }
 
     private static void showSuccessToast(Context activityContext){
-        Context appContext = Slash.getAppContext();
         CharSequence message = activityContext.getString(R.string.registerScreenSuccessMessage);
-        int duration = Toast.LENGTH_SHORT;
-
         Activity registrationActivity = (Activity) activityContext;
-        registrationActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                Toast.makeText(registrationActivity, message, Toast.LENGTH_LONG).show();
-            }
-        });
+        registrationActivity.runOnUiThread(() -> Toast.makeText(registrationActivity, message, Toast.LENGTH_LONG).show());
     }
 }

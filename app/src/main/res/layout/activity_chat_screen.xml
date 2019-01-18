@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -75,20 +73,25 @@
             android:id="@+id/chatscreen_message_field"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:inputType="text"
+            android:hint="@string/chat_message_hint"
             android:layout_weight="1"
-            style="@style/LoginRegisterScreenInputElement"/>
+            style="@style/LoginRegisterScreenInputElement"
+            android:importantForAutofill="no" />
 
         <ImageButton
             android:id="@+id/chatscreen_button_addon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_attachment" />
+            android:src="@drawable/ic_attachment"
+            android:contentDescription="@string/contentDesc_attach" />
 
         <ImageButton
             android:id="@+id/chatscreen_button_send"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_send_fill" />
+            android:src="@drawable/ic_send_fill"
+            android:contentDescription="@string/contentDesc_send" />
 
     </LinearLayout>
 

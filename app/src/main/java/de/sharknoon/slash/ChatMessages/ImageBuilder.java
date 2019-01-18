@@ -5,11 +5,11 @@ import android.widget.ImageView;
 
 import de.sharknoon.slash.HomeScreen.Chat;
 
-public class ImageBuilder {
+class ImageBuilder {
 
-    private ImageView imageView;
+    private final ImageView imageView;
 
-    public ImageBuilder(Context context, Chat.Message message, ChatOrProject chatOrProject){
+    public ImageBuilder(Context context, Chat.Message message){
         imageView = new ImageView(context);
         imageView.setTag(message.image);
 

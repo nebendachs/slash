@@ -29,18 +29,12 @@ public class PushReceiver extends BroadcastReceiver {
         String message = "NO_MESSAGE_DEFINED";
         String category = "NO_CATEGORY_DEFINED";
 
-        String status = "NO_STATUS_DEFINED";
-
         if(intent.getStringExtra("type") != null){
             type = intent.getStringExtra("type");
         }
 
         if(intent.getStringExtra("from") != null){
             from = intent.getStringExtra("from");
-        }
-
-        if(intent.getStringExtra("status") != null){
-            status = intent.getStringExtra("status");
         }
 
         if(intent.getStringExtra("content") != null) {
@@ -123,7 +117,7 @@ public class PushReceiver extends BroadcastReceiver {
         Pushy.setNotificationChannel(builder, context);
 
         // Get an instance of the NotificationManager service
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Build the notification and display it
         notificationManager.notify(counter, builder.build());

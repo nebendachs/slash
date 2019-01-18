@@ -11,22 +11,20 @@ import java.util.Locale;
 
 import de.sharknoon.slash.People.Person;
 
-public class Chat implements Serializable{
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
+public class Chat implements Serializable {
+    private final String id;
+    private final String personA;
+    private final String personB;
+    private final String partnerUsername;
+    private final String partnerImage;
+    private final String creationDate;
+    private final Person.Sentiment partnerSentiment;
+    private final List<Message> messages;
 
-    private String id;
-    private String personA;
-    private String personB;
-    private String personAUsername;
-    private String partnerUsername;
-    private String partnerImage;
-    private String creationDate;
-    private Person.Sentiment partnerSentiment;
-    private List<Message> messages;
-
-    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String partnerImage, String creationDate, Person.Sentiment partnerSentiment, List<Message> messages){
+    public Chat(String id, String personA, String personB, String partnerUsername, String partnerImage, String creationDate, Person.Sentiment partnerSentiment, List<Message> messages){
         this.id = id;
         this.personA = personA;
-        this.personAUsername = personAUsername;
         this.personB = personB;
         this.partnerUsername = partnerUsername;
         this.partnerImage = partnerImage;
@@ -47,10 +45,6 @@ public class Chat implements Serializable{
         return personB;
     }
 
-    public String getPersonAUsername() {
-        return personAUsername;
-    }
-
     public String getPartnerUsername() {
         return partnerUsername;
     }
@@ -63,10 +57,6 @@ public class Chat implements Serializable{
         return messages;
     }
 
-    public String getCreationDate() {
-        return creationDate;
-    }
-
     public Person.Sentiment getSentiment() {
         return partnerSentiment;
     }
@@ -74,7 +64,7 @@ public class Chat implements Serializable{
     public class Message implements Serializable, Comparable<Message> {
 
         public String sender;
-        public String creationDate;
+        String creationDate;
         public String type;
         public String content;
         public String subject;

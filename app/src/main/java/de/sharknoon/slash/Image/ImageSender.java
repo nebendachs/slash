@@ -41,11 +41,11 @@ public class ImageSender {
             case CHATORPROJECT:
                 if(currentChatOrProject.getProject() != null) {
                     SendProjectMessage projectMessage = new SendProjectMessage(ParameterManager.getSession(context),
-                            currentChatOrProject.getProject().getId(), "IMAGE", "", "", "", "ADD_PROJECT_MESSAGE");
+                            currentChatOrProject.getProject().getId(), "IMAGE", "", "", "");
                     message = gson.toJson(projectMessage);
                 } else {
                     SendChatMessage chatMessage = new SendChatMessage(ParameterManager.getSession(context),
-                            currentChatOrProject.getChat().getId(), "IMAGE", "", "", "", "ADD_CHAT_MESSAGE");
+                            currentChatOrProject.getChat().getId(), "IMAGE", "", "", "");
                     message = gson.toJson(chatMessage);
                 }
                 break;

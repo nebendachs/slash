@@ -1,16 +1,13 @@
 package de.sharknoon.slash.Image;
 
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
 public class OkImageResponse {
-    String status;
-    String imageID;
+    private final String status;
+    private final String imageID;
 
     public OkImageResponse(String status, String imageID) {
         this.status = status;
         this.imageID = imageID;
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     public String getImageID() {

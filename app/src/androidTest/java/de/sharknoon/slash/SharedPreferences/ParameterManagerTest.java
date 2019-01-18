@@ -28,6 +28,6 @@ public class ParameterManagerTest {
         Context context = InstrumentationRegistry.getTargetContext();
         ParameterManager.setSession(context, "abc123");
         ParameterManager.setSession(context, null);
-        assertEquals(null, ParameterManager.getSession(context));
+        assertNull(ParameterManager.getSession(context));
     }
 }

@@ -5,15 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,14 +17,9 @@ import com.google.gson.Gson;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
 import java.security.KeyStore;
 
 import javax.net.ssl.KeyManagerFactory;
@@ -37,15 +27,13 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
-import de.sharknoon.slash.HomeScreen.ContactView;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
-import de.sharknoon.slash.Utilities;
 
 public class ImageLoader {
 
     private Context context;
-    private String imageDownloadUrl = "wss://sharknoon.de/slash/file/";
+    private final String imageDownloadUrl = "wss://sharknoon.de/slash/file/";
 
     public ImageLoader(String imageId, Context context, View targetView){
         try {

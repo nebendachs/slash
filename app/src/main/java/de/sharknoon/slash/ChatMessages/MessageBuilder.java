@@ -17,13 +17,12 @@ import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
-public class MessageBuilder {
-
+class MessageBuilder {
     private View view;
-    private Chat.Message message;
-    private Context context;
+    private final Chat.Message message;
+    private final Context context;
     private boolean project_b;
-    private ArrayList<Sender> senders;
+    private final ArrayList<Sender> senders;
 
     public MessageBuilder(Context context, Chat.Message message, ChatOrProject chatOrProject){
         view = new LinearLayout(context);
@@ -32,14 +31,7 @@ public class MessageBuilder {
 
         senders = new ArrayList<>();
 
-        if(chatOrProject.getChatOrProject() == 0) {
-            Chat chat = chatOrProject.getChat();
-            Sender persA = new Sender("", chat.getPersonA());
-            Sender persB = new Sender("", chat.getPersonB());
-            this.senders.add(persA);
-            this.senders.add(persB);
-
-        } else if (chatOrProject.getChatOrProject() == 1){
+        if (chatOrProject.isProject()){
             project_b = true;
 
             Project project = chatOrProject.getProject();
@@ -47,6 +39,12 @@ public class MessageBuilder {
                 Sender sender = new Sender(user.getUsername(), user.getId());
                 this.senders.add(sender);
             }
+        } else {
+            Chat chat = chatOrProject.getChat();
+            Sender persA = new Sender("", chat.getPersonA());
+            Sender persB = new Sender("", chat.getPersonB());
+            this.senders.add(persA);
+            this.senders.add(persB);
         }
 
         createChatMessage();
@@ -217,11 +215,11 @@ public class MessageBuilder {
         view = layoutBase;
     }
 
-    public class Sender{
-        public String name;
-        public String id;
+    class Sender{
+        final String name;
+        final String id;
 
-        public Sender(String name, String id){
+        Sender(String name, String id){
             this.name = name;
             this.id = id;
         }

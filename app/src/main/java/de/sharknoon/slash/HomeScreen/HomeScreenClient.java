@@ -15,6 +15,4 @@ public class HomeScreenClient extends SSLWebSocketClient  {
                             Consumer<Exception> onErrorConsumer) {
         super(URL, context, onOpenConsumer, onMessageConsumer, onCloseConsumer, onErrorConsumer);
     }
-
-
 }

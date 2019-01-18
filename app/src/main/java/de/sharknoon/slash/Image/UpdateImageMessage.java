@@ -1,13 +1,14 @@
 package de.sharknoon.slash.Image;
 
-public class UpdateImageMessage {
-    public static final String PROJECT = "MODIFY_PROJECT_IMAGE";
-    public static final String USER = "MODIFY_USER_IMAGE";
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
+class UpdateImageMessage {
+    private static final String PROJECT = "MODIFY_PROJECT_IMAGE";
+    private static final String USER = "MODIFY_USER_IMAGE";
 
-    private String sessionid;
-    private String status;
+    private final String sessionid;
+    private final String status;
     private String projectID;
-    private boolean remove;
+    private final boolean remove;
 
     public UpdateImageMessage(String sessionid, String projectID, boolean remove) {
         this.sessionid = sessionid;
@@ -20,21 +21,5 @@ public class UpdateImageMessage {
         this.sessionid = sessionid;
         this.status = USER;
         this.remove = remove;
-    }
-
-    public String getSessionid() {
-        return sessionid;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getProjectID() {
-        return projectID;
-    }
-
-    public boolean isRemove() {
-        return remove;
     }
 }

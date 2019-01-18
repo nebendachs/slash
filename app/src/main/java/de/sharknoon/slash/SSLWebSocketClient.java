@@ -17,12 +17,12 @@ import javax.net.ssl.TrustManagerFactory;
 
 public abstract class SSLWebSocketClient {
 
-    private Context context;
+    private final Context context;
     private WebSocketClient webSocketClient;
 
-    public SSLWebSocketClient(String URL, Context context, Consumer<WebSocketClient> onOpenConsumer,
-                              Consumer<String> onMessageConsumer, Consumer<String> onCloseConsumer,
-                              Consumer<Exception> onErrorConsumer) {
+    protected SSLWebSocketClient(String URL, Context context, Consumer<WebSocketClient> onOpenConsumer,
+                                 Consumer<String> onMessageConsumer, Consumer<String> onCloseConsumer,
+                                 Consumer<Exception> onErrorConsumer) {
         this.context = context;
 
         try {
@@ -76,10 +76,6 @@ public abstract class SSLWebSocketClient {
         SSLContext sslContext = SSLContext.getInstance("TLS");
         sslContext.init(keyManagerFactory.getKeyManagers(), tmf.getTrustManagers(), null);
         return sslContext.getSocketFactory();
-    }
-
-    public Context getContext() {
-        return context;
     }
 
     public WebSocketClient getWebSocketClient() {

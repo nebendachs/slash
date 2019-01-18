@@ -1,24 +1,13 @@
 package de.sharknoon.slash.ChatMessages;
 
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
 public class GetChat {
-    private String sessionid;
+    private final String sessionid;
     private final String status = "GET_CHAT";
-    private String partnerUserID;
+    private final String partnerUserID;
 
-        public GetChat(String sessionid, String partnerUserID){
-            this.sessionid = sessionid;
-            this.partnerUserID = partnerUserID;
-        }
-
-    public String getPartnerUserId() {
-        return partnerUserID;
-    }
-
-    public String getSessionId() {
-        return sessionid;
-    }
-
-    public String getStatus() {
-        return status;
+    public GetChat(String sessionid, String partnerUserID){
+        this.sessionid = sessionid;
+        this.partnerUserID = partnerUserID;
     }
 }

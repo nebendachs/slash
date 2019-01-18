@@ -1,10 +1,10 @@
 package de.sharknoon.slash.Registration;
 
-public class RegistrationMessage {
-
-    private String username;
-    private String email;
-    private String password;
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
+class RegistrationMessage {
+    private final String username;
+    private final String email;
+    private final String password;
 
     public RegistrationMessage(String username, String email, String password) {
         this.username = username;

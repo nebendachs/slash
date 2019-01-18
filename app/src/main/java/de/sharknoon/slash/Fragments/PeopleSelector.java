@@ -48,12 +48,6 @@ public class PeopleSelector extends Fragment {
     private PeopleSelectedReceiver peopleSelectedReceiver = null;
     private PeopleDeselectedReceiver peopleDeselectedReceiver = null;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment PeopleSelector.
-     */
     public static PeopleSelector newInstance(String purpose, ArrayList<Person> removees) {
         PeopleSelector fragment = new PeopleSelector();
         Bundle args = new Bundle();
@@ -132,7 +126,6 @@ public class PeopleSelector extends Fragment {
     }
 
     public class PeopleSearchResultReceiver extends BroadcastReceiver {
-        PeopleSelector ps = null;
         public static final String ACTION = "de.sharknoon.slash.RECEIVE_PERSON_SEARCH_RESULT";
 
         @Override

@@ -44,13 +44,9 @@ public class UserRegistration {
             RegistrationResponseHandler.handleResponse(message, context);
         };
 
-        Consumer<String> onClose = reason -> {
-            Log.d("Websocket", "Closed");
-        };
+        Consumer<String> onClose = reason -> Log.d("Websocket", "Closed");
 
-        Consumer<Exception> onError = ex -> {
-            Log.d("Websocket", String.valueOf(ex));
-        };
+        Consumer<Exception> onError = ex -> Log.d("Websocket", String.valueOf(ex));
 
         String REGISTRATION_URI = "wss://sharknoon.de/slash/register";
         new RegistrationClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);
@@ -60,7 +56,7 @@ public class UserRegistration {
         return password.length() >= UserRegistration.MIN_PASSWORD_LENGTH;
     }
 
-    public static String hashPassword(String password) throws Exception {
+    private static String hashPassword(String password) throws Exception {
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
         messageDigest.update(password.getBytes());
         return new String(messageDigest.digest());
