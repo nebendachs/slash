@@ -18,10 +18,12 @@ import java.util.List;
 
 import de.sharknoon.slash.Activties.AddPeopleActivity;
 import de.sharknoon.slash.Activties.CreateClientProjektActivity;
+import de.sharknoon.slash.Activties.HomeScreenActivity;
 import de.sharknoon.slash.ChatMessages.GetChat;
 import de.sharknoon.slash.ChatMessages.ImageLoader;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.Image.SentimentLoader;
+import de.sharknoon.slash.Project.UpdateProjectMembersMessage;
 import de.sharknoon.slash.Project.UpdateScrumMasterMessage;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
@@ -55,16 +57,6 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
             nameTextView = itemView.findViewById(R.id.person_name);
             roleTextView = itemView.findViewById(R.id.person_role);
             itemView.setOnClickListener(this);
-
-            /*if(purpose.equals(PeopleSelector.PROJECT_INFO))
-                itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-                    @Override
-                    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                        menu.setHeaderTitle("Select The Action");
-                        menu.add(0, v.getId(), 0, "Call");//groupId, itemId, order, title
-                        menu.add(0, v.getId(), 0, "SMS");
-                    }
-                });*/
         }
 
         // Handles the row being clicked
@@ -110,17 +102,20 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
                         PopupMenu popup = new PopupMenu(context, view);
                         popup.inflate(R.menu.project_member_context_menu);
 
-                        if(ParameterManager.getUserId(context).equals(person.getId()))
+                        if(ParameterManager.getUserId(context).equals(person.getId())) {
                             popup.getMenu().findItem(R.id.message_user).setEnabled(false);
-                        if(ParameterManager.getCurrentOpenChatOrProject().getProject().getProjectOwner().equals(person.getId()))
+                            popup.getMenu().findItem(R.id.remove_from_project).setTitle(context.getString(R.string.context_leave_project));
+                        }
+                        String projectOwner = ParameterManager.getCurrentOpenChatOrProject().getProject().getProjectOwner();
+                        if(projectOwner != null && projectOwner.equals(person.getId()))
                             popup.getMenu().findItem(R.id.make_scrum_master).setEnabled(false);
 
                         popup.setOnMenuItemClickListener(item -> {
+                            Gson gson = new Gson();
                             switch (item.getItemId()) {
                                 case R.id.message_user:
-                                    Gson gson1 = new Gson();
                                     GetChat getChat = new GetChat(ParameterManager.getSession(context), person.getId());
-                                    String jsonChatMessage = gson1.toJson(getChat);
+                                    String jsonChatMessage = gson.toJson(getChat);
                                     Log.i("XXXXXX",jsonChatMessage);
 
                                     if(homeScreenClient != null)
@@ -129,12 +124,11 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
                                         Toast.makeText(context, context.getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
                                     return true;
                                 case R.id.make_scrum_master:
-                                    Gson gson2 = new Gson();
                                     UpdateScrumMasterMessage updateScrumMasterMessage = new UpdateScrumMasterMessage(
                                             ParameterManager.getSession(context),
                                             ParameterManager.getCurrentOpenChatOrProject().getProject().getId(),
                                             person.getId());
-                                    String jsonScrumMasterMessage = gson2.toJson(updateScrumMasterMessage);
+                                    String jsonScrumMasterMessage = gson.toJson(updateScrumMasterMessage);
                                     Log.i("XXXXXX",jsonScrumMasterMessage);
 
                                     if(homeScreenClient != null) {
@@ -151,6 +145,31 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
                                     } else
                                         Toast.makeText(context, context.getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
                                     return true;
+                                case R.id.remove_from_project:
+                                    UpdateProjectMembersMessage updateProjectMembersMessage = new UpdateProjectMembersMessage(
+                                            ParameterManager.getSession(context),
+                                            ParameterManager.getCurrentOpenChatOrProject().getProject().getId(),
+                                            person.getId(),
+                                            false
+                                    );
+                                    String jsonUpdateProjectMembersMessage = gson.toJson(updateProjectMembersMessage);
+                                    Log.i("XXXXXX",jsonUpdateProjectMembersMessage);
+
+                                    if(homeScreenClient != null) {
+                                        homeScreenClient.getWebSocketClient().send(jsonUpdateProjectMembersMessage);
+                                        if(ParameterManager.getUserId(context).equals(person.getId())) {
+                                            homeScreenClient.getWebSocketClient().send(jsonUpdateProjectMembersMessage);
+                                            Intent intent1 = new Intent(context, HomeScreenActivity.class);
+                                            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //clear intermediate activities from backstack
+                                            context.startActivity(intent1);
+                                        } else {
+                                            int pos = people.indexOf(person);
+                                            people.remove(person);
+                                            notifyItemRemoved(pos);
+                                        }
+                                    } else
+                                        Toast.makeText(context, context.getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
+                                    return true;
                             }
                             return false;
                         });
@@ -161,7 +180,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         }
     }
 
-    // Pass in the contact array into the constructor
+    // Pass in the people list into the constructor
     public PeopleAdapter(List<Person> people, String purpose) {
         this.people = people;
         this.purpose = purpose;

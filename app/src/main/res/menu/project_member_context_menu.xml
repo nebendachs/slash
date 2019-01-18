@@ -6,4 +6,7 @@
     <item
         android:id="@+id/make_scrum_master"
         android:title="@string/context_make_scrum_master"/>
+    <item
+        android:id="@+id/remove_from_project"
+        android:title="@string/context_remove_from_project"/>
 </menu>

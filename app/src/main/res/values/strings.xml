@@ -74,4 +74,6 @@
     <string name="toolbar_info">Info</string>
     <string name="element_sentiment">Current sentiment</string>
     <string name="chat_message_hint">Enter your message</string>
+    <string name="context_remove_from_project">Remove from Project</string>
+    <string name="context_leave_project">Leave Project</string>
 </resources>
