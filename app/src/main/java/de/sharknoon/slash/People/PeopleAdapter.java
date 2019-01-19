@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.sharknoon.slash.Activties.AddPeopleActivity;
@@ -146,10 +147,12 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
                                         Toast.makeText(context, context.getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
                                     return true;
                                 case R.id.remove_from_project:
+                                    ArrayList<String> user = new ArrayList<>();
+                                    user.add(person.getId());
                                     UpdateProjectMembersMessage updateProjectMembersMessage = new UpdateProjectMembersMessage(
                                             ParameterManager.getSession(context),
                                             ParameterManager.getCurrentOpenChatOrProject().getProject().getId(),
-                                            person.getId(),
+                                            user,
                                             false
                                     );
                                     String jsonUpdateProjectMembersMessage = gson.toJson(updateProjectMembersMessage);
@@ -158,7 +161,6 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
                                     if(homeScreenClient != null) {
                                         homeScreenClient.getWebSocketClient().send(jsonUpdateProjectMembersMessage);
                                         if(ParameterManager.getUserId(context).equals(person.getId())) {
-                                            homeScreenClient.getWebSocketClient().send(jsonUpdateProjectMembersMessage);
                                             Intent intent1 = new Intent(context, HomeScreenActivity.class);
                                             intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //clear intermediate activities from backstack
                                             context.startActivity(intent1);

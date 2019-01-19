@@ -1,6 +1,9 @@
 package de.sharknoon.slash.Activties;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,14 +11,19 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import de.sharknoon.slash.ChatMessages.ImageLoader;
+import de.sharknoon.slash.Fragments.CreateProject;
 import de.sharknoon.slash.Fragments.PeopleSelector;
 import de.sharknoon.slash.HomeScreen.Project;
 import de.sharknoon.slash.Image.ImageSender;
@@ -25,9 +33,12 @@ import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 
 public class ProjectInfoActivity extends AppCompatActivity {
-    private CircleImageView projectImage;
-
     private final int PICK_IMAGE_REQUEST = 1;
+
+    private CircleImageView projectImage;
+    private ArrayList<Person> members;
+    private PeopleAdapter adapter;
+    private ProjectPeopleAddedReceiver projectPeopleAddedReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +49,7 @@ public class ProjectInfoActivity extends AppCompatActivity {
         ImageView projectMood = findViewById(R.id.element_mood);
         TextView projectName = findViewById(R.id.info_project_name);
         TextView projectDesc = findViewById(R.id.info_project_description);
+        ImageView addPeople = findViewById(R.id.add_people);
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
@@ -64,7 +76,7 @@ public class ProjectInfoActivity extends AppCompatActivity {
         projectName.setText(project.getName());
         projectDesc.setText(project.getDescription());
 
-        ArrayList<Person> members = new ArrayList<>(project.getUsernames());
+        members = new ArrayList<>(project.getUsernames());
         for(int i = 0; i< members.size(); i++) {
             if(members.get(i).getId().equals(project.getProjectOwner()))
                 members.get(i).setRole(Person.SCRUM_MASTER);
@@ -74,9 +86,20 @@ public class ProjectInfoActivity extends AppCompatActivity {
         members.sort((o1, o2) -> o1.getUsername().compareToIgnoreCase(o2.getUsername()));
 
         RecyclerView recyclerView = findViewById(R.id.info_project_members);
-        PeopleAdapter adapter = new PeopleAdapter(members, PeopleSelector.PROJECT_INFO);
+        adapter = new PeopleAdapter(members, PeopleSelector.PROJECT_INFO);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        addPeople.setOnClickListener(view -> {
+            Intent goToAddPeopleActivity = new Intent(this, AddPeopleActivity.class);
+            goToAddPeopleActivity.putExtra(AddPeopleActivity.PEOPLE, members);
+            goToAddPeopleActivity.putExtra(AddPeopleActivity.IS_NEW_PROJECT, false);
+            startActivity(goToAddPeopleActivity);
+        });
+
+        projectPeopleAddedReceiver = new ProjectPeopleAddedReceiver();
+        IntentFilter intentFilter = new IntentFilter(ProjectPeopleAddedReceiver.ACTION);
+        registerReceiver(projectPeopleAddedReceiver, intentFilter);
     }
 
     @Override
@@ -93,5 +116,23 @@ public class ProjectInfoActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    public class ProjectPeopleAddedReceiver extends BroadcastReceiver {
+        public static final String ACTION = "de.sharknoon.slash.RECEIVE_PEOPLE_ADDED_TO_PROJECT";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ArrayList<Person> newMembers = (ArrayList<Person>)intent.getSerializableExtra(ACTION);
+            members.addAll(newMembers);
+            members.sort((o1, o2) -> o1.getUsername().compareToIgnoreCase(o2.getUsername()));
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(projectPeopleAddedReceiver);
     }
 }

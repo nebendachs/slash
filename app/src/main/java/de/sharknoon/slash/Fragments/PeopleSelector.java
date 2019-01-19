@@ -52,7 +52,7 @@ public class PeopleSelector extends Fragment {
         PeopleSelector fragment = new PeopleSelector();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, purpose);
-        args.putSerializable(ARG_PARAM2,removees);
+        args.putSerializable(ARG_PARAM2, removees);
         fragment.setArguments(args);
         return fragment;
     }

@@ -47,8 +47,8 @@ public class CreateProject extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        peopleReceiver = new ProjectPeopleReveiver();
         people = new ArrayList<>();
+        peopleReceiver = new ProjectPeopleReveiver();
         IntentFilter intentFilter = new IntentFilter(ProjectPeopleReveiver.ACTION);
         getActivity().registerReceiver(peopleReceiver, intentFilter);
         View view = inflater.inflate(R.layout.fragment_create_project, container, false);
@@ -78,9 +78,8 @@ public class CreateProject extends Fragment {
         add_button.setText(String.format("%s (0)", button_text));
         add_button.setOnClickListener(view1 -> {
             Intent goToAddPeopleActivity = new Intent(view1.getContext(), AddPeopleActivity.class);
-            //Bundle bundle = new Bundle();
-            //bundle.putSerializable("People", people);
-            goToAddPeopleActivity.putExtra("People", people);
+            goToAddPeopleActivity.putExtra(AddPeopleActivity.PEOPLE, people);
+            goToAddPeopleActivity.putExtra(AddPeopleActivity.IS_NEW_PROJECT, true);
             startActivity(goToAddPeopleActivity);
         });
     }
