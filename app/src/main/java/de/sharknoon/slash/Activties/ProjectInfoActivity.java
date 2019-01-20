@@ -31,6 +31,7 @@ import de.sharknoon.slash.Image.SentimentLoader;
 import de.sharknoon.slash.People.PeopleAdapter;
 import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
+import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
 public class ProjectInfoActivity extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 1;
@@ -127,6 +128,7 @@ public class ProjectInfoActivity extends AppCompatActivity {
             members.addAll(newMembers);
             members.sort((o1, o2) -> o1.getUsername().compareToIgnoreCase(o2.getUsername()));
             adapter.notifyDataSetChanged();
+            ParameterManager.getCurrentOpenChatOrProject().getProject().getUsernames().addAll(newMembers);
         }
     }
 

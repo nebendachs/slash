@@ -70,7 +70,6 @@ class ContactView {
             frameLayout.addView(contactTextView);
 
             // Create ImageView with mood image
-            //todo: Get sentiment for chats
             if(chat.getSentiment() != null) {
                 ImageView mood = createMoodImageView(chat.getSentiment(), homeScreenActivity);
                 frameLayout.addView(mood);

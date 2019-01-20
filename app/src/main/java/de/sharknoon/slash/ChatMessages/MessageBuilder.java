@@ -3,6 +3,7 @@ package de.sharknoon.slash.ChatMessages;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ class MessageBuilder {
     private View view;
     private final Chat.Message message;
     private final Context context;
+    private Project project;
     private boolean project_b;
     private final ArrayList<Sender> senders;
 
@@ -34,7 +36,7 @@ class MessageBuilder {
         if (chatOrProject.isProject()){
             project_b = true;
 
-            Project project = chatOrProject.getProject();
+            project = chatOrProject.getProject();
             for (Person user:project.getUsernames()){
                 Sender sender = new Sender(user.getUsername(), user.getId());
                 this.senders.add(sender);
@@ -66,7 +68,7 @@ class MessageBuilder {
         boolean template_b = false;
 
         for (Sender s:senders) {
-            if(s.id.equals(message.sender)){
+            if(s.id.equals(message.getSender())){
                 if(project_b) {
                     sender = s.name;
                 }
@@ -76,12 +78,18 @@ class MessageBuilder {
             }
         }
 
-        if(message.type.equals("TEXT")){
-            messageToSend = message.content;
-        } else if(message.type.equals("EMOTION")) {
+        Log.d("asdf", "Sender: " + message.getSender());
+        if(project != null)
+        Log.d("asdf", "Srum Master: " + project.getProjectOwner());
+
+        if(message.getType().equals("TEXT")){
+            if(message.getSender().equals(project.getProjectOwner()))
+
+            messageToSend = message.getContent();
+        } else if(message.getType().equals("EMOTION")) {
             template_b = true;
-            messageToSend = "#"+message.subject + ":\n" + message.content;
-            switch (message.emotion) {
+            messageToSend = "#"+message.getSubject() + ":\n" + message.getContent();
+            switch (message.getEmotion()) {
                 case "SUCCESS":
                     logo = R.drawable.ic_checkmark_full;
                     headlineColor = R.color.colorSuccess;

@@ -63,13 +63,13 @@ public class Chat implements Serializable {
 
     public class Message implements Serializable, Comparable<Message> {
 
-        public String sender;
-        String creationDate;
-        public String type;
-        public String content;
-        public String subject;
-        public String emotion;
-        public String image;
+        private String sender;
+        private String creationDate;
+        private String type;
+        private String content;
+        private String subject;
+        private String emotion;
+        private String image;
 
         @Override
         public int compareTo(Message m) {
@@ -83,6 +83,30 @@ public class Chat implements Serializable {
                 return 0;
             }
 
+        }
+
+        public String getSender() {
+            return sender;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public String getSubject() {
+            return subject;
+        }
+
+        public String getEmotion() {
+            return emotion;
+        }
+
+        public String getImage() {
+            return image;
         }
     }
 }

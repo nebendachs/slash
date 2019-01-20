@@ -52,4 +52,11 @@ public class Project implements Serializable {
     public List<Chat.Message> getMessages() {
         return messages;
     }
+
+    public void remove(String userId) {
+        for(int i=0; i<usernames.size(); i++) {
+            if(usernames.get(i).getId().equals(userId))
+                usernames.remove(i);
+        }
+    }
 }

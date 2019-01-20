@@ -93,7 +93,6 @@ public class AddPeopleActivity extends AppCompatActivity {
                 if (homeScreenClient != null) {
                     homeScreenClient.getWebSocketClient().send(jsonUpdateProjectMembersMessage);
                     //update project member list in project info activity
-                    Log.d("asdf", selected.toString());
                     Intent intent = new Intent(ProjectInfoActivity.ProjectPeopleAddedReceiver.ACTION);
                     intent.putExtra(ProjectInfoActivity.ProjectPeopleAddedReceiver.ACTION, selected);
                     sendBroadcast(intent); } else Toast.makeText(this, getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();

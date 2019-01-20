@@ -11,5 +11,6 @@
     <color name="colorHurry">#ef6c00</color>
     <color name="colorCriticism">#990000</color>
     <color name="colorIncomprehension">#990000</color>
+    <color name="colorScrumMaster">#ffe600</color>
     <color name="colorMemes">#FFFFFF</color>
 </resources>

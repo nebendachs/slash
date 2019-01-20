@@ -11,9 +11,9 @@ class ImageBuilder {
 
     public ImageBuilder(Context context, Chat.Message message){
         imageView = new ImageView(context);
-        imageView.setTag(message.image);
+        imageView.setTag(message.getImage());
 
-        new ImageLoader(message.image, context, imageView);
+        new ImageLoader(message.getImage(), context, imageView);
     }
 
     public ImageView getView(){
