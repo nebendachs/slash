@@ -77,4 +77,5 @@
     <string name="context_remove_from_project">Remove from Project</string>
     <string name="context_leave_project">Leave Project</string>
     <string name="context_unmake_scrum_master">Make Developer</string>
+    <string name="chat_unknown_user">Unknown User</string>
 </resources>

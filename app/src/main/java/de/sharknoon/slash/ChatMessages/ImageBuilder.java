@@ -9,22 +9,14 @@ class ImageBuilder {
 
     private final ImageView imageView;
 
-    public ImageBuilder(Context context, Chat.Message message){
+    public ImageBuilder(Context context, Chat.Message message) {
         imageView = new ImageView(context);
-        imageView.setTag(message.getImage());
+        imageView.setTag(message.image);
 
-        new ImageLoader(message.getImage(), context, imageView);
+        new ImageLoader(message.image, context, imageView);
     }
 
-    public ImageView getView(){
+    public ImageView getView() {
         return imageView;
     }
-
-
-
-
-
-
-
-
 }

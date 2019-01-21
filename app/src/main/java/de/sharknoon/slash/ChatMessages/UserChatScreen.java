@@ -42,7 +42,7 @@ public class UserChatScreen implements Serializable {
 
                     for (Chat.Message s : messageList) {
 
-                        if(s.getType().equals("IMAGE")){
+                        if(s.type.equals("IMAGE")){
                             ImageBuilder imageBuilder = new ImageBuilder(context, s);
                             View view = imageBuilder.getView();
                             messageScreen.addView(view);
