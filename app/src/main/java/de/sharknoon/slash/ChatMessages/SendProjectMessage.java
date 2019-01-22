@@ -1,35 +1,21 @@
 package de.sharknoon.slash.ChatMessages;
 
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
 public class SendProjectMessage {
-    private String sessionid;
-    private String status;
-    private String projectID;
-    private String messageType;
-    private String messageContent;
-    private String messageSubject;
-    private String messageEmotion;
+    private final String sessionid;
+    private final String status = "ADD_PROJECT_MESSAGE";
+    private final String projectID;
+    private final String messageType;
+    private final String messageContent;
+    private final String messageSubject;
+    private final String messageEmotion;
 
-    public SendProjectMessage(String sessionId, String projectID, String messageType, String messageContent, String messageSubject, String messageEmotion, String status){
+    public SendProjectMessage(String sessionId, String projectID, String messageType, String messageContent, String messageSubject, String messageEmotion){
         this.projectID = projectID;
         this.sessionid = sessionId;
         this.messageType = messageType;
         this.messageContent = messageContent;
         this.messageSubject = messageSubject;
         this.messageEmotion = messageEmotion;
-        this.status = status;
     }
-
-    public String getProjectID(){ return projectID; }
-
-    public String getStatus(){ return status;}
-
-    public String getSessionID(){ return sessionid; }
-
-    public String getMessageType(){ return  messageType; }
-
-    public String getMessageContent() { return messageContent; }
-
-    public String getMessageSubject() { return messageSubject; }
-
-    public String getMessageEmotion() { return messageEmotion; }
-    }
+}

@@ -9,13 +9,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-
     <application
-        android:name=".Slash"
         android:allowBackup="true"
-        android:icon="@drawable/logo2"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -84,20 +81,26 @@
             android:label="@string/home" />
         <activity
             android:name=".Activties.ChatScreenActivity"
-            android:label="@string/chatScreen" />
+            android:label="@string/chatScreen"
+            android:parentActivityName=".Activties.HomeScreenActivity"/>
         <activity
             android:name=".Activties.CreateClientProjektActivity"
-            android:label="New" />
+            android:label="New"
+            android:parentActivityName=".Activties.HomeScreenActivity"/>
         <activity
             android:name=".Activties.AddPeopleActivity"
             android:label="@string/title_activity_add_people" />
         <activity
             android:name=".Activties.CreateTemplateActivity"
-            android:label="MessageTemplates" />
+            android:label="Message Templates" />
+        <activity
+            android:name=".Activties.ProjectInfoActivity"
+            android:parentActivityName=".Activties.ChatScreenActivity"/>
         <activity
             android:name=".Activties.MemeTemplateSelectionActivity"
             android:label="Meme Templates" />
-        <activity android:name=".Activties.MemeGenerationActivity"
+        <activity
+            android:name=".Activties.MemeGenerationActivity"
             android:label="Meme Generator" />
     </application>
 

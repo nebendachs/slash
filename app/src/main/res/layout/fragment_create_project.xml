@@ -21,7 +21,8 @@
         android:ems="10"
         android:hint="@string/project_name"
         android:inputType="text"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/projectDescription"
@@ -29,7 +30,8 @@
         android:ems="10"
         android:hint="@string/description"
         android:inputType="textMultiLine"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/AddPeopleButton"
@@ -37,6 +39,17 @@
         android:layout_height="wrap_content"
         android:text="@string/add_people"
         android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/role_scrum_master"
+        style="@style/slashObject"/>
+
+    <Spinner
+        android:id="@+id/scrumMasterSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/continueButton"

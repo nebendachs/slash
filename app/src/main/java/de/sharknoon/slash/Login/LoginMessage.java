@@ -1,10 +1,10 @@
 package de.sharknoon.slash.Login;
 
-public class LoginMessage {
-
-    private String usernameOrEmail;
-    private String password;
-    private String deviceID;
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
+class LoginMessage {
+    private final String usernameOrEmail;
+    private final String password;
+    private final String deviceID;
 
     public LoginMessage(String usernameOrEmail, String password, String deviceID) {
         this.usernameOrEmail = usernameOrEmail;

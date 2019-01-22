@@ -20,7 +20,6 @@ import de.sharknoon.slash.SharedPreferences.ParameterManager;
 import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
 public class UserChatScreen implements Serializable {
-
     public void setChat(ChatOrProject chatOrProject, Context context, LinearLayout messageScreen){
         fillChatScreen(chatOrProject, context, messageScreen);
         if(messageScreen.getChildAt(messageScreen.getChildCount()-1) != null) {
@@ -31,7 +30,7 @@ public class UserChatScreen implements Serializable {
     }
 
     //Fill the Layout with all messages got from server
-    public void fillChatScreen(ChatOrProject chatOrProject, Context context, LinearLayout messageScreen){
+    private void fillChatScreen(ChatOrProject chatOrProject, Context context, LinearLayout messageScreen){
         if(chatOrProject != null) {
             List<Chat.Message> messageList = chatOrProject.getMessages();
             if(messageList != null) {
@@ -44,7 +43,7 @@ public class UserChatScreen implements Serializable {
                     for (Chat.Message s : messageList) {
 
                         if(s.type.equals("IMAGE")){
-                            ImageBuilder imageBuilder = new ImageBuilder(context, s, chatOrProject);
+                            ImageBuilder imageBuilder = new ImageBuilder(context, s);
                             View view = imageBuilder.getView();
                             messageScreen.addView(view);
 
@@ -59,48 +58,45 @@ public class UserChatScreen implements Serializable {
         }
     }
 
-    public void startMessageBuilder(Context context, String status, String id){
+    public void startMessageBuilder(Context context, boolean isProject, String id){
         Activity templateActivity = (Activity) context;
         Intent intent = new Intent(context, CreateTemplateActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("USERCHATSCREEN", this);
-        bundle.putString("STATUS", status);
+        bundle.putBoolean("ISPROJECT", isProject);
         bundle.putString("ID", id);
         intent.putExtras(bundle);
         templateActivity.startActivity(intent);
     }
 
-    // messagetype: 0 = einfach, 1 = template, 2 = image
-    public void sendMessage(int messagetype, Context context, String id, String status, String message, String emotion, String subject){
+    // messagetype: 0 = einfach, 1 = template
+    public void sendMessage(int messagetype, boolean isProject, Context context, String id, String message, String emotion, String subject){
         switch (messagetype){
             case 0:
-                sendSimpleMessage(context, id, status, message);
+                sendSimpleMessage(context, id, isProject, message);
                 break;
             case 1:
-                sendTemplateMessage(context, id, status, message, emotion, subject);
-                break;
-            case 2:
-                sendImageMessage(context, id, status, message);
+                sendTemplateMessage(context, id, isProject, message, emotion, subject);
                 break;
         }
     }
 
-    private void sendSimpleMessage(Context context, String id, String status, String message){
+    private void sendSimpleMessage(Context context, String id, boolean isProject, String message){
         Object sendMessage;
-        if(status.equals("ADD_PROJECT_MESSAGE")){
-            sendMessage = new SendProjectMessage(ParameterManager.getSession(context), id, "TEXT", message, "", "", status);
+        if(isProject){
+            sendMessage = new SendProjectMessage(ParameterManager.getSession(context), id, "TEXT", message, "", "");
         } else {
-            sendMessage = new SendChatMessage(ParameterManager.getSession(context), id, "TEXT", message, "", "", status);
+            sendMessage = new SendChatMessage(ParameterManager.getSession(context), id, "TEXT", message, "", "");
         }
         sendJson(sendMessage);
     }
 
-    private void sendTemplateMessage(Context context, String id, String status, String message, String emotion, String subject){
+    private void sendTemplateMessage(Context context, String id, boolean isProject, String message, String emotion, String subject){
         Object sendMessage;
-        if(status.equals("ADD_PROJECT_MESSAGE")){
-            sendMessage = new SendProjectMessage(ParameterManager.getSession(context), id ,"EMOTION", message, subject, emotion, status);
+        if(isProject){
+            sendMessage = new SendProjectMessage(ParameterManager.getSession(context), id ,"EMOTION", message, subject, emotion);
         } else {
-            sendMessage = new SendChatMessage(ParameterManager.getSession(context), id ,"EMOTION", message, subject, emotion, status);
+            sendMessage = new SendChatMessage(ParameterManager.getSession(context), id ,"EMOTION", message, subject, emotion);
         }
         sendJson(sendMessage);
     }
@@ -113,9 +109,4 @@ public class UserChatScreen implements Serializable {
             homeScreenClient.getWebSocketClient().send(jsonChatMessage);
         }
     }
-
-    private void sendImageMessage(Context context, String id, String status, String message){
-        //TODO: Aufruf für Bilder
-    }
-
 }

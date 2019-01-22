@@ -17,7 +17,7 @@ import de.sharknoon.slash.SharedPreferences.ParameterManager;
 public class UserHomeScreen {
 
     public static HomeScreenClient homeScreenClient;
-    private Context context;
+    private final Context context;
 
     public UserHomeScreen(Context context) {
         this.context = context;
@@ -27,7 +27,7 @@ public class UserHomeScreen {
     public void askForProjectsChats(){
         try {
             Gson gson = new Gson();
-            HomeScreenMessage homeScreenMessage = new HomeScreenMessage(ParameterManager.getSession(context), "GET_HOME");
+            HomeScreenMessage homeScreenMessage = new HomeScreenMessage(ParameterManager.getSession(context));
             String jsonHomeScreenMessage = gson.toJson(homeScreenMessage);
             Log.d("JSON", jsonHomeScreenMessage);
 
@@ -58,13 +58,9 @@ public class UserHomeScreen {
             HomeScreenResponseHandler.handleResponse(message, context);
         };
 
-        Consumer<String> onClose = reason -> {
-            Log.d("Websocket", "Closed");
-        };
+        Consumer<String> onClose = reason -> Log.d("Websocket", "Closed");
 
-        Consumer<Exception> onError = ex -> {
-            Log.d("Websocket", String.valueOf(ex));
-        };
+        Consumer<Exception> onError = ex -> Log.d("Websocket", String.valueOf(ex));
 
         String REGISTRATION_URI = "wss://sharknoon.de/slash/home";
         return new HomeScreenClient(REGISTRATION_URI, context, onOpen, onMessage, onClose, onError);

@@ -22,14 +22,15 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="@string/createChatUsername"/>
+            android:hint="@string/createChatUsername"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/createChatFindButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Search" />
+            android:text="@string/search" />
 
     </LinearLayout>
 

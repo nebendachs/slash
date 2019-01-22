@@ -22,50 +22,71 @@
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate1"/>
+                android:src="@drawable/memetemplate1"
+                android:contentDescription="@string/contentDes_meme_template" />
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate2"/>
+                android:src="@drawable/memetemplate2"
+                android:contentDescription="@string/contentDes_meme_template" />
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate3"/>
+                android:src="@drawable/memetemplate3"
+                android:contentDescription="@string/contentDes_meme_template" />
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate4"/>
+                android:src="@drawable/memetemplate4"
+                android:contentDescription="@string/contentDes_meme_template" />
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate5"/>
+                android:src="@drawable/memetemplate5"
+                android:contentDescription="@string/contentDes_meme_template" />
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate6"/>
+                android:src="@drawable/memetemplate6"
+                android:contentDescription="@string/contentDes_meme_template" />
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate7"/>
+                android:src="@drawable/memetemplate7"
+                android:contentDescription="@string/contentDes_meme_template" />
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate8"/>
+                android:src="@drawable/memetemplate8"
+                android:contentDescription="@string/contentDes_meme_template" />
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate9"/>
+                android:src="@drawable/memetemplate9"
+                android:contentDescription="@string/contentDes_meme_template" />
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate10"/>
+                android:src="@drawable/memetemplate10"
+                android:contentDescription="@string/contentDes_meme_template" />
 
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate11"/>
+                android:src="@drawable/memetemplate11"
+                android:contentDescription="@string/contentDes_meme_template" />
+
             <ImageView
                 style="@style/MemeGeneratorTemplatesImageViews"
-                android:src="@drawable/memetemplate12"/>
+                android:src="@drawable/memetemplate12"
+                android:contentDescription="@string/contentDes_meme_template" />
+
+            <TextView
+                android:id="@+id/custom_image"
+                style="@style/MemeGeneratorTemplatesImageViews"
+                android:text="@string/custom_image"
+                android:gravity="center"
+                android:background="@drawable/rectangle"
+                android:textSize="20sp"/>
 
         </com.google.android.flexbox.FlexboxLayout>
 

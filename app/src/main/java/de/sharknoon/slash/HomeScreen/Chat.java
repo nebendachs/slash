@@ -9,23 +9,27 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class Chat implements Serializable{
+import de.sharknoon.slash.People.Person;
 
-    private String id;
-    private String personA;
-    private String personB;
-    private String personAUsername;
-    private String partnerUsername;
-    private String creationDate;
-    private List<Message> messages;
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
+public class Chat implements Serializable {
+    private final String id;
+    private final String personA;
+    private final String personB;
+    private final String partnerUsername;
+    private final String partnerImage;
+    private final String creationDate;
+    private final Person.Sentiment partnerSentiment;
+    private final List<Message> messages;
 
-    public Chat(String id, String personA, String personAUsername, String personB, String partnerUsername, String creationDate, List<Message> messages){
+    public Chat(String id, String personA, String personB, String partnerUsername, String partnerImage, String creationDate, Person.Sentiment partnerSentiment, List<Message> messages){
         this.id = id;
         this.personA = personA;
-        this.personAUsername = personAUsername;
         this.personB = personB;
         this.partnerUsername = partnerUsername;
+        this.partnerImage = partnerImage;
         this.creationDate = creationDate;
+        this.partnerSentiment = partnerSentiment;
         this.messages = messages;
     }
 
@@ -41,20 +45,20 @@ public class Chat implements Serializable{
         return personB;
     }
 
-    public String getPersonAUsername() {
-        return personAUsername;
-    }
-
     public String getPartnerUsername() {
         return partnerUsername;
+    }
+
+    public String getPartnerImage() {
+        return partnerImage;
     }
 
     public List<Message> getMessages(){
         return messages;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public Person.Sentiment getSentiment() {
+        return partnerSentiment;
     }
 
     public class Message implements Serializable, Comparable<Message> {
@@ -78,7 +82,6 @@ public class Chat implements Serializable{
                 Log.i("Chat", "Parse Exception while parsing time");
                 return 0;
             }
-
         }
     }
 }

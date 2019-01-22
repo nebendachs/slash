@@ -1,37 +1,67 @@
 package de.sharknoon.slash.People;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
 public class Person implements Serializable {
-    private String username;
-    private String id;
+    public static final String MEMBER = "Developer";
+    public static final String SCRUM_MASTER = "Scrum Master";
 
-    public Person(String username) {
+    public static final String POSITIVE = "POSITIVE";
+    public static final String NEUTRAL = "NEUTRAL";
+    public static final String NEGATIVE = "NEGATIVE";
+
+    private final String id;
+    private final String username;
+    private String role;
+    private String image;
+    private Sentiment sentiment;
+
+    public Person(String id, String username) {
+        this.id = id;
         this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getUsername() {
+        return username;
     }
 
-    private static int lastPersonId = 0;
+    public String getRole() {
+        return role;
+    }
 
-    public static ArrayList<Person> createPeopleList(int numPeople) {
-        ArrayList<Person> people = new ArrayList<Person>();
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-        for (int i = 1; i <= numPeople; i++) {
-            people.add(new Person("Person " + ++lastPersonId));
+    public String getImage() {
+        return image;
+    }
+
+    public Sentiment getSentiment() {
+        return sentiment;
+    }
+
+    @NonNull
+    public String toString() {
+        if(username != null)
+            return username;
+        return "Unknown User";
+    }
+
+    public class Sentiment implements Serializable {
+        private String polarity;
+        private String subjectivity;
+
+        public String getPolarity() {
+            return polarity;
         }
 
-        return people;
     }
 }

@@ -6,8 +6,6 @@ import org.java_websocket.client.WebSocketClient;
 
 import java.util.function.Consumer;
 
-import de.sharknoon.slash.Login.LoginResponseHandler;
-
 import android.content.Context;
 
 
@@ -27,24 +25,19 @@ public class UploadImageMessage {
         }
     }
 
-    public static void uploadImageWithClient(String imageUrl, Context context) {
+    private static void uploadImageWithClient(String imageUrl, Context context) {
         Consumer<WebSocketClient> onOpen = webSocketClient -> {
             Log.d("Websocket", "Opened");
             Log.d("ImageSize", String.valueOf(imageData.length));
             webSocketClient.send(imageData);
         };
 
-        Consumer<String> onMessage = message -> {
-            Log.d("Websocket", message);
-        };
+        Consumer<String> onMessage = message -> Log.d("Websocket", message);
 
-        Consumer<String> onClose = reason -> {
-            Log.d("Websocket", "Closed");
-        };
+        Consumer<String> onClose = reason -> Log.d("Websocket", "Closed");
 
-        Consumer<Exception> onError = ex -> {
-            Log.d("Websocket", String.valueOf(ex));
-        };
+        Consumer<Exception> onError = ex -> Log.d("Websocket", String.valueOf(ex));
+
         new ImageUploadClient(imageUrl, context, onOpen, onMessage, onClose, onError);
     }
 }

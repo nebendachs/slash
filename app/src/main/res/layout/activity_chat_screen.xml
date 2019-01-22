@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        android:gravity="bottom">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -32,71 +24,75 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="top">
-
             </LinearLayout>
 
         </ScrollView>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/chatscreen_menu_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="50dp"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/chatscreen_button_template"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/activity_chat_screen_template"/>
-
-                <Button
-                    android:id="@+id/chatscreen_button_meme"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/activity_chat_screen_meme_generator"/>
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/chatscreen_message_field"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <ImageButton
-                android:id="@+id/chatscreen_button_addon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_attachment" />
-
-            <ImageButton
-                android:id="@+id/chatscreen_button_send"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_send_fill" />
-
-        </LinearLayout>
 
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/chatscreen_menu_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!--android:visibility="gone"-->
+
+        <Button
+            android:id="@+id/chatscreen_button_template"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/activity_chat_screen_template"/>
+
+        <Button
+            android:id="@+id/chatscreen_button_meme"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/activity_chat_screen_meme_generator"/>
+
+        <Button
+            android:id="@+id/chatscreen_button_gallery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/activity_chat_screen_image"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/chatscreen_message_field"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:hint="@string/chat_message_hint"
+            android:layout_weight="1"
+            style="@style/LoginRegisterScreenInputElement"
+            android:importantForAutofill="no" />
+
+        <ImageButton
+            android:id="@+id/chatscreen_button_addon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_attachment"
+            android:contentDescription="@string/contentDesc_attach" />
+
+        <ImageButton
+            android:id="@+id/chatscreen_button_send"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_send_fill"
+            android:contentDescription="@string/contentDesc_send" />
+
+    </LinearLayout>
+
+</LinearLayout>

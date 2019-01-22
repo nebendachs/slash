@@ -1,9 +1,9 @@
 package de.sharknoon.slash.Registration;
 
-public class RegistrationResponse {
+class RegistrationResponse {
 
-    private String status;
-    private String message;
+    private final String status;
+    private final String message;
 
     public RegistrationResponse(String status, String message) {
         this.status = status;

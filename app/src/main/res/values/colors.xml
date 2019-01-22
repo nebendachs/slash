@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorBlack">#000000</color>
     <color name="colorPrimary">#ff8800</color>
     <color name="colorPrimaryDark">#ff5e00</color>
     <color name="colorAccent">#ff5e00</color>
@@ -11,6 +12,7 @@
     <color name="colorHurry">#ef6c00</color>
     <color name="colorCriticism">#990000</color>
     <color name="colorIncomprehension">#990000</color>
-    <color name="colorTextStandard">#000000</color>
+    <color name="colorScrumMaster">#00d0ff</color>
+    <color name="colorBadSentiment">#ff0000</color>
     <color name="colorMemes">#FFFFFF</color>
 </resources>

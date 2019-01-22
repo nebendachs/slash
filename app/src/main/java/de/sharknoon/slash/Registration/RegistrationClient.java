@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 
 import de.sharknoon.slash.SSLWebSocketClient;
 
-public class RegistrationClient extends SSLWebSocketClient {
+class RegistrationClient extends SSLWebSocketClient {
 
     public RegistrationClient(String URL, Context context, Consumer<WebSocketClient> onOpenConsumer,
                               Consumer<String> onMessageConsumer, Consumer<String> onCloseConsumer,

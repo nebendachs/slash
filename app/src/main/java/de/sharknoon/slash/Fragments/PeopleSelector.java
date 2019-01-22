@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -32,6 +33,7 @@ public class PeopleSelector extends Fragment {
     public static final String CHAT = "Chat";
     public static final String PROJECT = "Project";
     public static final String SELECTED = "Selected";
+    public static final String PROJECT_INFO = "ProjectInfo";
 
     private static final String ARG_PARAM1 = "purpose";
     private static final String ARG_PARAM2 = "removees";
@@ -46,17 +48,11 @@ public class PeopleSelector extends Fragment {
     private PeopleSelectedReceiver peopleSelectedReceiver = null;
     private PeopleDeselectedReceiver peopleDeselectedReceiver = null;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment PeopleSelector.
-     */
     public static PeopleSelector newInstance(String purpose, ArrayList<Person> removees) {
         PeopleSelector fragment = new PeopleSelector();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, purpose);
-        args.putSerializable(ARG_PARAM2,removees);
+        args.putSerializable(ARG_PARAM2, removees);
         fragment.setArguments(args);
         return fragment;
     }
@@ -121,13 +117,15 @@ public class PeopleSelector extends Fragment {
                 FindUser findUser = new FindUser(ParameterManager.getSession(view1.getContext()), search.getText().toString());
                 String jsonSearchMessage = gson.toJson(findUser);
                 Log.d("JSON", jsonSearchMessage);
-                homeScreenClient.getWebSocketClient().send(jsonSearchMessage);
+                if(homeScreenClient.getWebSocketClient().isOpen())
+                    homeScreenClient.getWebSocketClient().send(jsonSearchMessage);
+                else
+                    Toast.makeText(getActivity(), getString(R.string.error_socket_not_connected), Toast.LENGTH_LONG).show();
             }
         });
     }
 
     public class PeopleSearchResultReceiver extends BroadcastReceiver {
-        PeopleSelector ps = null;
         public static final String ACTION = "de.sharknoon.slash.RECEIVE_PERSON_SEARCH_RESULT";
 
         @Override

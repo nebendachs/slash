@@ -2,7 +2,6 @@ package de.sharknoon.slash.Activties;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +13,7 @@ public class CreateTemplateActivity extends AppCompatActivity {
 
     private UserChatScreen screen;
     private String id;
-    private String status;
+    private boolean isProject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,39 +24,40 @@ public class CreateTemplateActivity extends AppCompatActivity {
         String[] items = new String[]{"Erfolg", "Zustimmung", "Information", "Frage", "Benötige Hilfe", "Dringend", "Kritik", "Unverständnis"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+        dropdown.setSelection(0);
 
         if(getIntent().getExtras() != null) {
             screen = (UserChatScreen) getIntent().getExtras().getSerializable("USERCHATSCREEN");
             id = getIntent().getExtras().getString("ID");
-            status = getIntent().getExtras().getString("STATUS");
+            isProject = getIntent().getExtras().getBoolean("ISPROJECT");
         }
 
+        this.handleSendButton();
+    }
+
+    private void handleSendButton() {
         Button send = findViewById(R.id.templates_send);
+        send.setOnClickListener(v -> {
+            //String sessionId, String chatID, String messageType, String messageContent, String messageSubject, String messageEmotion
+            EditText messageContent = findViewById(R.id.templates_messages);
+            EditText messageSubject = findViewById(R.id.templates_header);
+            Spinner dropdown = findViewById(R.id.template_category);
+            String chosenWord = dropdown.getSelectedItem().toString();
+            ArrayAdapter Adap = (ArrayAdapter) dropdown.getAdapter();
+            int pos = Adap.getPosition(chosenWord);
 
-        send.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //String sessionId, String chatID, String messageType, String messageContent, String messageSubject, String messageEmotion
-                EditText messageContent = findViewById(R.id.templates_messages);
-                EditText messageSubject = findViewById(R.id.templates_header);
-                Spinner dropdown = findViewById(R.id.template_category);
-                String chosenWord = dropdown.getSelectedItem().toString();
-                ArrayAdapter Adap = (ArrayAdapter) dropdown.getAdapter();
-                int pos = Adap.getPosition(chosenWord);
-
-                boolean input_ok = true;
-                if(messageSubject.getText().toString().isEmpty()) {
-                    messageSubject.setError(getString(R.string.subject_required));
-                    input_ok = false;
-                }
-                if(messageContent.getText().toString().isEmpty()) {
-                    messageContent.setError(getString(R.string.message_required));
-                    input_ok = false;
-                }
-                if(screen != null && input_ok){
-                    screen.sendMessage(1,v.getContext(), id, status, messageContent.getText().toString(), getEmotion(pos), messageSubject.getText().toString());
-                    finish();
-                }
+            boolean input_ok = true;
+            if(messageSubject.getText().toString().isEmpty()) {
+                messageSubject.setError(getString(R.string.subject_required));
+                input_ok = false;
+            }
+            if(messageContent.getText().toString().isEmpty()) {
+                messageContent.setError(getString(R.string.message_required));
+                input_ok = false;
+            }
+            if(screen != null && input_ok){
+                screen.sendMessage(1, isProject, v.getContext(), id, messageContent.getText().toString(), getEmotion(pos), messageSubject.getText().toString());
+                finish();
             }
         });
     }

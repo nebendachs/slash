@@ -15,7 +15,6 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/wholeWindow"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
@@ -35,7 +34,8 @@
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/logo2" />
+                    android:src="@drawable/logo2"
+                    android:contentDescription="@string/contentDesc_logo" />
 
                 <EditText
                     android:id="@+id/homeScreenEmailInput"
@@ -45,34 +45,18 @@
                     android:hint="@string/homeScreenEmailInput"
                     android:inputType="textEmailAddress" />
 
-                <TextView
-                    android:id="@+id/homeScreenWrongEmailTextView"
-                    style="@style/LoginRegisterScreenErrorMessageTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp" />
-
                 <EditText
                     android:id="@+id/homeScreenPasswordInput"
                     style="@style/LoginRegisterScreenInputElement"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="35dp"
                     android:ems="10"
                     android:hint="@string/homeScreenPasswordInput"
                     android:inputType="textPassword" />
 
                 <TextView
-                    android:id="@+id/homeScreenWrongPasswordTextView"
-                    style="@style/LoginRegisterScreenErrorMessageTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp" />
-
-                <TextView
                     android:id="@+id/homeScreenRegisterLink"
                     style="@style/LoginRegisterScreenInteractionElement"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="35dp"
                     android:ems="10"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
@@ -120,7 +104,6 @@
                     android:orientation="vertical">
 
                     <ProgressBar
-                        android:id="@+id/progressBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 

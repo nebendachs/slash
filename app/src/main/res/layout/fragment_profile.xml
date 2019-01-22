@@ -5,15 +5,35 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.Profile"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="10dp">
+    style="@style/slashLayout">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/profile"
-        android:textSize="25sp" />
+        style="@style/slashHeader" />
+
+    <LinearLayout
+        android:id="@+id/profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="@style/slashObject">
+
+        <FrameLayout
+            android:layout_width="110dp"
+            android:layout_height="110dp">
+            <include layout="@layout/layout_mood_image"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lorem_ipsum"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/logoutButton"

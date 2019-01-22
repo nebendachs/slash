@@ -6,14 +6,11 @@ import android.content.SharedPreferences;
 
 import de.sharknoon.slash.ChatMessages.ChatOrProject;
 
+@SuppressWarnings({"FieldCanBeLocal", "UnusedParameters"})
 public class ParameterManager {
     private SharedPreferences sharedPreferences;
     private static ChatOrProject currentOpenChatOrProject;
     private static Activity HomeScreenActivtiy;
-
-    public ParameterManager() {
-        // Blank
-    }
 
     private static SharedPreferences getPreferences(Context context) {
         return context.getSharedPreferences("de.sharknoon.slash", Context.MODE_PRIVATE);

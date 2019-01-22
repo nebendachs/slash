@@ -24,8 +24,6 @@ import static de.sharknoon.slash.HomeScreen.UserHomeScreen.homeScreenClient;
 
 public class CreateClientProjektActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     private ChatPersonReceiver personReceiver = null;
 
     @Override
@@ -38,13 +36,13 @@ public class CreateClientProjektActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter(ChatPersonReceiver.ACTION);
         registerReceiver(personReceiver, intentFilter);
 
-        viewPager = findViewById(R.id.view_pager);
+        ViewPager viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(PeopleSelector.newInstance(PeopleSelector.CHAT, null), "Chat");
         adapter.addFragment(CreateProject.newInstance(), "Project");
         viewPager.setAdapter(adapter);
 
-        tabLayout = findViewById(R.id.tab_layout);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_person);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_people);
@@ -70,7 +68,7 @@ public class CreateClientProjektActivity extends AppCompatActivity {
             activity.finish();
         }
 
-        public void setActivity(CreateClientProjektActivity activity) {
+        void setActivity(CreateClientProjektActivity activity) {
             this.activity = activity;
         }
     }

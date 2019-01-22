@@ -3,27 +3,23 @@ package de.sharknoon.slash.ChatMessages;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.os.Environment;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
 import java.security.KeyStore;
 
 import javax.net.ssl.KeyManagerFactory;
@@ -37,9 +33,9 @@ import de.sharknoon.slash.SharedPreferences.ParameterManager;
 public class ImageLoader {
 
     private Context context;
-    private String imageDownloadUrl = "wss://sharknoon.de/slash/file/";
+    private final String imageDownloadUrl = "wss://sharknoon.de/slash/file/";
 
-    public ImageLoader(String imageId, Context context, ImageView imageView){
+    public ImageLoader(String imageId, Context context, View targetView){
         try {
 
             this.context = context;
@@ -70,7 +66,13 @@ public class ImageLoader {
                         imageByteBuffer.get(imageBytes);
 
                         Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                        imageView.setImageBitmap(bitmap);
+
+                        if(targetView instanceof ImageView)
+                            ((ImageView)targetView).setImageBitmap(bitmap);
+                        else if(targetView instanceof TextView) {
+                            Drawable d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, targetView.getWidth(), targetView.getWidth(), false));
+                            ((TextView) targetView).setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
+                        }
                     });
                 }
 

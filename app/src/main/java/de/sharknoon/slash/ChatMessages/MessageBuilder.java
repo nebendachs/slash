@@ -13,39 +13,33 @@ import java.util.ArrayList;
 
 import de.sharknoon.slash.HomeScreen.Chat;
 import de.sharknoon.slash.HomeScreen.Project;
+import de.sharknoon.slash.People.Person;
 import de.sharknoon.slash.R;
 import de.sharknoon.slash.SharedPreferences.ParameterManager;
 
-public class MessageBuilder {
-
+class MessageBuilder {
     private View view;
-    private Chat.Message message;
-    private Context context;
-    private boolean project_b;
-    private ArrayList<Sender> senders;
+    private final ChatOrProject chatOrProject;
+    private final Chat.Message message;
+    private final Context context;
+    private final ArrayList<Person> senders;
 
     public MessageBuilder(Context context, Chat.Message message, ChatOrProject chatOrProject){
         view = new LinearLayout(context);
         this.message = message;
         this.context = context;
+        this.chatOrProject = chatOrProject;
 
         senders = new ArrayList<>();
 
-        if(chatOrProject.getChatOrProject() == 0) {
+        if (chatOrProject.isProject()){
+            senders.addAll(chatOrProject.getProject().getUsernames());
+        } else {
             Chat chat = chatOrProject.getChat();
-            Sender persA = new Sender("", chat.getPersonA());
-            Sender persB = new Sender("", chat.getPersonB());
+            Person persA = new Person(chat.getPersonA(), "");
+            Person persB = new Person(chat.getPersonB(), "");
             this.senders.add(persA);
             this.senders.add(persB);
-
-        } else if (chatOrProject.getChatOrProject() == 1){
-            project_b = true;
-
-            Project project = chatOrProject.getProject();
-            for (Project.Username user:project.getUsernames()){
-                Sender sender = new Sender(user.getUsername(), user.getId());
-                this.senders.add(sender);
-            }
         }
 
         createChatMessage();
@@ -66,12 +60,12 @@ public class MessageBuilder {
         boolean left_b = true;
         boolean template_b = false;
 
-        for (Sender s:senders) {
-            if(s.id.equals(message.sender)){
-                if(project_b) {
-                    sender = s.name;
+        for (Person s:senders) {
+            if(s.getId().equals(message.sender)){
+                if(chatOrProject.isProject()) {
+                    sender = s.getUsername();
                 }
-                if(s.id.equals(ParameterManager.getUserId(context))){
+                if(s.getId().equals(ParameterManager.getUserId(context))){
                     left_b = false;
                 }
             }
@@ -81,7 +75,7 @@ public class MessageBuilder {
             messageToSend = message.content;
         } else if(message.type.equals("EMOTION")) {
             template_b = true;
-            messageToSend = "#"+message.subject + ":\n" + message.content;
+            messageToSend = String.format("#%s:\n%s", message.subject, message.content);
             switch (message.emotion) {
                 case "SUCCESS":
                     logo = R.drawable.ic_checkmark_full;
@@ -146,7 +140,10 @@ public class MessageBuilder {
 
         layoutBubble.setOrientation(LinearLayout.VERTICAL);
         layoutBubble.setPadding(25,20,25,20);
-        layoutBubble.setBackground(ContextCompat.getDrawable(context, R.drawable.layout_speech_bubble));
+        if(chatOrProject.isProject() && chatOrProject.getProject().getProjectOwner() != null && chatOrProject.getProject().getProjectOwner().equals(message.sender))
+            layoutBubble.setBackground(ContextCompat.getDrawable(context, R.drawable.layout_speech_bubble_scrum_master));
+        else
+            layoutBubble.setBackground(ContextCompat.getDrawable(context, R.drawable.layout_speech_bubble));
 
         TextView viewHeader;
         TextView viewSubject;
@@ -155,13 +152,16 @@ public class MessageBuilder {
 
         LinearLayout innerlayout;
 
-        if(project_b) {
+        if(chatOrProject.isProject()) {
             viewHeader = new TextView(context);
             viewHeader.setTypeface(null,Typeface.ITALIC);
             LinearLayout.LayoutParams parameter = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             parameter.setMargins(0,20,0,0);
             viewHeader.setLayoutParams(parameter);
-            viewHeader.setText(sender);
+            if(sender.isEmpty())
+                viewHeader.setText(context.getString(R.string.chat_unknown_user));
+            else
+                viewHeader.setText(sender);
 
             layoutBubble.addView(viewHeader);
         }
@@ -214,15 +214,5 @@ public class MessageBuilder {
         layoutBase.addView(layoutWeight2);
 
         view = layoutBase;
-    }
-
-    public class Sender{
-        public String name;
-        public String id;
-
-        public Sender(String name, String id){
-            this.name = name;
-            this.id = id;
-        }
     }
 }
